@@ -785,6 +785,18 @@ const htmlContent = `<!DOCTYPE html>
       border-top: 5px solid #D5AD36 !important;
       animation: goldPulseCard 1.4s ease-in-out 2;
     }
+    mark.search-hl {
+      background-color: #F7E396;
+      color: #181916;
+      padding: 0 3px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .cat-tag-hl {
+      background-color: #F7E396 !important;
+      color: #181916 !important;
+      border-color: #D5AD36 !important;
+    }
 
     /* PRIORITY CONTACT BOX INSIDE VSO CARD */
     .priority-contact-box {
@@ -1497,6 +1509,10 @@ const htmlContent = `<!DOCTYPE html>
       selectedCounty: 'all',
       selectedCategory: 'all',
       selectedBranch: 'all',
+      matchedCategories: [],
+      matchedOrgIds: null,
+      highlightTerms: [],
+      matchedTown: '',
       uploadMode: 'new',
       submissionWorkflow: 'live',
       uploadedFileDataUrl: null,
@@ -1688,8 +1704,462 @@ const htmlContent = `<!DOCTYPE html>
       showToast('✉️ Opening your email app with full VSO details for ' + org.name + '!');
     }
 
+    const SEARCH_STOP_WORDS = [
+      'a','about','all','also','am','an','and','any','anyone','are','around','as','ask','asking','at',
+      'be','because','been','being','buddy','but','by','call','can','could','do','does','email','explain',
+      'find','finding','for','friend','from','get','getting','got','group','groups','guy','has','have',
+      'help','helping','her','here','him','his','how','i','if','in','info','information','into','is','it',
+      'its','just','know','knows','looking','man','me','my','near','need','needed','needs','new','nh',
+      'hampshire','of','on','or','org','organization','organizations','our','out','person','please','program',
+      'programs','provide','providing','resource','resources','search','service','services','show','some',
+      'someone','somebody','support','text','that','the','their','them','there','they','this','to','trying',
+      'up','us','vet','vets','veteran','veterans','vso','vsos','want','wants','we','what','where','which',
+      'who','with','woman','would','you','your'
+    ];
+
+    const AMBIGUOUS_NH_TOWNS = {
+      bath: true, bow: true, freedom: true, glen: true, hill: true, jackson: true,
+      lee: true, lincoln: true, lyme: true, madison: true, milton: true, monroe: true,
+      pike: true, rye: true, temple: true, troy: true, warren: true, washington: true
+    };
+
+    const SEARCH_TYPO_RULES = [
+      [/\\bmorgage\\b/gi, 'mortgage'],
+      [/\\bmortage\\b/gi, 'mortgage'],
+      [/\\bdependant(s)?\\b/gi, 'dependent$1'],
+      [/\\bbenifit(s)?\\b/gi, 'benefit$1'],
+      [/\\bbeneift(s)?\\b/gi, 'benefit$1'],
+      [/\\bveteren(s)?\\b/gi, 'veteran$1'],
+      [/\\bsurviver(s)?\\b/gi, 'survivor$1'],
+      [/\\bchamp\\s+va\\b/gi, 'champva'],
+      [/\\bch\\.?\\s*35\\b/gi, 'chapter 35'],
+      [/\\bch\\.?\\s*31\\b/gi, 'chapter 31'],
+      [/\\bptds\\b/gi, 'ptsd'],
+      [/\\bhomles(s)?\\b/gi, 'homeless'],
+      [/\\butilites\\b/gi, 'utilities'],
+      [/\\bgi\\s*bill\\b/gi, 'gi bill']
+    ];
+
+    function escapeRegexStr(s) {
+      return String(s || '').replace(/[.*+?^\\$\\{\\}()|[\\]\\\\]/g, '\\\\$&');
+    }
+
+    function normalizeSearchQuery(raw) {
+      let s = String(raw || '').trim();
+      for (let i = 0; i < SEARCH_TYPO_RULES.length; i++) {
+        s = s.replace(SEARCH_TYPO_RULES[i][0], SEARCH_TYPO_RULES[i][1]);
+      }
+      return s.replace(/\\s+/g, ' ').trim();
+    }
+
+    const GENERIC_VSO_TERMS = {
+      va: true, benefit: true, benefits: true, state: true, federal: true, military: true,
+      nh: true, assistance: true, advocacy: true, care: true, support: true, health: true,
+      community: true, office: true, center: true, chapter: true, county: true, region: true
+    };
+
+    function extractSearchTerms(normalizedQuery, detectedGeo) {
+      const geoSkip = {};
+      if (detectedGeo && detectedGeo.city) {
+        detectedGeo.city.toLowerCase().split(/\\s+/).forEach(function(w) { geoSkip[w] = true; });
+      }
+      if (detectedGeo && detectedGeo.zip) {
+        geoSkip[String(detectedGeo.zip).toLowerCase()] = true;
+      }
+      if (detectedGeo && detectedGeo.county && detectedGeo.county !== 'all') {
+        detectedGeo.county.toLowerCase().split(/\\s+/).forEach(function(w) { geoSkip[w] = true; });
+        geoSkip['county'] = true;
+      }
+      if (detectedGeo && detectedGeo.regionName) {
+        detectedGeo.regionName.toLowerCase().split(/\\s+/).forEach(function(w) { geoSkip[w] = true; });
+        geoSkip['region'] = true;
+      }
+      return normalizedQuery
+        .toLowerCase()
+        .replace(/[^a-z0-9@._\\s-]/g, ' ')
+        .split(/\\s+/)
+        .filter(function(w) {
+          return w.length >= 2 && SEARCH_STOP_WORDS.indexOf(w) === -1 && !geoSkip[w];
+        });
+    }
+
+    function detectSafeGeography(rawQuery) {
+      const q = String(rawQuery || '').trim();
+      const lower = q.toLowerCase();
+      const out = { regionId: 'all', regionName: '', county: 'all', city: '', zip: '', label: '' };
+      if (!q) return out;
+
+      // 1. Exact NH 5-digit ZIP code
+      const zipMatch = lower.match(/\\b(03[0-8]\\d{2})\\b/);
+      if (zipMatch) {
+        const z = LOOKUP_DATA.zip_lookup.find(function(item) { return item.zip === zipMatch[1]; });
+        if (z) {
+          return { regionId: z.region_id, regionName: getRegionName(z.region_id), county: 'all', city: z.city, zip: z.zip, label: 'near ' + z.city + ' (' + z.zip + ' • ' + z.county + ' County)' };
+        }
+      }
+
+      // 2. Explicit Region name
+      for (let i = 0; i < LOOKUP_DATA.regions.length; i++) {
+        const reg = LOOKUP_DATA.regions[i];
+        if (reg.id === 'statewide') continue;
+        const names = [reg.name].concat(reg.alternate_names || []);
+        for (let j = 0; j < names.length; j++) {
+          const rn = String(names[j] || '').toLowerCase();
+          if (rn.length >= 4 && new RegExp('\\\\b' + escapeRegexStr(rn) + '\\\\b', 'i').test(lower)) {
+            out.regionId = reg.id;
+            out.regionName = rn;
+            out.label = reg.name;
+            break;
+          }
+        }
+        if (out.regionId !== 'all') break;
+      }
+
+      // 3. Explicit County name
+      for (let i = 0; i < LOOKUP_DATA.counties.length; i++) {
+        const c = LOOKUP_DATA.counties[i];
+        if (c === 'All Counties') continue;
+        if (new RegExp('\\\\b' + escapeRegexStr(c.toLowerCase()) + '(?:\\\\s+county)?\\\\b', 'i').test(lower)) {
+          out.county = c;
+          out.label = c + ' County';
+          return out;
+        }
+      }
+
+      // 4. NH Town names (longest-first + collision guard for English words like Lyme, Bow, Freedom, Bath)
+      const wordCount = lower.split(/\\s+/).filter(Boolean).length;
+      const sortedZips = LOOKUP_DATA.zip_lookup.slice().sort(function(a, b) {
+        return (b.city || '').length - (a.city || '').length;
+      });
+      for (let i = 0; i < sortedZips.length; i++) {
+        const z = sortedZips[i];
+        const cityClean = String(z.city || '').toLowerCase().trim();
+        if (cityClean.length < 3) continue;
+        const escCity = escapeRegexStr(cityClean);
+        if (!new RegExp('\\\\b' + escCity + '\\\\b', 'i').test(lower)) continue;
+
+        if (AMBIGUOUS_NH_TOWNS[cityClean]) {
+          const isStandalone = wordCount <= 2 && new RegExp('^' + escCity + '(?:,?\\\\s*nh)?$', 'i').test(lower.trim());
+          const hasGeoContext = new RegExp('(?:\\\\b(?:in|near|around|from|living in|live in|located in|town of|city of)\\\\s+' + escCity + '\\\\b|\\\\b' + escCity + ',?\\\\s+(?:nh|new hampshire)\\\\b)', 'i').test(lower);
+          if (!isStandalone && !hasGeoContext) continue;
+        }
+
+        return { regionId: z.region_id, regionName: getRegionName(z.region_id), county: 'all', city: z.city, zip: z.zip, label: 'near ' + z.city + ' (' + z.zip + ' • ' + z.county + ' County)' };
+      }
+
+      return out;
+    }
+
+    const SEARCH_INTENT_RULES = [
+      {
+        id: 'survivor-dependent',
+        label: 'Dependent & Survivor VA Benefits',
+        triggers: [
+          /\\b(survivor|widow|widower|gold\\s+star|fallen|deceased|passed\\s+away|death\\s+benefit|dic|champva|chapter\\s*35|dea)\\b/i,
+          /\\bdependent\\b.*\\b(benefit|benefits|va|claim|spouse|child|children|survivor|education|health)\\b/i,
+          /\\b(spouse|child|children|family)\\b.*\\b(survivor|dependent|champva|dic|chapter\\s*35|va\\s+benefit)\\b/i
+        ],
+        categories: ['benefits-advocacy', 'family-youth', 'financial-legal'],
+        highlights: ['Survivor', 'Fallen', 'Families', 'Family Assistance', 'Family Resources', 'Family', 'Dependent', 'Spouse', 'State Veteran Benefits', 'VA Claims Assistance', 'Claims Assistance', 'Benefits', 'Care Coordination', 'Advocacy', 'Emergency Financial Assistance', 'Emergency Financial Aid', 'Financial Assistance', 'Legal', 'Military Children'],
+        matchOrg: function(org, hay) {
+          if ((org.categories || []).indexOf('family-youth') !== -1) return true;
+          if ((org.categories || []).indexOf('financial-legal') !== -1) return true;
+          return /\\b(dmavs|department of military affairs|care coordination|dav nh|disabled american veterans|vfw state headquarters|survivor outreach|gold star|fallen|dependent|champva|dic)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'student-education',
+        label: 'Student & GI Bill Education Benefits',
+        triggers: [
+          /\\b(student|students|gi\\s*bill|college|university|tuition|scholarship|education|campus|chapter\\s*35|chapter\\s*31|vr&e|vocational|degree)\\b/i
+        ],
+        categories: ['education-employment', 'benefits-advocacy'],
+        highlights: ['Education Benefits', 'GI Bill', 'Student Veteran', 'Student', 'University', 'College', 'Campus', 'Education & Training', 'Education', 'Training', 'Career Coaching', 'Career Transition', 'State Veteran Benefits', 'VA Claims Assistance', 'Claims Assistance', 'Benefits', 'Advocacy', 'Youth Programs'],
+        matchOrg: function(org, hay) {
+          if (/\\b(plymouth state|student veterans|military services|military kids|51 vets|candorful|operation high flight|dmavs|department of military affairs|care coordination|dav nh|disabled american veterans|vfw state headquarters|veterans inc|wounded warrior)\\b/i.test(hay)) return true;
+          return /\\b(gi bill|student|college|university|tuition|scholarship|education benefits|education & training|chapter 35|campus)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'va-claims',
+        label: 'VA Claims & Benefits Advocacy',
+        triggers: [
+          /\\b(va\\s+claim|disability\\s+claim|file\\s+(?:a\\s+)?claim|submit\\s+(?:a\\s+)?claim|claim|claims|appeal|rating|discharge\\s+upgrade|dd[\\s-]?214|pact\\s+act|dmavs|dav|vso\\s+officer|va\\s+benefits?|veteran\\s+benefits?|state\\s+benefits?|disability\\s+benefits?)\\b/i
+        ],
+        categories: ['benefits-advocacy', 'financial-legal'],
+        highlights: ['VA Claims Assistance', 'Claims Assistance', 'State Veteran Benefits', 'Benefits', 'Care Coordination', 'Advocacy', 'Case Management', 'Legal', 'Pro Bono'],
+        matchOrg: function(org, hay) {
+          if (/\\b(honor flight|less leg more heart)\\b/i.test(hay)) return false;
+          if ((org.categories || []).indexOf('benefits-advocacy') !== -1 && /\\b(claim|benefit|care coordination|advocacy|vfw|dav|dmavs|legion|case management)\\b/i.test(hay)) return true;
+          return /\\b(603 legal|veterans legal justice|veterans inc|discharge upgrade|va claim)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'financial-bills',
+        label: 'Mortgage, Rent, Utility & Financial Aid',
+        triggers: [
+          /\\b(mortgage|rent|rental|evict|eviction|foreclos|utility|utilities|heating|fuel|electric|bill|bills|financial|grant|grants|money|debt|tax|behind\\s+on)\\b/i
+        ],
+        categories: ['financial-legal', 'housing-shelter'],
+        highlights: ['Emergency Financial Assistance', 'Emergency Financial Aid', 'Financial Assistance', 'Housing', 'Care Coordination', 'Legal Advice', 'Pro Bono', 'Community Aid'],
+        matchOrg: function(org, hay) {
+          if ((org.categories || []).indexOf('financial-legal') !== -1) return true;
+          return /\\b(emergency financial|financial assistance|financial aid|mortgage|rent|utility|heating|dan healy|easterseals|veterans count|homeland heroes|worker bee|harbor care|liberty house|veterans inc|bridge house)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'housing-shelter',
+        label: 'Housing & Shelter',
+        triggers: [
+          /\\b(house|houses|housing|home|homes|apartment|homeless|shelter|roof|lodging|motel|transitional|hud-?vash|accessibility|ramp)\\b/i
+        ],
+        categories: ['housing-shelter'],
+        highlights: ['Housing', 'Shelter', 'Transitional Housing', 'Home Accessibility', 'Adapted Custom Homes', 'Housing First', 'Support Services'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('housing-shelter') !== -1 || /\\b(housing|shelter|homeless|home modification|adapted)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'food-basic',
+        label: 'Food & Basic Needs',
+        triggers: [
+          /\\b(food|hungry|pantry|meal|meals|grocery|groceries|voucher|eat|nutrition|clothing|clothes|furnishing|furnishings)\\b/i
+        ],
+        categories: ['food-basic-needs'],
+        highlights: ['Food', 'Pantry', 'Clothing', 'Farmers Market Vouchers', 'Furnishings', 'Basic Needs'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('food-basic-needs') !== -1 || /\\b(food|pantry|clothing|voucher|grocer)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'legal-aid',
+        label: 'Legal Aid & Veterans Court',
+        triggers: [
+          /\\b(lawyer|attorney|legal|court|pro\\s+bono|eviction|foreclosure)\\b/i
+        ],
+        categories: ['financial-legal'],
+        highlights: ['Legal Advice', 'Pro Bono Legal Representation', 'Civil Legal Aid', 'Legal'],
+        matchOrg: function(org, hay) {
+          return /\\b(legal|attorney|court|pro bono|justice)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'service-animals',
+        label: 'Service Dogs & Equine Therapy',
+        triggers: [
+          /\\b(horse|horses|equine|ranch|farm|riding|service\\s+dog|service\\s+animal|pup|puppy|k-?9|canine|dog|dogs|animal)\\b/i
+        ],
+        categories: ['service-animals-equine'],
+        highlights: ['Service Dogs', 'Service Animals', 'Equine', 'Equine-Assisted Therapy', 'Animal Support', 'K9'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('service-animals-equine') !== -1 || /\\b(service dog|equine|horse|canine|k-?9|animal)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'mental-health',
+        label: 'Mental Health, PTSD & Recovery',
+        triggers: [
+          /\\b(ptsd|trauma|counseling|mental|therapy|suicide|depression|anxiety|yoga|wellness|recovery|substance|alcohol|addiction|grief)\\b/i
+        ],
+        categories: ['mental-health-wellness'],
+        highlights: ['Mental Health', 'PTSD', 'Trauma', 'Crisis Support', 'Suicide Prevention', 'Wellness', 'Recovery', 'Therapy', 'Peer Support'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('mental-health-wellness') !== -1 || /\\b(ptsd|mental health|counseling|therapy|recovery|suicide)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'healthcare-medical',
+        label: 'Healthcare, Medical & Transportation',
+        triggers: [
+          /\\b(dental|teeth|tooth|doctor|medical|clinic|hospital|flight|airlift|wheelchair|amputee|mobility|car|vehicle|ride|rides|transport|transportation|healthcare|health\\s+care|lyme\\s+disease)\\b/i
+        ],
+        categories: ['healthcare-medical'],
+        highlights: ['Healthcare', 'VA Medical', 'Medical', 'Community Health', 'Transportation', 'Free Medical Flights', 'Dental'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('healthcare-medical') !== -1 || /\\b(medical|healthcare|transport|airlift|flight|amputee|clinic|hospital)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'jobs-career',
+        label: 'Jobs & Career Transition',
+        triggers: [
+          /\\b(job|jobs|work|career|employ|employment|interview|resume|hiring|transition|training|apprentice|mentorship)\\b/i
+        ],
+        categories: ['education-employment'],
+        highlights: ['Career Transition', 'Career Coaching', 'Employment', 'Interview Prep', 'Training', 'Mentorship', 'Case Management'],
+        matchOrg: function(org, hay) {
+          return /\\b(career|employ|interview|resume|transition|training|mentorship|51 vets|candorful|harbor care|veterans inc|high flight|wounded warrior)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'family-youth',
+        label: 'Family, Spouse & Youth Support',
+        triggers: [
+          /\\b(family|families|kids|child|children|youth|spouse|wife|husband)\\b/i
+        ],
+        categories: ['family-youth'],
+        highlights: ['Family', 'Families', 'Family Assistance', 'Family Resources', 'Military Children', 'Youth Programs'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('family-youth') !== -1 || /\\b(family|families|spouse|children|youth)\\b/i.test(hay);
+        }
+      },
+      {
+        id: 'recreation-outdoors',
+        label: 'Recreation & Outdoors',
+        triggers: [
+          /\\b(hike|hiking|48|fish|fishing|sail|sailing|outdoor|hunt|hunting|walk|walking|sport|sports|game|gaming|xbox|swim|retreat|music|art)\\b/i
+        ],
+        categories: ['recreation-outdoors'],
+        highlights: ['Outdoor', 'Adaptive Sports', 'Therapeutic', 'Fishing', 'Hunting', 'Retreat', 'Recreation', 'Music', 'Walking'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('recreation-outdoors') !== -1;
+        }
+      },
+      {
+        id: 'posts-community',
+        label: 'Local Veteran Posts & Peer Community',
+        triggers: [
+          /\\b(vfw|legion|post|meeting|canteen|peer|coalition|lonely)\\b/i
+        ],
+        categories: ['veterans-posts-community'],
+        highlights: ['VFW', 'American Legion', 'Post', 'Peer', 'Coalition', 'Community'],
+        matchOrg: function(org, hay) {
+          return (org.categories || []).indexOf('veterans-posts-community') !== -1;
+        }
+      }
+    ];
+
+    function analyzeSearchIntents(rawQuery, detectedGeo) {
+      const normalized = normalizeSearchQuery(rawQuery);
+      const matchedRules = [];
+      const catSet = {};
+      const highlightSet = {};
+      const orgIdSet = {};
+      const labels = [];
+
+      for (let r = 0; r < SEARCH_INTENT_RULES.length; r++) {
+        const rule = SEARCH_INTENT_RULES[r];
+        const hit = rule.triggers.some(function(re) { return re.test(normalized); });
+        if (!hit) continue;
+        matchedRules.push(rule);
+        labels.push(rule.label);
+        rule.categories.forEach(function(c) { catSet[c] = true; });
+        rule.highlights.forEach(function(h) { highlightSet[h] = true; });
+      }
+
+      if (matchedRules.length > 0) {
+        for (let i = 0; i < ORGANIZATIONS.length; i++) {
+          const org = ORGANIZATIONS[i];
+          const hay = (org.name + ' ' + org.description + ' ' + (org.categories || []).join(' ')).toLowerCase();
+          for (let r = 0; r < matchedRules.length; r++) {
+            if (matchedRules[r].matchOrg(org, hay)) {
+              orgIdSet[org.id] = true;
+              break;
+            }
+          }
+        }
+      }
+
+      const queryTerms = extractSearchTerms(normalized, detectedGeo);
+      queryTerms.forEach(function(t) {
+        if (t.length >= 2) highlightSet[t] = true;
+      });
+      if (detectedGeo && detectedGeo.city) highlightSet[detectedGeo.city] = true;
+      if (detectedGeo && detectedGeo.zip) highlightSet[detectedGeo.zip] = true;
+      if (detectedGeo && detectedGeo.county && detectedGeo.county !== 'all') highlightSet[detectedGeo.county] = true;
+
+      return {
+        normalized: normalized,
+        queryTerms: queryTerms,
+        labels: labels,
+        categories: Object.keys(catSet),
+        orgIds: Object.keys(orgIdSet),
+        highlightTerms: Object.keys(highlightSet)
+      };
+    }
+
+    function highlightText(rawText, terms) {
+      const raw = String(rawText || '');
+      if (!raw || !terms || terms.length === 0) return escapeHtml(raw);
+
+      const cleaned = [];
+      const seen = {};
+      for (let i = 0; i < terms.length; i++) {
+        const t = String(terms[i] || '').trim();
+        if (t.length < 2) continue;
+        const k = t.toLowerCase();
+        if (seen[k]) continue;
+        if (t.indexOf(' ') === -1 && SEARCH_STOP_WORDS.indexOf(k) !== -1) continue;
+        seen[k] = true;
+        cleaned.push(t);
+      }
+      if (cleaned.length === 0) return escapeHtml(raw);
+
+      // Sort longest phrases first so "Education Benefits" highlights as one span before "Benefits"
+      cleaned.sort(function(a, b) { return b.length - a.length; });
+      const parts = cleaned.slice(0, 32).map(function(t) {
+        const leadB = /^[a-z0-9]/i.test(t) ? '\\\\b' : '';
+        const trailB = /[a-z0-9]$/i.test(t) ? '\\\\b' : '';
+        if (t.length <= 3 || /[^a-z]/i.test(t)) {
+          return leadB + escapeRegexStr(t) + trailB;
+        }
+        // Handle simple singular/plural inflections safely (e.g., "benefits" <-> "benefit")
+        if (t.length >= 5 && /s$/i.test(t) && !/(ss|us|is)$/i.test(t)) {
+          return leadB + escapeRegexStr(t.slice(0, -1)) + 's?' + trailB;
+        }
+        return leadB + escapeRegexStr(t) + '(?:s|es|ed|ing)?' + trailB;
+      });
+
+      try {
+        // Match against RAW text and escape each slice individually so HTML entities (&amp;, &lt;) are never broken
+        const re = new RegExp('(' + parts.join('|') + ')', 'gi');
+        let out = '';
+        let lastIdx = 0;
+        let match;
+        while ((match = re.exec(raw)) !== null) {
+          if (match[0].length === 0) { re.lastIndex++; continue; }
+          out += escapeHtml(raw.slice(lastIdx, match.index)) + '<mark class="search-hl">' + escapeHtml(match[0]) + '</mark>';
+          lastIdx = match.index + match[0].length;
+        }
+        out += escapeHtml(raw.slice(lastIdx));
+        return out;
+      } catch (e) {
+        return escapeHtml(raw);
+      }
+    }
+
     function onLiveSearchInput(val) {
-      state.searchQuery = (val || '').trim();
+      const raw = (val || '').trim();
+      state.searchQuery = raw;
+
+      if (!raw) {
+        state.matchedCategories = [];
+        state.matchedOrgIds = null;
+        state.highlightTerms = [];
+        state.matchedTown = '';
+        const aiBox = document.getElementById('ai-navigator-response');
+        if (aiBox) aiBox.classList.add('hidden');
+        renderDirectory();
+        return;
+      }
+
+      const geo = detectSafeGeography(raw);
+      const analysis = analyzeSearchIntents(raw, geo);
+      const wordCount = raw.split(/\\s+/).filter(Boolean).length;
+
+      state.matchedTown = geo.city || '';
+      state.highlightTerms = analysis.highlightTerms;
+
+      // For multi-word plain-English sentences while typing, activate live multi-intent matching
+      // so results never collapse to 0 before hitting Enter.
+      if (wordCount >= 3 && analysis.orgIds.length > 0) {
+        state.matchedCategories = analysis.categories;
+        state.matchedOrgIds = analysis.orgIds;
+      } else {
+        state.matchedCategories = [];
+        state.matchedOrgIds = null;
+      }
+
       renderDirectory();
     }
 
@@ -1708,80 +2178,28 @@ const htmlContent = `<!DOCTYPE html>
       const rawQuery = document.getElementById('search-input').value.trim();
       if (!rawQuery) return resetAllFilters();
 
-      const q = rawQuery.toLowerCase();
-      let detectedCat = 'all', detectedRegion = 'all', detectedCounty = 'all', detectedBranch = 'all', matchedTownOrZip = '';
+      const normalized = normalizeSearchQuery(rawQuery);
+      const q = normalized.toLowerCase();
+      const wordCount = rawQuery.split(/\\s+/).filter(Boolean).length;
+      let detectedRegion = 'all', detectedCounty = 'all', detectedBranch = 'all', matchedTownOrZip = '';
       const reasons = [];
+
       const compactQ = q.replace(/[^a-z0-9]/g, '');
-      const nameHit = compactQ.length >= 3 && ORGANIZATIONS.some(function(o) { const cn = (o.name || '').toLowerCase().replace(/[^a-z0-9]/g, ''); return cn.includes(compactQ) || (cn.length >= 5 && compactQ.includes(cn)); });
+      const isEmailQuery = /[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/i.test(rawQuery);
 
-      const key = localStorage.getItem('nhvet411_gemini_key');
-      if (key && !nameHit) {
-        try {
-          const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-          const promptMsg = 'You are the NHVet411 Veteran Resource Navigator. Analyze this veteran request: "' + rawQuery + '". Choose the best matching category ID from: [housing-shelter, mental-health-wellness, healthcare-medical, food-basic-needs, financial-legal, education-employment, service-animals-equine, recreation-outdoors, family-youth, veterans-posts-community, benefits-advocacy, all]. Return ONLY valid JSON with keys: {"category": "...", "explanation": "..."}';
-          for (let mi = 0; mi < models.length; mi++) {
-            const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + models[mi] + ':generateContent?key=' + encodeURIComponent(key);
-            const res = await fetch(endpoint, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ contents: [{ parts: [{ text: promptMsg }] }] })
-            });
-            if (res.ok) {
-              const data = await res.json();
-              const txt = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) || '';
-              const jsonMatch = txt.match(/\\{[\\s\\S]*\\}/);
-              if (jsonMatch) {
-                const parsed = JSON.parse(jsonMatch[0]);
-                if (parsed.category && parsed.category !== 'all') {
-                  detectedCat = parsed.category;
-                  reasons.push(getCategoryName(detectedCat) + ' (via Gemini Flash)');
-                }
-                break;
-              }
-            }
-          }
-        } catch (err) { console.warn('Gemini API Vault fallback to local synonym engine:', err); }
-      }
+      const geo = detectSafeGeography(rawQuery);
+      if (geo.regionId !== 'all') detectedRegion = geo.regionId;
+      if (geo.county !== 'all') detectedCounty = geo.county;
+      if (geo.city) matchedTownOrZip = geo.city;
+      if (geo.label) reasons.push(geo.label);
 
-      if (detectedCat === 'all') {
-        if (q.match(/house|houses|housing|home|homes|apartment|rent|rental|evict|eviction|homeless|shelter|roof|living|lodging|motel/)) { detectedCat = 'housing-shelter'; reasons.push('Housing & Shelter'); }
-        else if (q.match(/horse|equine|ranch|farm|riding|service dog|pup|puppy|animal|k-?9|companion|pet|dog|dogs|canine/)) { detectedCat = 'service-animals-equine'; reasons.push('Service Animals & Equine Therapy'); }
-        else if (q.match(/food|hungry|pantry|meal|meals|grocery|groceries|voucher|eat|nutrition/)) { detectedCat = 'food-basic-needs'; reasons.push('Food & Basic Needs'); }
-        else if (q.match(/ptsd|trauma|counseling|mental|therapy|suicide|depression|anxiety|yoga|retreat|wellness|music|art/)) { detectedCat = 'mental-health-wellness'; reasons.push('Mental Health & Wellness'); }
-        else if (q.match(/dental|teeth|tooth|doctor|medical|clinic|hospital|flight|airlift|wheelchair|mobility|car|cars|vehicle|truck|ride|rides|transport|transportation|drive/)) { detectedCat = 'healthcare-medical'; reasons.push('Healthcare, Medical & Transportation'); }
-        else if (q.match(/lawyer|attorney|legal|court|money|grant|bill|bills|financial|heating|fuel|utility|aid|tax/)) { detectedCat = 'financial-legal'; reasons.push('Financial & Legal Aid'); }
-        else if (q.match(/job|jobs|work|career|employ|interview|resume|college|gi bill|school|student|university|training/)) { detectedCat = 'education-employment'; reasons.push('Education & Employment'); }
-        else if (q.match(/hike|hiking|48|fish|fishing|sail|sailing|outdoor|hunt|hunting|walk|walking|sport|game|gaming|xbox|swim/)) { detectedCat = 'recreation-outdoors'; reasons.push('Recreation & Outdoors'); }
-        else if (q.match(/family|kids|child|children|youth|spouse|wife|husband|survivor|fallen/)) { detectedCat = 'family-youth'; reasons.push('Family & Youth Support'); }
-        else if (q.match(/vfw|legion|post|meeting|canteen|peer|buddy|friend|lonely/)) { detectedCat = 'veterans-posts-community'; reasons.push('Local Veteran Posts & Community'); }
-        else if (q.match(/va|claim|claims|benefit|benefits|disability|vso|dav|dmavs|discharge/)) { detectedCat = 'benefits-advocacy'; reasons.push('VA Benefits & Advocacy'); }
-      }
+      const localAnalysis = analyzeSearchIntents(rawQuery, geo);
+      const pureGeoOnly = !isEmailQuery && localAnalysis.queryTerms.length === 0 && (detectedRegion !== 'all' || detectedCounty !== 'all');
+      const nameHit = !isEmailQuery && !pureGeoOnly && wordCount <= 6 && compactQ.length >= 3 && ORGANIZATIONS.some(function(o) {
+        const cn = (o.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        return cn.includes(compactQ);
+      });
 
-      for (let i = 0; i < LOOKUP_DATA.regions.length; i++) {
-        const reg = LOOKUP_DATA.regions[i];
-        if (reg.id === 'statewide') continue;
-        if (q.includes(reg.name.toLowerCase())) {
-          detectedRegion = reg.id;
-          reasons.push(reg.name);
-          break;
-        }
-      }
-
-      for (let i = 0; i < LOOKUP_DATA.counties.length; i++) {
-        const c = LOOKUP_DATA.counties[i];
-        if (c === 'All Counties') continue;
-        if (q.includes(c.toLowerCase())) { detectedCounty = c; reasons.push(c + ' County'); break; }
-      }
-      for (let i = 0; i < LOOKUP_DATA.zip_lookup.length; i++) {
-        const z = LOOKUP_DATA.zip_lookup[i];
-        const townRegex = new RegExp('\\\\b' + z.city.toLowerCase().replace(/[^a-z0-9\\s]/g, '') + '\\\\b');
-        if (q.includes(z.zip) || townRegex.test(q)) {
-          detectedRegion = z.region_id;
-          matchedTownOrZip = z.city;
-          reasons.push('near ' + z.city + ' (' + z.zip + ' • ' + z.county + ' County)');
-          break;
-        }
-      }
       if (q.match(/\\b(marine|marines|usmc)\\b/)) { detectedBranch = 'marines'; reasons.push('U.S. Marines'); }
       else if (q.match(/\\b(army|soldier|guard)\\b/)) { detectedBranch = 'army'; reasons.push('U.S. Army'); }
       else if (q.match(/\\b(navy|sailor)\\b/)) { detectedBranch = 'navy'; reasons.push('U.S. Navy'); }
@@ -1789,12 +2207,97 @@ const htmlContent = `<!DOCTYPE html>
       else if (q.match(/\\b(space force|ussf|guardian|guardians)\\b/)) { detectedBranch = 'space-force'; reasons.push('U.S. Space Force'); }
       else if (q.match(/\\b(coast guard|uscg)\\b/)) { detectedBranch = 'coast-guard'; reasons.push('Coast Guard'); }
 
-      if (nameHit) { detectedCat = 'all'; detectedRegion = 'all'; detectedCounty = 'all'; detectedBranch = 'all'; matchedTownOrZip = ''; reasons.length = 0; reasons.push('Organization name match'); }
-      state.selectedCategory = detectedCat; state.selectedRegion = detectedRegion; state.selectedCounty = detectedCounty; state.selectedBranch = detectedBranch;
-      state.searchQuery = (nameHit || (detectedCat === 'all' && detectedRegion === 'all' && detectedCounty === 'all' && detectedBranch === 'all')) ? rawQuery : '';
+      let matchedCategories = localAnalysis.categories.slice();
+      let matchedOrgIds = localAnalysis.orgIds.length > 0 ? localAnalysis.orgIds.slice() : null;
+      let highlightTerms = localAnalysis.highlightTerms.slice();
+
+      if (localAnalysis.labels.length > 0) {
+        localAnalysis.labels.forEach(function(lbl) { reasons.unshift(lbl); });
+      }
+
+      const key = localStorage.getItem('nhvet411_gemini_key');
+      if (key && !nameHit && !isEmailQuery && !pureGeoOnly) {
+        try {
+          const models = ['gemini-3.5-flash-lite', 'gemini-4-hydrogen'];
+          const catalog = ORGANIZATIONS.map(function(o) {
+            return { id: o.id, name: o.name, categories: o.categories, city: o.city, county: o.county, is_statewide: o.is_statewide, description: o.description };
+          });
+          const promptMsg = 'You are the NHVet411 Veteran Resource Navigator for New Hampshire. STRICT RULE: Do NOT do open-web search; ONLY return valid organization IDs from the provided directory JSON. Analyze this request: "' + rawQuery + '". Return ALL organizations from the directory that can meaningfully help (across every relevant category), plus exact words/phrases that appear in their descriptions to highlight visually. Return ONLY valid JSON: {"categories": ["..."], "org_ids": ["..."], "highlight_terms": ["..."], "summary": "..."}. DIRECTORY: ' + JSON.stringify(catalog);
+          for (let mi = 0; mi < models.length; mi++) {
+            const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + models[mi] + ':generateContent?key=' + encodeURIComponent(key);
+            const res = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: promptMsg }] }],
+                generationConfig: { responseMimeType: 'application/json' }
+              })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              const txt = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) || '';
+              const jsonMatch = txt.match(/\\{[\\s\\S]*\\}/);
+              if (jsonMatch) {
+                const parsed = JSON.parse(jsonMatch[0]);
+                const validIdMap = {};
+                ORGANIZATIONS.forEach(function(o) { validIdMap[o.id] = true; });
+                const aiOrgIds = Array.isArray(parsed.org_ids) ? parsed.org_ids.filter(function(id) { return validIdMap[id]; }) : [];
+                const aiCats = Array.isArray(parsed.categories) ? parsed.categories.filter(function(c) { return c && c !== 'all'; }) : [];
+                const aiHighlights = Array.isArray(parsed.highlight_terms) ? parsed.highlight_terms.filter(Boolean) : [];
+                if (aiOrgIds.length > 0 || aiCats.length > 0) {
+                  if (aiOrgIds.length > 0) {
+                    const mergedSet = {};
+                    aiOrgIds.forEach(function(id) { mergedSet[id] = true; });
+                    if (matchedOrgIds) matchedOrgIds.forEach(function(id) { mergedSet[id] = true; });
+                    matchedOrgIds = Object.keys(mergedSet);
+                  }
+                  if (aiCats.length > 0) {
+                    const mergedCats = {};
+                    aiCats.forEach(function(c) { mergedCats[c] = true; });
+                    matchedCategories.forEach(function(c) { mergedCats[c] = true; });
+                    matchedCategories = Object.keys(mergedCats);
+                  }
+                  if (aiHighlights.length > 0) {
+                    highlightTerms = highlightTerms.concat(aiHighlights);
+                  }
+                  reasons.push('Grounded via ' + models[mi]);
+                }
+                break;
+              }
+            }
+          }
+        } catch (err) { console.warn('Gemini API Vault fallback to local multi-intent engine:', err); }
+      }
+
+      if (nameHit) {
+        detectedRegion = 'all'; detectedCounty = 'all'; detectedBranch = 'all'; matchedTownOrZip = '';
+        matchedCategories = []; matchedOrgIds = null;
+        highlightTerms = [rawQuery];
+        reasons.length = 0; reasons.push('Organization name match');
+      } else if (isEmailQuery) {
+        detectedRegion = 'all'; detectedCounty = 'all'; detectedBranch = 'all'; matchedTownOrZip = '';
+        matchedCategories = []; matchedOrgIds = null;
+        highlightTerms = [rawQuery];
+        reasons.length = 0; reasons.push('Direct contact email match');
+      }
+
+      state.selectedCategory = matchedCategories.length === 1 ? matchedCategories[0] : 'all';
+      state.matchedCategories = matchedCategories;
+      state.matchedOrgIds = pureGeoOnly ? null : matchedOrgIds;
+      state.selectedRegion = detectedRegion;
+      state.selectedCounty = detectedCounty;
+      state.selectedBranch = detectedBranch;
+      state.matchedTown = matchedTownOrZip;
+      state.highlightTerms = highlightTerms;
+      state.searchQuery = pureGeoOnly ? '' : rawQuery;
 
       document.getElementById('county-select').value = detectedCounty;
-      document.querySelectorAll('.cat-pill').forEach(function(btn) { btn.classList.toggle('active', btn.dataset.cat === detectedCat); });
+      document.querySelectorAll('.cat-pill').forEach(function(btn) {
+        const isMatched = state.selectedCategory !== 'all'
+          ? btn.dataset.cat === state.selectedCategory
+          : (matchedCategories.length > 0 ? matchedCategories.indexOf(btn.dataset.cat) !== -1 : btn.dataset.cat === 'all');
+        btn.classList.toggle('active', isMatched);
+      });
       document.querySelectorAll('.region-pill').forEach(function(btn) { btn.classList.toggle('active', btn.dataset.region === detectedRegion); });
       document.querySelectorAll('.region-photo-card').forEach(function(btn) { btn.classList.toggle('active', btn.dataset.region === detectedRegion); });
       document.querySelectorAll('.branch-btn').forEach(function(btn) { btn.classList.toggle('active', btn.dataset.branch === detectedBranch); });
@@ -1803,9 +2306,11 @@ const htmlContent = `<!DOCTYPE html>
       const aiBox = document.getElementById('ai-navigator-response');
       aiBox.classList.remove('hidden');
       const countTxt = document.getElementById('results-count').textContent;
-      document.getElementById('ai-navigator-text').innerHTML = reasons.length > 0 
-        ? 'I analyzed your request (<em>"' + rawQuery + '"</em>) and filtered the directory for: <strong>' + reasons.join(' + ') + '</strong>. Showing <strong>' + countTxt + ' verified NH organizations</strong> below!'
-        : 'I analyzed your request (<em>"' + rawQuery + '"</em>) and matched keywords across all cards. Showing <strong>' + countTxt + ' verified NH organizations</strong> below!';
+      const safeRaw = escapeHtml(rawQuery);
+      const uniqueReasons = reasons.filter(function(v, idx, arr) { return arr.indexOf(v) === idx; });
+      document.getElementById('ai-navigator-text').innerHTML = uniqueReasons.length > 0
+        ? 'I analyzed your request (<em>"' + safeRaw + '"</em>) and matched: <strong>' + escapeHtml(uniqueReasons.join(' + ')) + '</strong>. Showing <strong>' + escapeHtml(countTxt) + ' verified NH organizations</strong> below with matching services highlighted.'
+        : 'I analyzed your request (<em>"' + safeRaw + '"</em>) across all organization descriptions and contacts. Showing <strong>' + escapeHtml(countTxt) + ' verified NH organizations</strong> below!';
 
       const dirEl = document.getElementById('directory-section');
       if (dirEl) dirEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1839,7 +2344,11 @@ const htmlContent = `<!DOCTYPE html>
       const rid = state.selectedRegion || 'all';
       const meta = REGION_IMAGERY[rid] || REGION_IMAGERY['all'];
       const countyLabel = state.selectedCounty !== 'all' ? (state.selectedCounty + ' County') : meta.counties;
-      const catLabel = state.selectedCategory !== 'all' ? getCategoryName(state.selectedCategory) : 'All 11 Veteran Service Categories';
+      const catLabel = state.selectedCategory !== 'all'
+        ? getCategoryName(state.selectedCategory)
+        : (state.matchedCategories && state.matchedCategories.length > 0
+          ? (state.matchedCategories.length <= 2 ? state.matchedCategories.map(getCategoryName).join(' + ') : state.matchedCategories.length + ' Matched Categories')
+          : 'All 11 Veteran Service Categories');
 
       banner.style.backgroundImage = 'url(\\'' + meta.img + '\\')';
       banner.innerHTML = '<div class="regional-spotlight-inner">' +
@@ -1865,6 +2374,7 @@ const htmlContent = `<!DOCTYPE html>
         parts.push(rid === 'all' ? 'All NH Regions' : meta.name);
         if (state.selectedCounty !== 'all') parts.push(state.selectedCounty + ' County');
         if (state.selectedCategory !== 'all') parts.push(getCategoryName(state.selectedCategory));
+        else if (state.matchedCategories && state.matchedCategories.length > 0) parts.push(state.matchedCategories.map(getCategoryName).join(' + '));
         if (state.selectedBranch !== 'all') parts.push(state.selectedBranch.toUpperCase());
         if (state.searchQuery) parts.push('Search: "' + state.searchQuery + '"');
         summaryEl.textContent = parts.join(' • ');
@@ -1925,6 +2435,10 @@ const htmlContent = `<!DOCTYPE html>
       state.selectedCounty = 'all';
       state.selectedCategory = 'all';
       state.selectedBranch = 'all';
+      state.matchedCategories = [];
+      state.matchedOrgIds = null;
+      state.highlightTerms = [];
+      state.matchedTown = '';
       document.getElementById('search-input').value = '';
       document.getElementById('county-select').value = 'all';
       document.getElementById('include-statewide-toggle').checked = true;
@@ -1963,7 +2477,22 @@ const htmlContent = `<!DOCTYPE html>
       renderDirectory();
     }
     function selectCategory(id) {
+      const wasMatched = id !== 'all' && state.matchedCategories && state.matchedCategories.indexOf(id) !== -1;
       state.selectedCategory = id;
+      if (!wasMatched) {
+        const hadLongOrMultiSearch = (state.matchedCategories && state.matchedCategories.length > 0) ||
+          (state.searchQuery && state.searchQuery.trim().split(/\\s+/).filter(Boolean).length >= 3);
+        state.matchedCategories = [];
+        state.matchedOrgIds = null;
+        if (hadLongOrMultiSearch) {
+          state.searchQuery = '';
+          state.highlightTerms = [];
+          const input = document.getElementById('search-input');
+          if (input) input.value = '';
+          const aiBox = document.getElementById('ai-navigator-response');
+          if (aiBox) aiBox.classList.add('hidden');
+        }
+      }
       document.querySelectorAll('.cat-pill').forEach(function(b) { b.classList.toggle('active', b.dataset.cat === id); });
       renderDirectory();
     }
@@ -1979,27 +2508,139 @@ const htmlContent = `<!DOCTYPE html>
     function getRegionName(id) { const found = LOOKUP_DATA.regions.find(function(r) { return r.id === id; }); return found ? found.name : id; }
 
     function renderDirectory() {
-      const q = state.searchQuery.trim().toLowerCase();
+      const rawQ = state.searchQuery.trim();
+      const normQ = normalizeSearchQuery(rawQ);
+      const q = normQ.toLowerCase();
       const incState = document.getElementById('include-statewide-toggle').checked;
-      const stopWords = ['i','need','a','an','the','for','in','on','with','to','of','help','looking','find','finding','getting','get','is','are','my','me','we','us','can','you','show','some','any','near','around','there','groups','someone','who','where','want','please'];
+      const isEmailQ = /[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/i.test(rawQ);
+      const compactQ = q.replace(/[^a-z0-9]/g, '');
+      const qWords = q ? q.split(/\\s+/).filter(Boolean).length : 0;
+      const detectedGeoForSearch = q ? detectSafeGeography(rawQ) : null;
+      const queryTerms = q ? extractSearchTerms(normQ, detectedGeoForSearch) : [];
+      const specificTerms = queryTerms.filter(function(w) { return !GENERIC_VSO_TERMS[w]; });
+      const matchedIdMap = (state.matchedOrgIds && state.matchedOrgIds.length > 0)
+        ? state.matchedOrgIds.reduce(function(acc, id) { acc[id] = true; return acc; }, {})
+        : null;
+      const hasActiveSearch = Boolean(q || matchedIdMap || (state.matchedCategories && state.matchedCategories.length > 0) || state.matchedTown);
+      const activeHighlights = hasActiveSearch
+        ? ((state.highlightTerms && state.highlightTerms.length > 0) ? state.highlightTerms : queryTerms)
+        : [];
 
-      let filtered = ORGANIZATIONS.filter(function(org) {
+      function buildOrgHay(org) {
+        const staffStr = (org.staff_contacts || []).map(function(s) { return (s.name || '') + ' ' + (s.email || ''); }).join(' ');
+        const emailHay = ((org.email || '') + ' ' + staffStr).toLowerCase();
+        const regionStr = getRegionName(org.region_id);
+        const catStr = (org.categories || []).map(function(c) { return getCategoryName(c); }).join(' ');
+        const nameDescHay = ((org.name || '') + ' ' + (org.description || '')).toLowerCase();
+        const fullHay = (nameDescHay + ' ' + (org.city || '') + ' ' + (org.zip || '') + ' ' + (org.county || '') + ' ' + regionStr + ' ' + catStr + ' ' + (org.address || '') + ' ' + (org.phone || '') + ' ' + emailHay).toLowerCase();
+        return { emailHay: emailHay, nameDescHay: nameDescHay, fullHay: fullHay };
+      }
+
+      function passesBaseFilters(org) {
         if (state.selectedCategory !== 'all' && !org.categories.includes(state.selectedCategory)) return false;
         if (state.selectedBranch !== 'all' && !(org.branches || ['all']).includes(state.selectedBranch) && !(incState && (org.branches || ['all']).includes('all'))) return false;
         if (state.selectedCounty !== 'all' && org.county !== state.selectedCounty && !(incState && org.is_statewide)) return false;
-        if (state.selectedRegion !== 'all') { if (state.selectedRegion === 'statewide') { if (!org.is_statewide) return false; } else if (org.region_id !== state.selectedRegion && org.secondary_region_id !== state.selectedRegion && !(incState && org.is_statewide)) { return false; } }
-        if (q) {
-          const compactQ = q.replace(/[^a-z0-9]/g, '');
-          if (compactQ.length >= 3 && (org.name || '').toLowerCase().replace(/[^a-z0-9]/g, '').includes(compactQ)) return true;
-          const staffStr = (org.staff_contacts || []).map(function(s) { return s.name + ' ' + s.email; }).join(' ');
-          const regionStr = getRegionName(org.region_id);
-          const catStr = (org.categories || []).map(function(c) { return getCategoryName(c); }).join(' ');
-          const hay = (org.name + ' ' + org.description + ' ' + org.city + ' ' + (org.zip || '') + ' ' + org.county + ' ' + regionStr + ' ' + catStr + ' ' + org.address + ' ' + (org.phone || '') + ' ' + staffStr).toLowerCase();
-          const terms = q.replace(/[^a-z0-9\\s-]/g, '').split(/\\s+/).filter(function(w) { return w.length > 1 && !stopWords.includes(w); });
-          if (terms.length > 0) { if (!terms.some(function(term) { return hay.includes(term); })) return false; } else if (!hay.includes(q)) { return false; }
+        if (state.selectedRegion !== 'all') {
+          if (state.selectedRegion === 'statewide') { if (!org.is_statewide) return false; }
+          else if (org.region_id !== state.selectedRegion && org.secondary_region_id !== state.selectedRegion && !(incState && org.is_statewide)) { return false; }
         }
         return true;
+      }
+
+      let filtered = ORGANIZATIONS.filter(function(org) {
+        if (!passesBaseFilters(org)) return false;
+        if (!q && !matchedIdMap) return true;
+
+        const h = buildOrgHay(org);
+        if (isEmailQ) return h.emailHay.includes(q);
+        if (qWords <= 6 && compactQ.length >= 3 && (org.name || '').toLowerCase().replace(/[^a-z0-9]/g, '').includes(compactQ)) return true;
+
+        if (matchedIdMap) {
+          if (matchedIdMap[org.id]) return true;
+          // Always search live org.name + org.description so edited descriptions & uploaded brochures match immediately
+          if (queryTerms.length === 1) {
+            return h.nameDescHay.includes(queryTerms[0]);
+          }
+          if (specificTerms.length === 1 && specificTerms[0].length >= 4 && h.nameDescHay.includes(specificTerms[0])) {
+            return true;
+          }
+          if (queryTerms.length >= 2) {
+            const matchedDistinct = queryTerms.filter(function(t) { return h.nameDescHay.includes(t); });
+            const hasSpecific = specificTerms.length === 0 || specificTerms.some(function(t) { return h.nameDescHay.includes(t); });
+            if (matchedDistinct.length >= 2 && hasSpecific) return true;
+          }
+          return false;
+        }
+
+        if (queryTerms.length >= 3) {
+          const hitCount = queryTerms.filter(function(t) { return h.fullHay.includes(t); }).length;
+          const specHit = specificTerms.length === 0 || specificTerms.some(function(t) { return h.fullHay.includes(t); });
+          return (hitCount >= 2 && specHit) || h.fullHay.includes(q);
+        }
+        if (queryTerms.length === 2) {
+          return queryTerms.every(function(t) { return h.fullHay.includes(t); });
+        }
+        if (queryTerms.length === 1) {
+          return h.fullHay.includes(queryTerms[0]);
+        }
+        return h.fullHay.includes(q);
       });
+
+      // Fallback relaxation for novel unscripted multi-word queries when strict AND yields 0
+      if (filtered.length === 0 && q && !isEmailQ && !matchedIdMap && queryTerms.length >= 2) {
+        const fallbackTerms = specificTerms.length > 0 ? specificTerms : queryTerms;
+        filtered = ORGANIZATIONS.filter(function(org) {
+          if (!passesBaseFilters(org)) return false;
+          const h = buildOrgHay(org);
+          return fallbackTerms.some(function(t) { return h.fullHay.includes(t); });
+        });
+      }
+
+      // Relevance ranking when a search or town is active (preserves original baseline order when browsing)
+      if (hasActiveSearch && filtered.length > 1) {
+        const townLower = (state.matchedTown || '').toLowerCase();
+        const scored = filtered.map(function(org, idx) {
+          let score = 0;
+          const nameLower = (org.name || '').toLowerCase();
+          const descLower = (org.description || '').toLowerCase();
+          const compactName = nameLower.replace(/[^a-z0-9]/g, '');
+
+          if (q && compactQ.length >= 3 && compactName.includes(compactQ)) score += 120;
+          if (isEmailQ && (((org.email || '').toLowerCase().includes(q)) || (org.staff_contacts || []).some(function(s) { return (s.email || '').toLowerCase().includes(q); }))) score += 120;
+          if (townLower && (org.city || '').toLowerCase() === townLower) score += 45;
+          if (detectedGeoForSearch && detectedGeoForSearch.county !== 'all' && org.county === detectedGeoForSearch.county) score += 20;
+          if (detectedGeoForSearch && detectedGeoForSearch.regionId !== 'all' && (org.region_id === detectedGeoForSearch.regionId || org.secondary_region_id === detectedGeoForSearch.regionId)) score += 12;
+          if (matchedIdMap && matchedIdMap[org.id]) score += 25;
+
+          specificTerms.forEach(function(t) {
+            if (nameLower.includes(t)) score += 18;
+            if (descLower.includes(t)) score += 14;
+          });
+          queryTerms.forEach(function(t) {
+            if (nameLower.includes(t) || descLower.includes(t)) score += 5;
+          });
+
+          let hlHits = 0;
+          for (let i = 0; i < activeHighlights.length && hlHits < 6; i++) {
+            const hl = String(activeHighlights[i] || '').toLowerCase();
+            if (hl.length >= 3 && (descLower.includes(hl) || nameLower.includes(hl))) {
+              score += 6;
+              hlHits++;
+            }
+          }
+          if (state.matchedCategories && state.matchedCategories.length > 0) {
+            state.matchedCategories.forEach(function(mc) {
+              if ((org.categories || []).indexOf(mc) !== -1) score += 5;
+            });
+          }
+          return { org: org, score: score, idx: idx };
+        });
+        scored.sort(function(a, b) {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.idx - b.idx;
+        });
+        filtered = scored.map(function(item) { return item.org; });
+      }
 
       document.getElementById('results-count').textContent = filtered.length;
       updateRegionalSpotlightBanner(filtered.length);
@@ -2025,11 +2666,16 @@ const htmlContent = `<!DOCTYPE html>
         const mapHref = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(fullAddr);
 
         const catsHtml = org.categories.map(function(c) {
-          return '<span class="text-[10px] bg-blue-50 text-blue-900 font-bold px-2 py-0.5 rounded border">' + getCategoryName(c) + '</span>';
+          const isMatchedCat = hasActiveSearch && state.matchedCategories && state.matchedCategories.indexOf(c) !== -1;
+          return '<span class="text-[10px] bg-blue-50 text-blue-900 font-bold px-2 py-0.5 rounded border' + (isMatchedCat ? ' cat-tag-hl' : '') + '">' + getCategoryName(c) + '</span>';
         }).join('');
+
+        const titleHtml = (hasActiveSearch && activeHighlights.length > 0) ? highlightText(org.name, activeHighlights) : escapeHtml(org.name);
+        const descHtml = (hasActiveSearch && activeHighlights.length > 0) ? highlightText(org.description, activeHighlights) : escapeHtml(org.description);
 
         const primaryEmail = org.email || ((org.staff_contacts && org.staff_contacts[0] && org.staff_contacts[0].email) ? org.staff_contacts[0].email : '');
         const emailMailto = primaryEmail ? ('mailto:' + primaryEmail + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
+        const primaryEmailHtml = isEmailQ ? highlightText(primaryEmail, [rawQ]) : escapeHtml(primaryEmail);
         const cleanDigits = org.phone ? org.phone.replace(/[^0-9]/g, '') : '';
 
         // Prioritized Contact Information Box (Selectable Phone, App-Linked Email, 1-Click Maps, Lead Contact)
@@ -2046,7 +2692,7 @@ const htmlContent = `<!DOCTYPE html>
         if (primaryEmail) {
           priorityRows += '<div class="contact-row">' +
             '<span class="text-slate-600 font-semibold flex items-center gap-1 shrink-0"><span>✉️</span> <span>Email:</span></span>' +
-            '<a href="' + emailMailto + '" class="selectable-text font-bold text-blue-700 hover:underline break-all" title="Open in your email app">' + primaryEmail + '</a>' +
+            '<a href="' + emailMailto + '" class="selectable-text font-bold text-blue-700 hover:underline break-all" title="Open in your email app">' + primaryEmailHtml + '</a>' +
           '</div>';
         }
         if (org.address) {
@@ -2058,9 +2704,10 @@ const htmlContent = `<!DOCTYPE html>
         if (org.staff_contacts && org.staff_contacts.length > 0) {
           const lead = org.staff_contacts[0];
           const leadMail = lead.email ? ('mailto:' + lead.email + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
+          const leadEmailHtml = lead.email ? (isEmailQ ? highlightText(lead.email, [rawQ]) : escapeHtml(lead.email)) : '';
           priorityRows += '<div class="contact-row">' +
             '<span class="text-slate-600 font-semibold flex items-center gap-1 shrink-0"><span>👤</span> <span>VSO Contact:</span></span>' +
-            '<span class="font-bold text-slate-800 text-right">' + lead.name + (lead.email ? ' (<a href="' + leadMail + '" class="selectable-text text-blue-700 hover:underline">' + lead.email + '</a>)' : '') + '</span>' +
+            '<span class="font-bold text-slate-800 text-right">' + lead.name + (lead.email ? ' (<a href="' + leadMail + '" class="selectable-text text-blue-700 hover:underline">' + leadEmailHtml + '</a>)' : '') + '</span>' +
           '</div>';
         }
 
@@ -2092,9 +2739,10 @@ const htmlContent = `<!DOCTYPE html>
         if (org.staff_contacts && org.staff_contacts.length > 1) {
           const items = org.staff_contacts.map(function(s) {
             const sMail = s.email ? ('mailto:' + s.email + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
+            const sEmailHtml = s.email ? (isEmailQ ? highlightText(s.email, [rawQ]) : escapeHtml(s.email)) : '';
             return '<li class="flex items-center justify-between gap-2 py-1 border-b border-slate-100">' +
               '<span class="font-bold text-slate-800 selectable-text">' + s.name + '</span>' +
-              (s.email ? '<a href="' + sMail + '" class="selectable-text text-blue-700 font-semibold break-all hover:underline">✉️ ' + s.email + '</a>' : '') +
+              (s.email ? '<a href="' + sMail + '" class="selectable-text text-blue-700 font-semibold break-all hover:underline">✉️ ' + sEmailHtml + '</a>' : '') +
             '</li>';
           }).join('');
           contactsDrawer = '<details class="text-xs bg-slate-50 rounded-xl p-2.5 border">' +
@@ -2113,9 +2761,9 @@ const htmlContent = `<!DOCTYPE html>
                 '<button onclick="openEditModalForOrg(\\'' + org.id + '\\')" class="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded border cursor-pointer">✏️ Edit</button>' +
               '</div>' +
             '</div>' +
-            '<h2 class="text-base font-extrabold text-blue-950 leading-snug" style="margin:0;">' + org.name + '</h2>' +
+            '<h2 class="text-base font-extrabold text-blue-950 leading-snug" style="margin:0;">' + titleHtml + '</h2>' +
             '<div class="flex flex-wrap gap-1 mt-1.5">' + catsHtml + '</div>' +
-            '<p class="text-xs text-slate-700 mt-2 leading-relaxed" style="margin-bottom:0; font-weight:500;">' + org.description + '</p>' +
+            '<p class="text-xs text-slate-700 mt-2 leading-relaxed" style="margin-bottom:0; font-weight:500;">' + descHtml + '</p>' +
             priorityBoxHtml +
           '</div>' +
           '<div class="mt-4 pt-3 border-t space-y-2">' +
