@@ -475,3 +475,171 @@ test('10. Filter interoperability: manual selectCategory narrows matched categor
   assert.equal(cards.length, 147, 'resetAllFilters must restore all 147 orgs');
   assert.equal(cards.some(c => c.marks.length > 0 || c.catHlCount > 0), false, 'No highlight marks may remain after reset');
 });
+
+test('11. Approved Item #1: 6 Concord/Manchester statewide HQ orgs are flagged is_statewide:true and surface on regional searches (Plymouth & Berlin) while keeping physical HQ addresses intact', async () => {
+  const orgs = JSON.parse(fs.readFileSync(DATA_JSON_PATH, 'utf8'));
+  const expectedStatewideHqs = ['vso-002', 'vso-030', 'vso-031', 'vso-033', 'vso-068', 'vso-084'];
+  for (const id of expectedStatewideHqs) {
+    const o = orgs.find(item => item.id === id);
+    assert.ok(o, `Missing org ${id}`);
+    assert.equal(o.is_statewide, true, `${id} (${o.name}) must have is_statewide: true`);
+    assert.ok(['Concord', 'Manchester'].includes(o.city), `${id} must retain its physical HQ city (${o.city})`);
+    assert.ok(o.address && o.address.length > 3, `${id} must retain its physical street address for Google Maps`);
+  }
+
+  const { ctx, document, getRenderedCards } = createAppHarness();
+
+  // Plymouth mortgage + VA claim + family must now surface DMAVS, DAV NH, Easterseals/Veterans Count, VFW State HQ, 603 Legal Aid
+  document.getElementById('search-input').value = 'I live in Plymouth and I am behind on my morgage and need help filing a VA claim for my family';
+  await ctx.runAiAssistantFromInput();
+  let cards = getRenderedCards();
+  let ids = cards.map(c => c.id);
+  for (const id of ['vso-030', 'vso-031', 'vso-033', 'vso-068', 'vso-002']) {
+    assert.ok(ids.includes(id), `Plymouth multi-need search should now include statewide HQ ${id}`);
+  }
+  // Plymouth local orgs must still outrank Concord/Manchester statewide orgs
+  assert.ok(['vso-038', 'vso-067', 'vso-076', 'vso-083'].includes(ids[0]), `Top result for Plymouth search should be Plymouth-local, got ${ids[0]}`);
+  // Physical Concord/Manchester address must still appear in the card's Google Maps Location row
+  const dmavsCard = cards.find(c => c.id === 'vso-030');
+  assert.ok(dmavsCard.html.includes('4 Pembroke Road, Concord'), 'DMAVS card must keep Concord street address link');
+
+  // Berlin (Coos County / Great North Woods) survivor search includes SOS & DMAVS when + Include Statewide is ON, excludes when OFF
+  document.getElementById('search-input').value = 'Berlin survivor benefits';
+  await ctx.runAiAssistantFromInput();
+  ids = getRenderedCards().map(c => c.id);
+  assert.ok(ids.includes('vso-084'), 'Berlin survivor search should include Survivor Outreach Services (SOS)');
+  assert.ok(ids.includes('vso-030'), 'Berlin survivor search should include DMAVS');
+
+  document.getElementById('include-statewide-toggle').checked = false;
+  ctx.renderDirectory();
+  ids = getRenderedCards().map(c => c.id);
+  assert.equal(ids.includes('vso-084'), false, 'Unchecking + Include Statewide must hide Concord-based statewide orgs on Berlin filter');
+});
+
+test('12. Approved Item #2: Flyer/brochure upload parser uses updated Gemini models (gemini-3.5-flash-lite -> gemini-3.8-flash -> gemini-4-hydrogen) with zero retired 2.5/2.0/1.5 strings', () => {
+  const html = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+  const builderSrc = fs.readFileSync(path.join(ROOT, 'build_website.js'), 'utf8');
+
+  assert.equal(/gemini-(2\.5|2\.0|1\.5)-flash/i.test(html), false, 'index.html must not contain retired Gemini 2.5/2.0/1.5 model strings');
+  assert.equal(/gemini-(2\.5|2\.0|1\.5)-flash/i.test(builderSrc), false, 'build_website.js must not contain retired Gemini 2.5/2.0/1.5 model strings');
+  assert.ok(html.includes("['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-4-hydrogen']"), 'Flyer parser must use updated 3.5-flash-lite -> 3.8-flash -> 4-hydrogen chain');
+  assert.equal(builderSrc.includes('process.env.GEMINI_API_KEY'), false, 'build_website.js must NEVER read or bake secret GEMINI_API_KEY into index.html');
+});
+
+test('13. Approved Item #3: Supabase Edge Function gemini-search-proxy handles public keyless search & flyer parsing, strips hallucinations, enforces CORS/limits, and integrates cleanly with index.html', async () => {
+  const { handleRequest, resetRateLimitBuckets } = await import('../supabase/functions/gemini-search-proxy/index.ts');
+  resetRateLimitBuckets();
+
+  // 13a. End-to-end client (index.html with ZERO localStorage key!) -> Real Edge Function -> Mock Gemini API
+  const upstreamCalls = [];
+  const mockGeminiFetch = async (url, opts) => {
+    upstreamCalls.push(url);
+    assert.ok(url.includes('key=SERVER_SECRET_KEY_ONLY'), 'Server-side GEMINI_API_KEY must be injected by Edge Function');
+    if (url.includes('gemini-3.5-flash-lite')) {
+      return new Response(JSON.stringify({ error: 'busy' }), { status: 503 });
+    }
+    const reqBody = JSON.parse(opts.body);
+    assert.ok(reqBody.contents[0].parts[0].text.includes('Do NOT do open-web search'));
+    return new Response(
+      JSON.stringify({
+        candidates: [{
+          content: {
+            parts: [{
+              text: JSON.stringify({
+                categories: ['benefits-advocacy', 'family-youth'],
+                org_ids: ['vso-084', 'vso-030', 'vso-999-hallucinated'],
+                highlight_terms: ['State Veteran Benefits', 'Families'],
+                summary: 'Grounded proxy response'
+              })
+            }]
+          }
+        }]
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  };
+
+  const proxyUrl = 'https://example-ref.supabase.co/functions/v1/gemini-search-proxy';
+  const clientFetchBridge = async (url, opts) => {
+    assert.equal(url, proxyUrl, 'Browser must call Supabase Edge Function URL, NOT generativelanguage.googleapis.com directly');
+    const req = new Request(url, {
+      method: opts.method,
+      headers: { ...(opts.headers || {}), origin: 'https://nhvet411.org', 'x-forwarded-for': '203.0.113.10' },
+      body: opts.body
+    });
+    return handleRequest(req, {
+      geminiApiKey: 'SERVER_SECRET_KEY_ONLY',
+      allowedOrigins: 'https://nhvet411.org,https://www.nhvet411.org',
+      fetchImpl: mockGeminiFetch
+    });
+  };
+
+  const { ctx, document, localStorage, getRenderedCards } = createAppHarness({ fetchMock: clientFetchBridge });
+  assert.equal(localStorage.getItem('nhvet411_gemini_key'), null, 'Public visitor has NO browser API key');
+  ctx.window.NHVET411_GEMINI_PROXY_URL = proxyUrl;
+
+  document.getElementById('search-input').value = 'dependent VA survivor benefits';
+  await ctx.runAiAssistantFromInput();
+
+  assert.equal(upstreamCalls.length, 2, 'Edge Function should fall back gemini-3.5-flash-lite -> gemini-4-hydrogen');
+  assert.ok(upstreamCalls[0].includes('/models/gemini-3.5-flash-lite:generateContent'));
+  assert.ok(upstreamCalls[1].includes('/models/gemini-4-hydrogen:generateContent'));
+  const state = vm.runInContext('state', ctx);
+  assert.equal(state.matchedOrgIds.includes('vso-999-hallucinated'), false, 'Edge Function must strip hallucinated IDs');
+  assert.ok(document.getElementById('ai-navigator-text').innerHTML.includes('Grounded via gemini-4-hydrogen'));
+  assert.ok(getRenderedCards().some(c => c.id === 'vso-084'));
+
+  // 13b. Flyer mode inside Edge Function falls back 3.5-flash-lite -> 3.8-flash -> 4-hydrogen
+  const flyerCalls = [];
+  const flyerRes = await handleRequest(
+    new Request(proxyUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', origin: 'https://nhvet411.org', 'x-forwarded-for': '203.0.113.11' },
+      body: JSON.stringify({ mode: 'flyer', mimeType: 'image/png', base64Data: 'iVBORw0KGgo=' })
+    }),
+    {
+      geminiApiKey: 'SERVER_SECRET_KEY_ONLY',
+      allowedOrigins: 'https://nhvet411.org',
+      fetchImpl: async (url) => {
+        flyerCalls.push(url);
+        if (url.includes('gemini-3.5-flash-lite') || url.includes('gemini-3.8-flash')) {
+          return new Response('unavailable', { status: 503 });
+        }
+        return new Response(JSON.stringify({
+          candidates: [{ content: { parts: [{ text: JSON.stringify({ name: 'Test VSO', phone: '603-555-0199', contacts: [] }) }] } }]
+        }), { status: 200 });
+      }
+    }
+  );
+  assert.equal(flyerRes.status, 200);
+  const flyerJson = await flyerRes.json();
+  assert.equal(flyerJson.ok, true);
+  assert.equal(flyerJson.model, 'gemini-4-hydrogen');
+  assert.equal(flyerJson.data.name, 'Test VSO');
+  assert.equal(flyerCalls.length, 3, 'Flyer proxy must try all 3 models: 3.5-flash-lite -> 3.8-flash -> 4-hydrogen');
+
+  // 13c. Security & validation checks: OPTIONS CORS, disallowed origin 403, missing secret 500, oversized query 400
+  const optRes = await handleRequest(new Request(proxyUrl, { method: 'OPTIONS', headers: { origin: 'https://nhvet411.org' } }), {
+    geminiApiKey: 'K', allowedOrigins: 'https://nhvet411.org'
+  });
+  assert.equal(optRes.status, 204);
+  assert.equal(optRes.headers.get('Access-Control-Allow-Origin'), 'https://nhvet411.org');
+
+  const badOriginRes = await handleRequest(
+    new Request(proxyUrl, { method: 'POST', headers: { origin: 'https://evil.example', 'x-forwarded-for': '203.0.113.12' }, body: '{}' }),
+    { geminiApiKey: 'K', allowedOrigins: 'https://nhvet411.org' }
+  );
+  assert.equal(badOriginRes.status, 403);
+
+  const missingKeyRes = await handleRequest(
+    new Request(proxyUrl, { method: 'POST', headers: { 'x-forwarded-for': '203.0.113.13' }, body: JSON.stringify({ mode: 'search', query: 'va claim', catalog: [{ id: 'vso-030' }] }) }),
+    { geminiApiKey: '' }
+  );
+  assert.equal(missingKeyRes.status, 500);
+
+  const bigQueryRes = await handleRequest(
+    new Request(proxyUrl, { method: 'POST', headers: { 'x-forwarded-for': '203.0.113.14' }, body: JSON.stringify({ mode: 'search', query: 'a'.repeat(2000), catalog: [{ id: 'vso-030' }] }) }),
+    { geminiApiKey: 'K' }
+  );
+  assert.equal(bigQueryRes.status, 400);
+});

@@ -14,6 +14,12 @@ if (!fs.existsSync(LOOKUP_PATH)) {
 
 const nhLookup = JSON.parse(fs.readFileSync(LOOKUP_PATH, 'utf-8'));
 const todayISO = new Date().toISOString().split('T')[0];
+const rawSupabaseUrl = String(process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '');
+const geminiProxyUrl = String(
+  process.env.NHVET411_GEMINI_PROXY_URL ||
+  (rawSupabaseUrl ? `${rawSupabaseUrl}/functions/v1/gemini-search-proxy` : '')
+).trim();
+const supabaseAnonKey = String(process.env.NHVET411_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '').trim();
 
 const swamSvgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
   <rect width="800" height="520" fill="#07192F" rx="16"/>
@@ -303,6 +309,8 @@ function detectBranches(orgName = '', desc = '') {
   return specific.length > 0 ? specific : ['all'];
 }
 
+const STATEWIDE_HQ_IDS = new Set(['VSO-002', 'VSO-030', 'VSO-031', 'VSO-033', 'VSO-068', 'VSO-084']);
+
 function convertMasterRecord(rec, idx) {
   const vsoId = String(rec.id || `VSO-${idx + 1}`).toUpperCase();
   const orgName = rec.organization_name || rec.name || `NH Veteran Organization ${idx + 1}`;
@@ -310,14 +318,15 @@ function convertMasterRecord(rec, idx) {
   const rawCity = rec.city || parsed.city || '';
   const rawZip = rec.zip || parsed.zip || '';
   const geo = resolveGeo(rawZip, rawCity);
-  const isStatewide = geo.region_id === 'statewide';
+  const hasLocalHq = geo.region_id !== 'statewide';
+  const isStatewide = !hasLocalHq || STATEWIDE_HQ_IDS.has(vsoId);
 
   const staffContacts = COMPLETE_NOTEBOOK_CONTACTS[vsoId] ? [...COMPLETE_NOTEBOOK_CONTACTS[vsoId]] : [];
   if (staffContacts.length === 0 && parsed.email) staffContacts.push({ name: `${orgName} Contact`, email: parsed.email });
 
   const rawCats = Array.isArray(rec.service_categories) ? rec.service_categories : [];
   const orgType = rec.organization_type || 'Veteran Resource';
-  let desc = rec.description || `${orgType} providing ${rawCats.join(', ') || 'veteran support services'}${!isStatewide ? ` in ${geo.city}, NH (${geo.county} County)` : ' for veterans across all 10 New Hampshire counties'}.`;
+  let desc = rec.description || `${orgType} providing ${rawCats.join(', ') || 'veteran support services'}${hasLocalHq ? ` in ${geo.city}, NH (${geo.county} County)` : ' for veterans across all 10 New Hampshire counties'}.`;
   let phone = parsed.phone || rec.phone || '';
   let ampDoc = rec.amplifier_doc || null;
 
@@ -1500,6 +1509,21 @@ const htmlContent = `<!DOCTYPE html>
     };
     const LOOKUP_DATA = ${JSON.stringify(nhLookup)};
     let ORGANIZATIONS = ${JSON.stringify(finalOrganizations)};
+    const GEMINI_PROXY_URL = ${JSON.stringify(geminiProxyUrl)};
+    const SUPABASE_ANON_KEY = ${JSON.stringify(supabaseAnonKey)};
+
+    function getGeminiProxyUrl() {
+      return String((typeof window !== 'undefined' && window.NHVET411_GEMINI_PROXY_URL) || GEMINI_PROXY_URL || '').trim();
+    }
+    function buildGeminiProxyHeaders() {
+      const headers = { 'Content-Type': 'application/json' };
+      const anon = String((typeof window !== 'undefined' && window.NHVET411_SUPABASE_ANON_KEY) || SUPABASE_ANON_KEY || '').trim();
+      if (anon) {
+        headers['apikey'] = anon;
+        headers['Authorization'] = 'Bearer ' + anon;
+      }
+      return headers;
+    }
 
     const BASE_ORGANIZATIONS_SNAPSHOT = JSON.parse(JSON.stringify(ORGANIZATIONS));
 
@@ -2215,58 +2239,87 @@ const htmlContent = `<!DOCTYPE html>
         localAnalysis.labels.forEach(function(lbl) { reasons.unshift(lbl); });
       }
 
+      const proxyUrl = getGeminiProxyUrl();
       const key = localStorage.getItem('nhvet411_gemini_key');
-      if (key && !nameHit && !isEmailQuery && !pureGeoOnly) {
+      if ((proxyUrl || key) && !nameHit && !isEmailQuery && !pureGeoOnly) {
         try {
-          const models = ['gemini-3.5-flash-lite', 'gemini-4-hydrogen'];
           const catalog = ORGANIZATIONS.map(function(o) {
             return { id: o.id, name: o.name, categories: o.categories, city: o.city, county: o.county, is_statewide: o.is_statewide, description: o.description };
           });
-          const promptMsg = 'You are the NHVet411 Veteran Resource Navigator for New Hampshire. STRICT RULE: Do NOT do open-web search; ONLY return valid organization IDs from the provided directory JSON. Analyze this request: "' + rawQuery + '". Return ALL organizations from the directory that can meaningfully help (across every relevant category), plus exact words/phrases that appear in their descriptions to highlight visually. Return ONLY valid JSON: {"categories": ["..."], "org_ids": ["..."], "highlight_terms": ["..."], "summary": "..."}. DIRECTORY: ' + JSON.stringify(catalog);
-          for (let mi = 0; mi < models.length; mi++) {
-            const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + models[mi] + ':generateContent?key=' + encodeURIComponent(key);
-            const res = await fetch(endpoint, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: promptMsg }] }],
-                generationConfig: { responseMimeType: 'application/json' }
-              })
-            });
-            if (res.ok) {
-              const data = await res.json();
-              const txt = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) || '';
-              const jsonMatch = txt.match(/\\{[\\s\\S]*\\}/);
-              if (jsonMatch) {
-                const parsed = JSON.parse(jsonMatch[0]);
-                const validIdMap = {};
-                ORGANIZATIONS.forEach(function(o) { validIdMap[o.id] = true; });
-                const aiOrgIds = Array.isArray(parsed.org_ids) ? parsed.org_ids.filter(function(id) { return validIdMap[id]; }) : [];
-                const aiCats = Array.isArray(parsed.categories) ? parsed.categories.filter(function(c) { return c && c !== 'all'; }) : [];
-                const aiHighlights = Array.isArray(parsed.highlight_terms) ? parsed.highlight_terms.filter(Boolean) : [];
-                if (aiOrgIds.length > 0 || aiCats.length > 0) {
-                  if (aiOrgIds.length > 0) {
-                    const mergedSet = {};
-                    aiOrgIds.forEach(function(id) { mergedSet[id] = true; });
-                    if (matchedOrgIds) matchedOrgIds.forEach(function(id) { mergedSet[id] = true; });
-                    matchedOrgIds = Object.keys(mergedSet);
-                  }
-                  if (aiCats.length > 0) {
-                    const mergedCats = {};
-                    aiCats.forEach(function(c) { mergedCats[c] = true; });
-                    matchedCategories.forEach(function(c) { mergedCats[c] = true; });
-                    matchedCategories = Object.keys(mergedCats);
-                  }
-                  if (aiHighlights.length > 0) {
-                    highlightTerms = highlightTerms.concat(aiHighlights);
-                  }
-                  reasons.push('Grounded via ' + models[mi]);
+          const validIdMap = {};
+          ORGANIZATIONS.forEach(function(o) { validIdMap[o.id] = true; });
+          const applyGroundedAiResult = function(parsed, modelLabel) {
+            const aiOrgIds = Array.isArray(parsed.org_ids) ? parsed.org_ids.filter(function(id) { return validIdMap[id]; }) : [];
+            const aiCats = Array.isArray(parsed.categories) ? parsed.categories.filter(function(c) { return c && c !== 'all'; }) : [];
+            const aiHighlights = Array.isArray(parsed.highlight_terms) ? parsed.highlight_terms.filter(Boolean) : [];
+            if (aiOrgIds.length > 0 || aiCats.length > 0) {
+              if (aiOrgIds.length > 0) {
+                const mergedSet = {};
+                aiOrgIds.forEach(function(id) { mergedSet[id] = true; });
+                if (matchedOrgIds) matchedOrgIds.forEach(function(id) { mergedSet[id] = true; });
+                matchedOrgIds = Object.keys(mergedSet);
+              }
+              if (aiCats.length > 0) {
+                const mergedCats = {};
+                aiCats.forEach(function(c) { mergedCats[c] = true; });
+                matchedCategories.forEach(function(c) { mergedCats[c] = true; });
+                matchedCategories = Object.keys(mergedCats);
+              }
+              if (aiHighlights.length > 0) {
+                highlightTerms = highlightTerms.concat(aiHighlights);
+              }
+              reasons.push('Grounded via ' + modelLabel);
+              return true;
+            }
+            return false;
+          };
+
+          let aiResolved = false;
+          if (proxyUrl) {
+            try {
+              const proxyRes = await fetch(proxyUrl, {
+                method: 'POST',
+                headers: buildGeminiProxyHeaders(),
+                body: JSON.stringify({ mode: 'search', query: rawQuery, catalog: catalog })
+              });
+              if (proxyRes.ok) {
+                const proxyJson = await proxyRes.json();
+                if (proxyJson && proxyJson.ok && proxyJson.data) {
+                  applyGroundedAiResult(proxyJson.data, proxyJson.model || 'NHVet411 AI');
+                  aiResolved = true;
                 }
-                break;
+              }
+            } catch (proxyErr) {
+              console.warn('Supabase Gemini proxy fallback:', proxyErr);
+            }
+          }
+
+          if (!aiResolved && key) {
+            const models = ['gemini-3.5-flash-lite', 'gemini-4-hydrogen'];
+            const promptMsg = 'You are the NHVet411 Veteran Resource Navigator for New Hampshire. STRICT RULE: Do NOT do open-web search; ONLY return valid organization IDs from the provided directory JSON. Analyze this request: "' + rawQuery + '". Return ALL organizations from the directory that can meaningfully help (across every relevant category), plus exact words/phrases that appear in their descriptions to highlight visually. Return ONLY valid JSON: {"categories": ["..."], "org_ids": ["..."], "highlight_terms": ["..."], "summary": "..."}. DIRECTORY: ' + JSON.stringify(catalog);
+            for (let mi = 0; mi < models.length; mi++) {
+              const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + models[mi] + ':generateContent?key=' + encodeURIComponent(key);
+              const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  contents: [{ parts: [{ text: promptMsg }] }],
+                  generationConfig: { responseMimeType: 'application/json' }
+                })
+              });
+              if (res.ok) {
+                const data = await res.json();
+                const txt = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) || '';
+                const jsonMatch = txt.match(/\\{[\\s\\S]*\\}/);
+                if (jsonMatch) {
+                  const parsed = JSON.parse(jsonMatch[0]);
+                  applyGroundedAiResult(parsed, models[mi]);
+                  break;
+                }
               }
             }
           }
-        } catch (err) { console.warn('Gemini API Vault fallback to local multi-intent engine:', err); }
+        } catch (err) { console.warn('Gemini AI fallback to local multi-intent engine:', err); }
       }
 
       if (nameHit) {
@@ -2404,7 +2457,8 @@ const htmlContent = `<!DOCTYPE html>
     }
 
     function initFilters() {
-      if (localStorage.getItem('nhvet411_gemini_key')) document.getElementById('api-status-btn-text').textContent = 'AI Vault Active ✓';
+      if (getGeminiProxyUrl()) document.getElementById('api-status-btn-text').textContent = 'AI Search Live ✓';
+      else if (localStorage.getItem('nhvet411_gemini_key')) document.getElementById('api-status-btn-text').textContent = 'AI Vault Active ✓';
       loadDirectoryDeltas();
       updateReviewQueueBadge();
       updateStateDirectoryStats();
@@ -4389,12 +4443,13 @@ const htmlContent = `<!DOCTYPE html>
           return;
         }
 
-        // Tier 2: Live Gemini Flash Vision API (Multi-Model Fallback: gemini-2.5-flash -> gemini-2.0-flash -> gemini-1.5-flash)
+        // Tier 2: Live Gemini Flash Vision API via Supabase Edge Function Proxy or API Vault (gemini-3.5-flash-lite -> gemini-3.8-flash -> gemini-4-hydrogen)
+        const proxyUrl = getGeminiProxyUrl();
         const key = localStorage.getItem('nhvet411_gemini_key');
         const isSvg = fname.endsWith('.svg') || ftype.indexOf('svg') !== -1;
         const isImageOrPdf = isSvg || ftype.indexOf('image') !== -1 || ftype.indexOf('pdf') !== -1 || /\\.(pdf|png|jpg|jpeg|webp|svg)$/i.test(fname);
 
-        if (key && isImageOrPdf) {
+        if ((proxyUrl || key) && isImageOrPdf) {
           try {
             let inlineMime = ftype || (fname.endsWith('.pdf') ? 'application/pdf' : 'image/png');
             let base64Data = String(e.target.result || '').split(',')[1] || '';
@@ -4410,32 +4465,59 @@ const htmlContent = `<!DOCTYPE html>
               }
             }
 
-            const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-            const promptMsg = 'Extract veteran organization details and ALL listed staff/officer contacts from this flyer or business card. Return ONLY valid JSON with keys: "name", "address", "city", "zip", "phone", "email", "website", "description" (1-2 sentences summarizing mission/services), "contact_name", and "contacts": [{"name": "...", "role": "...", "email": "...", "phone": "..."}]. If a piece of data is missing, leave the string empty. Do not invent details.' + extraSvgContext;
-
-            for (let mi = 0; mi < models.length; mi++) {
-              const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + models[mi] + ':generateContent?key=' + encodeURIComponent(key);
-              const parts = [];
-              if (base64Data && inlineMime.indexOf('svg') === -1) {
-                parts.push({ inlineData: { mimeType: inlineMime, data: base64Data } });
-              }
-              parts.push({ text: promptMsg });
-
-              const res = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: parts }] })
-              });
-
-              if (res.ok) {
-                const data = await res.json();
-                const txt = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) || '';
-                const jsonMatch = txt.match(/\\{[\\s\\S]*\\}/);
-                if (jsonMatch) {
-                  const apiParsed = JSON.parse(jsonMatch[0]);
+            if (proxyUrl) {
+              try {
+                const proxyRes = await fetch(proxyUrl, {
+                  method: 'POST',
+                  headers: buildGeminiProxyHeaders(),
+                  body: JSON.stringify({
+                    mode: 'flyer',
+                    mimeType: inlineMime,
+                    base64Data: inlineMime.indexOf('svg') === -1 ? base64Data : '',
+                    extraSvgContext: extraSvgContext
+                  })
+                });
+                if (proxyRes.ok) {
+                  const proxyJson = await proxyRes.json();
+                  const apiParsed = proxyJson && proxyJson.ok ? proxyJson.data : null;
                   if (apiParsed && (apiParsed.name || apiParsed.phone || apiParsed.email || (apiParsed.contacts && apiParsed.contacts.length > 0))) {
-                    applyParsedFlyerDataToForm(apiParsed, 'Gemini Vision (' + models[mi] + ')', file.name);
+                    applyParsedFlyerDataToForm(apiParsed, 'Gemini Vision (' + (proxyJson.model || 'NHVet411 AI') + ')', file.name);
                     return;
+                  }
+                }
+              } catch (proxyErr) {
+                console.warn('Supabase flyer proxy fallback:', proxyErr);
+              }
+            }
+
+            if (key) {
+              const models = ['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-4-hydrogen'];
+              const promptMsg = 'Extract veteran organization details and ALL listed staff/officer contacts from this flyer or business card. Return ONLY valid JSON with keys: "name", "address", "city", "zip", "phone", "email", "website", "description" (1-2 sentences summarizing mission/services), "contact_name", and "contacts": [{"name": "...", "role": "...", "email": "...", "phone": "..."}]. If a piece of data is missing, leave the string empty. Do not invent details.' + extraSvgContext;
+
+              for (let mi = 0; mi < models.length; mi++) {
+                const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/' + models[mi] + ':generateContent?key=' + encodeURIComponent(key);
+                const parts = [];
+                if (base64Data && inlineMime.indexOf('svg') === -1) {
+                  parts.push({ inlineData: { mimeType: inlineMime, data: base64Data } });
+                }
+                parts.push({ text: promptMsg });
+
+                const res = await fetch(endpoint, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ contents: [{ parts: parts }] })
+                });
+
+                if (res.ok) {
+                  const data = await res.json();
+                  const txt = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) || '';
+                  const jsonMatch = txt.match(/\\{[\\s\\S]*\\}/);
+                  if (jsonMatch) {
+                    const apiParsed = JSON.parse(jsonMatch[0]);
+                    if (apiParsed && (apiParsed.name || apiParsed.phone || apiParsed.email || (apiParsed.contacts && apiParsed.contacts.length > 0))) {
+                      applyParsedFlyerDataToForm(apiParsed, 'Gemini Vision (' + models[mi] + ')', file.name);
+                      return;
+                    }
                   }
                 }
               }

@@ -1,67 +1,82 @@
-# NHVet411 — Deployment Guide (GitHub + Supabase + NHVet411.org)
+# NHVet411 — Simple Go-Live Guide (GitHub + Supabase + NHVet411.org)
 
-This guide takes your clean baseline repository (`Ricoyoung11/nhvet411`) live on **`NHVet411.org`**.
+This guide takes your repository (**`Ricoyoung11/nhvet411-web`**, branch **`clean-baseline`**) live on **`NHVet411.org`** with your Gemini API key secured server-side inside Supabase.
 
 ---
 
-## Step 1: Set Up Supabase
-
-1. Sign in to [supabase.com](https://supabase.com/) and create a project (region: **US East**).
+## Step 1: Create Your Supabase Project & Database
+1. Sign in to [supabase.com](https://supabase.com/) and create a new project (region: **US East**).
 2. Open **SQL Editor**, paste the contents of `supabase/migrations/001_initial_schema.sql`, and click **Run**.
-   - Creates `organizations`, `staff_contacts` (shared emails across VSOs permitted), `amplifier_docs`, `pending_submissions`, `moderators`, `audit_logs`, Row Level Security (RLS), and the `vso-flyers` Storage bucket.
-3. In **Project Settings → API**, copy your **Project URL**, **anon key**, and **service_role key**.
+3. Go to **Project Settings → API** and copy:
+   - **Project URL** (`https://<PROJECT_REF>.supabase.co`)
+   - **anon public key**
+   - **service_role secret key** (only for seeding locally — never put this in the website)
 
 ---
 
-## Step 2: Seed the Clean 147-Org Baseline into Supabase
-
-In your local clone of `Ricoyoung11/nhvet411`:
+## Step 2: Seed Your 147 Verified Organizations
+On your computer, clone the repo and run the seeder once:
 
 ```bash
+git clone https://github.com/Ricoyoung11/nhvet411-web.git
+cd nhvet411-web
 cp .env.example .env
-# Fill in SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY inside .env
+# Edit .env and paste SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY
 npm install
 npm run seed
 ```
 
-This idempotently loads all 147 verified baseline organizations (with `ryoung28` removed from `vso-111`, shared emails intact, and SWAM/Angers clear for upload testing).
-
 ---
 
-## Step 3: Add Moderators in Supabase
+## Step 3: Deploy the Secure Gemini Edge Function (Keeps Your API Key Private)
+Install or run the Supabase CLI (`npx supabase`) inside `nhvet411-web`:
 
-1. In Supabase → **Authentication → Users**, add accounts for yourself and any trusted NHVet411 moderators.
-2. Register each moderator's User UUID in the SQL Editor:
+```bash
+npx supabase login
+npx supabase link --project-ref YOUR_PROJECT_REF
 
-```sql
-insert into public.moderators (user_id, email, display_name, role)
-values ('PASTE-USER-UUID-HERE', 'your-email@example.com', 'Richard Young', 'admin');
+# Store your Gemini API key & allowed web origins as server-side Supabase secrets
+# (Include your *.pages.dev preview URL while testing before NHVet411.org DNS is live)
+npx supabase secrets set GEMINI_API_KEY=YOUR_REAL_GEMINI_API_KEY
+npx supabase secrets set ALLOWED_ORIGINS="https://nhvet411.org,https://www.nhvet411.org,https://nhvet411-web.pages.dev"
+
+# Deploy the public search & flyer proxy function
+npx supabase functions deploy gemini-search-proxy --no-verify-jwt
 ```
 
+Your live proxy URL will be:
+`https://YOUR_PROJECT_REF.supabase.co/functions/v1/gemini-search-proxy`
+
 ---
 
-## Step 4: Host the Static Site (Cloudflare Pages or Vercel)
-
-Because `index.html` and the PDF flyers live cleanly in the repository root:
-
-### Option A: Cloudflare Pages (Recommended — Free Tier, Unlimited Bandwidth)
+## Step 4: Publish the Site on Cloudflare Pages (Free Tier, Unlimited Bandwidth)
 1. Go to **Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git**.
-2. Select **`Ricoyoung11/nhvet411`**.
+2. Select **`Ricoyoung11/nhvet411-web`** and branch **`clean-baseline`**.
 3. Build settings:
    - **Framework preset:** `None`
-   - **Build command:** `node build_website.js` *(or leave empty to serve the committed `index.html` directly)*
+   - **Build command:** `node build_website.js`
    - **Build output directory:** `/`
-4. Click **Save and Deploy**.
+4. Under **Environment variables (Production)**, add:
+   - `NHVET411_GEMINI_PROXY_URL` = `https://YOUR_PROJECT_REF.supabase.co/functions/v1/gemini-search-proxy`
+   - `NHVET411_SUPABASE_ANON_KEY` = `YOUR_SUPABASE_ANON_KEY`
+   *(Do **NOT** put `GEMINI_API_KEY` or `SUPABASE_SERVICE_ROLE_KEY` in Cloudflare!)*
+5. Click **Save and Deploy**.
 
-### Option B: Vercel
-1. Import `Ricoyoung11/nhvet411` on [vercel.com](https://vercel.com/).
-2. Framework preset: **Other**, output directory: `.` (root).
-3. Click **Deploy**.
+*(Alternative: Vercel — import `Ricoyoung11/nhvet411-web`, Build Command `node build_website.js`, Output Directory `.`, add the same two public environment variables, and click **Deploy**.)*
 
 ---
 
 ## Step 5: Connect `NHVet411.org`
+1. Buy/register **`nhvet411.org`** (Cloudflare Registrar, Porkbun, or Namecheap).
+2. In Cloudflare Pages → **Custom Domains**, add **`nhvet411.org`** and **`www.nhvet411.org`**.
+3. Follow the one-click DNS setup; free HTTPS/SSL activates automatically in a few minutes.
 
-1. Register `nhvet411.org` (Cloudflare Registrar, Porkbun, or Namecheap).
-2. In Cloudflare Pages (or Vercel) → **Custom Domains**, add `nhvet411.org` and `www.nhvet411.org`.
-3. Follow the DNS CNAME/ALIAS instructions; HTTPS/SSL activates automatically.
+---
+
+## Step 6: Add Yourself as Moderator (Optional — For Review Queue)
+1. In Supabase → **Authentication → Users**, create your admin account and copy your **User UUID**.
+2. In Supabase → **SQL Editor**, run:
+```sql
+insert into public.moderators (user_id, email, display_name, role)
+values ('PASTE-USER-UUID-HERE', 'your-email@example.com', 'Richard Young', 'admin');
+```

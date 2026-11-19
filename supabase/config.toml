@@ -1,0 +1,6 @@
+# Supabase project configuration for NHVet411
+# Public directory search & flyer parsing calls are intentionally accessible without user login;
+# GEMINI_API_KEY remains strictly server-side in Supabase Secrets.
+
+[functions.gemini-search-proxy]
+verify_jwt = false
