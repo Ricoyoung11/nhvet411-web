@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment & Secrets (NEVER commit real API keys!)
+.env
+.env.local
+.env.*.local
+
+# Generated test flyer (SWAM/Angers intentionally excluded from baseline for post-reset testing)
+Swim_With_A_Mission_Flyer.svg
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

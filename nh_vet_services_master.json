@@ -1,0 +1,1856 @@
+{
+  "metadata": {
+    "title": "New Hampshire Veteran Services & VSO Master Directory",
+    "version": "2.0",
+    "description": "Consolidated JSON dataset of New Hampshire Veteran Service Organizations, contact channels, service categories, and Easterseals VSO check-in audit status."
+  },
+  "summary_statistics": {
+    "total_organizations": 149,
+    "included_in_easterseals_checkin": 36,
+    "not_included_in_easterseals_checkin": 113,
+    "checkin_participation_rate": "24.2%"
+  },
+  "master_vso_directory": [
+    {
+      "id": "VSO-TEST-999",
+      "organization_name": "K-9 Veterans Tactical & Emergency Safehouse-North",
+      "website_url": "https://www.test-k9-rescue.org",
+      "service_categories": [
+        "Service Animals & Equine",
+        "Housing & Shelter",
+        "Mental Health & Wellness"
+      ],
+      "contact_info": "emergency@test-k9.org / 603-555-9999 | 104 Wilderness Way, Gorham, NH 03581",
+      "organization_type": "Emergency K9 Rescue & Housing",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "operator@test-k9.org"
+    },
+    {
+      "id": "VSO-001",
+      "organization_name": "51 Vets Incorporated",
+      "website_url": "https://51vets.org/",
+      "service_categories": [
+        "Education & Training",
+        "Career Transition"
+      ],
+      "contact_info": "maggie@51vets.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-002",
+      "organization_name": "603 Legal Aid",
+      "website_url": "https://www.603legalaid.org/",
+      "service_categories": [
+        "Housing Support",
+        "Employment",
+        "Legal Advice"
+      ],
+      "contact_info": "aclemmer@603legalaid.org / (603) 224-3333",
+      "organization_type": "Civil Legal Aid",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-003",
+      "organization_name": "Aiming For Zero, Inc",
+      "website_url": "https://aimingforzero.org/",
+      "service_categories": [
+        "Mental Health & Wellness",
+        "Suicide Prevention"
+      ],
+      "contact_info": "michael.johns@aimingforzero.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-004",
+      "organization_name": "All Secure Foundation",
+      "website_url": "https://allsecurefoundation.org/",
+      "service_categories": [
+        "Special Ops Veteran & Family PTSD Healing"
+      ],
+      "contact_info": "jen@allsecurefoundation.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-005",
+      "organization_name": "American Legion Auxiliary Unit 16 Goffstown, NH",
+      "website_url": "https://www.legionnh.org/",
+      "service_categories": [
+        "Community Support",
+        "Family Assistance"
+      ],
+      "contact_info": "iwont4gt@gmail.com",
+      "organization_type": "Veterans Auxiliary Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-006",
+      "organization_name": "American Red Cross NH",
+      "website_url": "https://www.redcross.org/",
+      "service_categories": [
+        "Mental Health & Wellness",
+        "Emergency Support"
+      ],
+      "contact_info": "katherine.breeden@redcross.org",
+      "organization_type": "Humanitarian Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "celeste.stimpson@redcross.org, dee.chase@redcross.org"
+    },
+    {
+      "id": "VSO-007",
+      "organization_name": "Animal Welfare Alliance Resource & Education of NH (AWARE)",
+      "website_url": "https://www.facebook.com/AWARENH/",
+      "service_categories": [
+        "Mental Health & Wellness",
+        "Animal Support"
+      ],
+      "contact_info": "AWARENH@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-008",
+      "organization_name": "ARCNH (Stronger Together)",
+      "website_url": "https://arcnh.org/",
+      "service_categories": [
+        "Mental Health",
+        "Therapeutic Programs",
+        "Companion Animals"
+      ],
+      "contact_info": "gsomers@arcnh.org",
+      "organization_type": "Recovery & Wellness Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-009",
+      "organization_name": "At Liberty Connections",
+      "website_url": "https://atlibertyconnections.org/",
+      "service_categories": [
+        "Therapeutic & Wellness Programs"
+      ],
+      "contact_info": "kathy@atlibertyconnections.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-010",
+      "organization_name": "Azimuth Check Foundation",
+      "website_url": "https://azimuthcheckfoundation.org/",
+      "service_categories": [
+        "Mental Health",
+        "Outdoor Therapeutic Programs"
+      ],
+      "contact_info": "eric.furey@azimuthcheckfoundation.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "eric.furey@azimuthcheckfoundation.org, yuma.haidara@azimuthcheckfoundation.org"
+    },
+    {
+      "id": "VSO-011",
+      "organization_name": "Badger Wilderness Guides",
+      "website_url": "https://www.badgerbasecamp.com/",
+      "service_categories": [
+        "Outdoor Recreation & Wilderness Expeditions"
+      ],
+      "contact_info": "dan@badgerwildernessguides.org",
+      "organization_type": "Outdoor Wilderness Program",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-012",
+      "organization_name": "BlueSky Equestrian Farm",
+      "website_url": "https://blueskyequestrianstables.com/",
+      "service_categories": [
+        "Service & Companion Animals",
+        "Equine Therapy"
+      ],
+      "contact_info": "rick@botnick.net",
+      "organization_type": "Equestrian Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-013",
+      "organization_name": "Boots and Beats (Concord Community Music School)",
+      "website_url": "https://ccmusicschool.org/",
+      "service_categories": [
+        "Music Therapy & Expressive Arts"
+      ],
+      "contact_info": "aashishbalani27@gmail.com",
+      "organization_type": "Community Music Program",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "avarga@ccmusicschool.org"
+    },
+    {
+      "id": "VSO-014",
+      "organization_name": "Bridge Club of Greater Lowell",
+      "website_url": "https://bridgecluboflowell.org/",
+      "service_categories": [
+        "Mental Health",
+        "Housing Support",
+        "Education"
+      ],
+      "contact_info": "randyc@bridgecluboflowell.org",
+      "organization_type": "Community Recovery Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-015",
+      "organization_name": "Building Dreams for Marines NH",
+      "website_url": "https://bdfm.org/",
+      "service_categories": [
+        "Home Accessibility Modifications for Injured Marines"
+      ],
+      "contact_info": "tstanton@bdfm.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "tim@bdfm.org"
+    },
+    {
+      "id": "VSO-016",
+      "organization_name": "Camp Resilience (Patriot Resilient Leader Institute)",
+      "website_url": "https://www.camp-resilience.org/",
+      "service_categories": [
+        "Mental Health",
+        "Retreats & Experiential Programs"
+      ],
+      "contact_info": "jladieu@camp-resilience.org / (978) 219-4003",
+      "organization_type": "Nonprofit Retreat Center",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "jladieu@camp-resilience.org, sveinotte@camp-resilience.org"
+    },
+    {
+      "id": "VSO-017",
+      "organization_name": "Camp Southern Ground",
+      "website_url": "https://campsouthernground.org/",
+      "service_categories": [
+        "Mental Health & Veteran Wellness Retreats"
+      ],
+      "contact_info": "kimberly@campsouthernground.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-018",
+      "organization_name": "Candorful",
+      "website_url": "https://candorful.org/",
+      "service_categories": [
+        "Employment & Career Coaching / Interview Prep"
+      ],
+      "contact_info": "shannonkopp@candorful.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "pathubbell@candorful.com"
+    },
+    {
+      "id": "VSO-019",
+      "organization_name": "Care Coordination Program of NH (CCPNH / DMAVS)",
+      "website_url": "https://www.nhveterans.nh.gov/",
+      "service_categories": [
+        "Case Management",
+        "Care Coordination"
+      ],
+      "contact_info": "info@dmavs.nh.gov",
+      "organization_type": "State Government Program",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-020",
+      "organization_name": "Carroll County Coalition for Public Health / Granite United Way",
+      "website_url": "https://www.graniteuw.org/",
+      "service_categories": [
+        "Mental Health",
+        "Public Health Resources"
+      ],
+      "contact_info": "u25carrollcounty@outlook.com",
+      "organization_type": "Public Health Coalition",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "jennifer.hunter@graniteuw.org, jennifer.thomas@graniteuw.org, sjennifer.hunter@graniteuw.org"
+    },
+    {
+      "id": "VSO-021",
+      "organization_name": "Cathedral of the Pines",
+      "website_url": "https://cathedralofthepines.org/",
+      "service_categories": [
+        "Mental Health",
+        "Therapeutic Outdoor Sanctuary"
+      ],
+      "contact_info": "Michelle@cathedralofthepines.org",
+      "organization_type": "National Memorial & Sanctuary",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-022",
+      "organization_name": "Central Region Veteran’s Coalition",
+      "website_url": "https://www.graniteuw.org/",
+      "service_categories": [
+        "Regional Veteran Support & Resources"
+      ],
+      "contact_info": "jennifer.hunter@graniteuw.org",
+      "organization_type": "Regional Veteran Coalition",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "jennifer.hunter@graniteuw.org, jennifer.thomas@graniteuw.org, sjennifer.hunter@graniteuw.org"
+    },
+    {
+      "id": "VSO-023",
+      "organization_name": "Challenge Unlimited, Inc. (Ironstone Farm)",
+      "website_url": "https://ironstonefarm.org/",
+      "service_categories": [
+        "Therapeutic Equine Programs for Veterans"
+      ],
+      "contact_info": "carlycolombo@ironstonefarm.org",
+      "organization_type": "Equine Therapy Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-024",
+      "organization_name": "Chasing Zero",
+      "website_url": "https://www.chasingzero22.com/",
+      "service_categories": [
+        "Suicide Prevention & Awareness"
+      ],
+      "contact_info": "chasingzero22@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-025",
+      "organization_name": "Colonel Edward Cross Chapter of AUSA",
+      "website_url": "https://www.ausa.org/",
+      "service_categories": [
+        "Military Advocacy & Community Support"
+      ],
+      "contact_info": "gregory.darbonne@ausa.org",
+      "organization_type": "Military Association Chapter",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-026",
+      "organization_name": "Crews Holdings",
+      "website_url": "https://crewshldgs.com/",
+      "service_categories": [
+        "Community & Veteran Partnership"
+      ],
+      "contact_info": "andy@crewshldgs.com",
+      "organization_type": "Corporate Partner",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-027",
+      "organization_name": "Cross Roads House",
+      "website_url": "https://crossroadshouse.org/",
+      "service_categories": [
+        "Emergency Housing & Shelter Support"
+      ],
+      "contact_info": "elimcquade@gmail.com",
+      "organization_type": "Emergency Shelter",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-028",
+      "organization_name": "Currier Museum of Art (Art for Vets)",
+      "website_url": "https://currier.org/",
+      "service_categories": [
+        "Mental Health",
+        "Wellness",
+        "Art Therapy"
+      ],
+      "contact_info": "sgillery@currier.org",
+      "organization_type": "Museum & Cultural Center",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "bmccoll@currier.org, lchmura@currier.org, scanali@currier.org"
+    },
+    {
+      "id": "VSO-029",
+      "organization_name": "Dan Healy Foundation",
+      "website_url": "https://thedanhealyfoundation.org/",
+      "service_categories": [
+        "Food Support",
+        "Housing Assistance"
+      ],
+      "contact_info": "danhealyfoundation@gmail.com",
+      "organization_type": "Nonprofit Foundation",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-030",
+      "organization_name": "Department of Military Affairs and Veterans Services (DMAVS)",
+      "website_url": "https://www.nhveterans.nh.gov/",
+      "service_categories": [
+        "State Veteran Benefits",
+        "Care Coordination",
+        "Advocacy"
+      ],
+      "contact_info": "nicole.l.desilets-bixler.nfg@army.mil",
+      "organization_type": "State Government Agency",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-031",
+      "organization_name": "Department of NH Disabled American Veterans (DAV NH)",
+      "website_url": "https://davnh.org/",
+      "service_categories": [
+        "VA Claims Assistance",
+        "Transportation",
+        "Advocacy"
+      ],
+      "contact_info": "commander@davnh.org",
+      "organization_type": "Veterans Service Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-032",
+      "organization_name": "Dismas Home of NH",
+      "website_url": "https://dismashomenh.org/",
+      "service_categories": [
+        "Mental Health",
+        "Reentry Housing & Support"
+      ],
+      "contact_info": "cheryll.andrews@dismashomenh.org",
+      "organization_type": "Transitional Housing Program",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-033",
+      "organization_name": "Easterseals NH & Veterans Count",
+      "website_url": "https://vetscount.org/",
+      "service_categories": [
+        "Emergency Financial Assistance",
+        "Housing",
+        "Care Coordination"
+      ],
+      "contact_info": "achrisstoffels@eastersealsnh.org / 603.315.4354",
+      "organization_type": "Nonprofit Service Provider",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "achrisstoffels@eastersealsnh.org, amckenna@eastersealsnh.org, ccampano@eastersealsnh.org, ckuhn@eastersealsnh.org, csauerwald@eastersealsnh.org, cstairs@eastersealsnh.org, eschaick@eastersealsnh.org, kaflynn@eastersealsnh.org, ksieling@eastersealsnh.org, lmendenhall@eastersealsnh.org, mbeauregard@eastersealsnh.org, mleary@eastersealsnh.org, mtalwani@eastersealsnh.org, mvscampus@eastersealsnh.org, shiggs@eastersealsnh.org, sproulx@eastersealsnh.org, ssilsby@eastersealsnh.org"
+    },
+    {
+      "id": "VSO-034",
+      "organization_name": "Easterseals NH Military and Veterans Campus",
+      "website_url": "https://militaryveteranscampusnh.org/",
+      "service_categories": [
+        "Comprehensive Housing",
+        "Support Services",
+        "Campus Hub"
+      ],
+      "contact_info": "amckenna@eastersealsnh.org",
+      "organization_type": "Veterans Campus & Housing",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "achrisstoffels@eastersealsnh.org, amckenna@eastersealsnh.org, ccampano@eastersealsnh.org, ckuhn@eastersealsnh.org, csauerwald@eastersealsnh.org, cstairs@eastersealsnh.org, eschaick@eastersealsnh.org, kaflynn@eastersealsnh.org, ksieling@eastersealsnh.org, lmendenhall@eastersealsnh.org, mbeauregard@eastersealsnh.org, mleary@eastersealsnh.org, mtalwani@eastersealsnh.org, mvscampus@eastersealsnh.org, shiggs@eastersealsnh.org, sproulx@eastersealsnh.org, ssilsby@eastersealsnh.org"
+    },
+    {
+      "id": "VSO-035",
+      "organization_name": "Equine Immersion Foundation",
+      "website_url": "https://equineimmersionfoundation.org/",
+      "service_categories": [
+        "Therapeutic Equine Programs"
+      ],
+      "contact_info": "scott@equineimmersionfoundation.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-036",
+      "organization_name": "FireIce Frogs Corp.",
+      "website_url": "https://fireicefrogs.com/",
+      "service_categories": [
+        "Mental Health & Peer Support"
+      ],
+      "contact_info": "derek.gordon@fireicefrogs.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-037",
+      "organization_name": "Forge VFR (Mental Health & Substance Use)",
+      "website_url": "https://forgehealth.com/",
+      "service_categories": [
+        "Mental Health & Trauma Treatment for Vets & First Responders"
+      ],
+      "contact_info": "Skilbreth@forgehealth.com",
+      "organization_type": "Healthcare Provider",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "sbice@forgehealth.com, skibreth@forgehealth.com, skilbreth@forgehealth.com"
+    },
+    {
+      "id": "VSO-038",
+      "organization_name": "Granite United Way Whole Village Family Resource Center",
+      "website_url": "https://www.graniteuw.org/",
+      "service_categories": [
+        "Family Resources & Community Support"
+      ],
+      "contact_info": "jennifer.hunter@graniteuw.org",
+      "organization_type": "Community Resource Center",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "jennifer.hunter@graniteuw.org, jennifer.thomas@graniteuw.org, sjennifer.hunter@graniteuw.org"
+    },
+    {
+      "id": "VSO-039",
+      "organization_name": "Greater Nashua Mental Health",
+      "website_url": "https://gnmhc.org/",
+      "service_categories": [
+        "Mental Health & Counseling Services"
+      ],
+      "contact_info": "lallyj@gnmhc.org",
+      "organization_type": "Mental Health Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-040",
+      "organization_name": "Guardian Revival",
+      "website_url": "https://guardianrevival.org/",
+      "service_categories": [
+        "Mental Health",
+        "Service Dogs",
+        "Outdoor Adventures"
+      ],
+      "contact_info": "kimhaight@guardianrevival.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-041",
+      "organization_name": "Harbor Care",
+      "website_url": "https://harborcarenh.org/",
+      "service_categories": [
+        "Housing First",
+        "Employment",
+        "Healthcare",
+        "Veteran Supportive Services"
+      ],
+      "contact_info": "a.alicea@harborcarenh.org / (603) 882-3616",
+      "organization_type": "Nonprofit Community Health Center",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "d.santiago@harborcarenh.org, d.tille@harborcarenh.org, k.tovar@harborcarenh.org, m.moran@harborcarenh.org, w.belecz@harborcarenh.org"
+    },
+    {
+      "id": "VSO-042",
+      "organization_name": "Hero Pups Inc",
+      "website_url": "https://heropups.com/",
+      "service_categories": [
+        "Service Dogs for Vets & First Responders"
+      ],
+      "contact_info": "heropupsinc@yahoo.com",
+      "organization_type": "Service Dog Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "heropupsinc@yahoo.com"
+    },
+    {
+      "id": "VSO-043",
+      "organization_name": "Heroes' Harvests",
+      "website_url": "https://heroesharvests.org/",
+      "service_categories": [
+        "Outdoor Therapeutic Hunting & Fishing",
+        "Career Transition"
+      ],
+      "contact_info": "vp@heroesharvests.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-044",
+      "organization_name": "Hidden Battles",
+      "website_url": "https://hiddenbattles.org/",
+      "service_categories": [
+        "Mental Health",
+        "Suicide Prevention",
+        "Peer Therapy"
+      ],
+      "contact_info": "nonaalexander1@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-045",
+      "organization_name": "High Horses Center for Equine-Assisted Service",
+      "website_url": "https://highhorses.org/",
+      "service_categories": [
+        "Equine-Assisted Therapy & Mental Health"
+      ],
+      "contact_info": "harold@highhorses.org",
+      "organization_type": "Equine Therapy Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-046",
+      "organization_name": "Holiday Cards 4 Our Military Challenge",
+      "website_url": "https://militaryholidaycardchallenge.com/",
+      "service_categories": [
+        "Troop Care",
+        "Morale & Support"
+      ],
+      "contact_info": "holidaycardsnh@gmail.com",
+      "organization_type": "Community Initiative",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "holidaycardsnh@gmail.com"
+    },
+    {
+      "id": "VSO-047",
+      "organization_name": "Home Base Program",
+      "website_url": "https://homebase.org/",
+      "service_categories": [
+        "Clinical Care for Invisible Wounds of War"
+      ],
+      "contact_info": "rcasavant@mgb.org",
+      "organization_type": "Academic Health Center Program",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-048",
+      "organization_name": "Homes for Our Troops",
+      "website_url": "https://hfotusa.org/",
+      "service_categories": [
+        "Specially Adapted Custom Homes for Injured Vets"
+      ],
+      "contact_info": "ebuddington@hfotusa.org",
+      "organization_type": "National Nonprofit",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-049",
+      "organization_name": "Honor Flight New England",
+      "website_url": "https://honorflightnewengland.org/",
+      "service_categories": [
+        "Free Flights for Veterans to Memorials in Washington DC"
+      ],
+      "contact_info": "tombyron38@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-050",
+      "organization_name": "Hounds Town Charities",
+      "website_url": "https://houndstownusa.com/",
+      "service_categories": [
+        "Service & Companion Animal Support"
+      ],
+      "contact_info": "mike@houndstownusa.com",
+      "organization_type": "Charity Foundation",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-051",
+      "organization_name": "House in the Woods Inc.",
+      "website_url": "https://houseinthewoods.org/",
+      "service_categories": [
+        "Outdoor Outdoor Therapeutic Retreats for Vets"
+      ],
+      "contact_info": "angie.gade@houseinthewoods.org",
+      "organization_type": "Retreat Facility",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-052",
+      "organization_name": "Irreverent Warriors Portsmouth",
+      "website_url": "https://irreverentwarriors.com/",
+      "service_categories": [
+        "Mental Health",
+        "Veteran Camaraderie Events"
+      ],
+      "contact_info": "portsmouth@irreverentwarriors.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "portsmouth@irreverentwarriors.com"
+    },
+    {
+      "id": "VSO-053",
+      "organization_name": "Kindred Spirits Ranch",
+      "website_url": "https://ksrnh.org/",
+      "service_categories": [
+        "Equine-Assisted Psychotherapy & Mental Health"
+      ],
+      "contact_info": "sveinotte@ksrnh.org",
+      "organization_type": "Therapeutic Ranch",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-054",
+      "organization_name": "Labyrinth Therapeutic Services",
+      "website_url": "https://labyrinthts.org/",
+      "service_categories": [
+        "Mental Health Counseling & Therapeutic Programs"
+      ],
+      "contact_info": "Aaron@LabyrinthTS.org",
+      "organization_type": "Therapeutic Practice",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-055",
+      "organization_name": "Lakes Region Veterans Coalition",
+      "website_url": "https://www.camp-resilience.org/",
+      "service_categories": [
+        "Community Health & Veteran Support Network"
+      ],
+      "contact_info": "1sgpeirce@gmail.com",
+      "organization_type": "Regional Coalition",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "1sgpeirce@gmail.com, jladieu@camp-resilience.org, sveinotte@camp-resilience.org"
+    },
+    {
+      "id": "VSO-056",
+      "organization_name": "Less Leg More Heart",
+      "website_url": "https://lesslegmoreheart.com/",
+      "service_categories": [
+        "Hope",
+        "Advocacy & Supplies for Amputee Vets"
+      ],
+      "contact_info": "lis.greiner@lesslegmoreheart.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-057",
+      "organization_name": "Liberty House",
+      "website_url": "https://libertyhousenh.org/",
+      "service_categories": [
+        "Substance-Free Transitional Housing",
+        "Food & Clothing Pantry"
+      ],
+      "contact_info": "jennifer.barlow@libertyhousenh.org / (603) 669-0761",
+      "organization_type": "Transitional Housing & Pantry",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "jeff@libertyhousenh.org"
+    },
+    {
+      "id": "VSO-058",
+      "organization_name": "Manchester VA Medical Center",
+      "website_url": "https://www.va.gov/manchester-health-care/",
+      "service_categories": [
+        "Comprehensive VA Healthcare",
+        "Suicide Prevention",
+        "Housing"
+      ],
+      "contact_info": "Kevin.Forrest@va.gov / (603) 624-4366",
+      "organization_type": "Federal VA Medical Center",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "craig.arnold2@va.gov, david.goodbread@va.gov, jamie.cummings@va.gov, kaitlyn.grimes@va.gov, michael.bichrest@va.gov, michelle.nerish@va.gov, mo.qamarudeen@va.gov, steven.bobrowski@va.gov, tracey.noonan@va.gov"
+    },
+    {
+      "id": "VSO-059",
+      "organization_name": "Military Families Story Project (The Voice Library)",
+      "website_url": "https://thevoicelibrary.net/",
+      "service_categories": [
+        "Mental Health",
+        "Voice Archiving for Military Families"
+      ],
+      "contact_info": "alb@ThevoiceLibrary.net",
+      "organization_type": "Nonprofit Digital Archive",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-060",
+      "organization_name": "Military Kids Program (UNH Extension)",
+      "website_url": "https://extension.unh.edu/",
+      "service_categories": [
+        "Support & Youth Programs for Military Children"
+      ],
+      "contact_info": "margolapointe33@gmail.com",
+      "organization_type": "University Youth Program",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "david.lee@unh.edu, margolapointe33@gmail.com, philip.brekke@unh.edu, tye.thompson@unh.edu"
+    },
+    {
+      "id": "VSO-061",
+      "organization_name": "Mobius Mobility",
+      "website_url": "https://mobiusmobility.com/",
+      "service_categories": [
+        "Advanced iBOT Mobility Systems for Disabled Vets"
+      ],
+      "contact_info": "marketing@mobiusmobility.com",
+      "organization_type": "Medical Equipment Partner",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-062",
+      "organization_name": "NAMI New Hampshire (National Alliance on Mental Illness)",
+      "website_url": "https://naminh.org/",
+      "service_categories": [
+        "Mental Health Support",
+        "Education",
+        "Crisis Support"
+      ],
+      "contact_info": "acook@naminh.org",
+      "organization_type": "Mental Health Advocacy Org",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "ksomarriba@naminh.org, sallen@naminh.org"
+    },
+    {
+      "id": "VSO-063",
+      "organization_name": "Nashua Community Music School",
+      "website_url": "https://nashuacms.org/",
+      "service_categories": [
+        "Music Education & Expressive Arts Therapy"
+      ],
+      "contact_info": "krystal.bloom@nashuacms.org",
+      "organization_type": "Community Music School",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-064",
+      "organization_name": "New England Battalion",
+      "website_url": "https://newenglandbattalion.org/",
+      "service_categories": [
+        "Mental Health & Outdoor Camaraderie"
+      ],
+      "contact_info": "jason@newenglandbattalion.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-065",
+      "organization_name": "New Hampshire Veterans Home",
+      "website_url": "https://www.veteranshome.nh.gov/",
+      "service_categories": [
+        "Long-Term Care & Housing for NH Vets"
+      ],
+      "contact_info": "sarah.e.stanley@nhvh.nh.gov / (603) 527-4400",
+      "organization_type": "State Veterans Home",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "kimberly.m.mackay@nhvh.nh.gov"
+    },
+    {
+      "id": "VSO-066",
+      "organization_name": "NH National Guard - Wellness Division",
+      "website_url": "https://nh.ng.mil/",
+      "service_categories": [
+        "Mental Health",
+        "Housing",
+        "Employment for Guard Members"
+      ],
+      "contact_info": "andrew.grassie.civ@army.mil",
+      "organization_type": "Military Division",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-067",
+      "organization_name": "NH North Country Veterans (Bridge House)",
+      "website_url": "https://bridgehousenh.org/",
+      "service_categories": [
+        "Housing Support",
+        "Shelter",
+        "Mental Health"
+      ],
+      "contact_info": "cathybentwoodbridgehouse@gmail.com",
+      "organization_type": "Community Shelter & Housing",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-068",
+      "organization_name": "NH Veterans of Foreign Wars (VFW State Headquarters)",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Advocacy",
+        "Claims Assistance",
+        "Post Network"
+      ],
+      "contact_info": "nhvfwstateheadquarters@gmail.com",
+      "organization_type": "State Veterans Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "nhvfwstateheadquarters@gmail.com"
+    },
+    {
+      "id": "VSO-069",
+      "organization_name": "North Country Veterans Dental Program",
+      "website_url": "https://northcountryveteransdental.org/",
+      "service_categories": [
+        "Free & Low-Cost Dental Care for Vets"
+      ],
+      "contact_info": "balloontraveler@yahoo.com",
+      "organization_type": "Healthcare Program",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-070",
+      "organization_name": "Northeast Passage (UNH)",
+      "website_url": "https://nepassage.org/",
+      "service_categories": [
+        "Adaptive Sports",
+        "Recreation & Therapeutic Recreation"
+      ],
+      "contact_info": "andrea.lucas@unh.edu",
+      "organization_type": "University Adaptive Sports Program",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-071",
+      "organization_name": "Operation Delta Dog",
+      "website_url": "https://operationdeltadog.org/",
+      "service_categories": [
+        "Rescued Dogs Trained as Service Dogs for Vets"
+      ],
+      "contact_info": "abutler@operationdeltadog.org",
+      "organization_type": "Service Dog Nonprofit",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "ctroddyn@operationdeltadog.org, khildebrand@operationdeltadog.org, nalexander@operationdeltadog.org, sdesimone@operationdeltadog.org"
+    },
+    {
+      "id": "VSO-072",
+      "organization_name": "Operation HIGH FLIGHT",
+      "website_url": "https://ophighflight.org/",
+      "service_categories": [
+        "Aviation Career Transition & Mentorship"
+      ],
+      "contact_info": "Mark.andrews@ophighflight.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-073",
+      "organization_name": "Overwatch Foundation",
+      "website_url": "https://overwatch.org/",
+      "service_categories": [
+        "Crisis Response & Humanitarian Veteran Operations"
+      ],
+      "contact_info": "vchambers@overwatch.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-074",
+      "organization_name": "Patient Airlift Services (PALS)",
+      "website_url": "https://palservices.org/",
+      "service_categories": [
+        "Free Medical Flights for Vets & Patients"
+      ],
+      "contact_info": "grants@palservices.org",
+      "organization_type": "Volunteer Pilot Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "jennifer.wahlig@palservices.org"
+    },
+    {
+      "id": "VSO-075",
+      "organization_name": "Play for Hero's Foundation",
+      "website_url": "https://playforheroes.org/",
+      "service_categories": [
+        "Sports Events & Mental Health Support"
+      ],
+      "contact_info": "info@playforheroes.org",
+      "organization_type": "Nonprofit Foundation",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-076",
+      "organization_name": "Plymouth State University Office of Military Services",
+      "website_url": "https://www.plymouth.edu/",
+      "service_categories": [
+        "Education Benefits",
+        "GI Bill",
+        "Career Coaching"
+      ],
+      "contact_info": "sgmjim@gmail.com",
+      "organization_type": "University Military Office",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-077",
+      "organization_name": "Prevention Strategies",
+      "website_url": "https://pphnh.org/",
+      "service_categories": [
+        "Mental Health & Substance Misuse Prevention"
+      ],
+      "contact_info": "jritson@pphnh.org",
+      "organization_type": "Public Health Agency",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-078",
+      "organization_name": "Rapid Recovery Center of New England",
+      "website_url": "http://www.newenglandrapidrecovery.com/",
+      "service_categories": [
+        "Holistic Mental Health & Physical Recovery"
+      ],
+      "contact_info": "newenglandrapidrecovery@gmail.com",
+      "organization_type": "Recovery Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-079",
+      "organization_name": "Reigning Hope Ranch",
+      "website_url": "https://reigninghoperanch.com/",
+      "service_categories": [
+        "Equine Therapy & Mental Wellness"
+      ],
+      "contact_info": "jenna@reigninghoperanch.com",
+      "organization_type": "Therapeutic Ranch",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-080",
+      "organization_name": "Rotors to Reels",
+      "website_url": "https://rotorstoreels.org/",
+      "service_categories": [
+        "Therapeutic Fishing & Outdoor Adventures"
+      ],
+      "contact_info": "presidentr2r@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-081",
+      "organization_name": "Shields and Stripes",
+      "website_url": "https://shieldsandstripes.org/",
+      "service_categories": [
+        "Rehabilitation for Vets & First Responders (PTSD & TBI)"
+      ],
+      "contact_info": "steven.nisbet@shieldsandstripes.org",
+      "organization_type": "Rehabilitation Nonprofit",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-082",
+      "organization_name": "Strongwater Farm",
+      "website_url": "https://strongwaterfarm.org/",
+      "service_categories": [
+        "Equestrian Therapeutic Programs"
+      ],
+      "contact_info": "aashishbalani27@gmail.com",
+      "organization_type": "Equine Therapy Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-083",
+      "organization_name": "Student Veterans of America (Plymouth State)",
+      "website_url": "https://studentveterans.org/",
+      "service_categories": [
+        "Student Veteran Peer Support & Campus Advocacy"
+      ],
+      "contact_info": "sgmjim@gmail.com",
+      "organization_type": "Student Veteran Chapter",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-084",
+      "organization_name": "Survivor Outreach Services (SOS)",
+      "website_url": "https://armymwr.com/",
+      "service_categories": [
+        "Support for Families of Fallen Service Members"
+      ],
+      "contact_info": "stephanie.m.ouellette.ctr@army.mil",
+      "organization_type": "Military Family Support Program",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-085",
+      "organization_name": "The Homeland Heroes Foundation",
+      "website_url": "https://homelandheroesfoundation.org/",
+      "service_categories": [
+        "Emergency Financial Aid",
+        "Food",
+        "Service Dogs",
+        "Furnishings"
+      ],
+      "contact_info": "julie@homelandheroesfoundation.org",
+      "organization_type": "Nonprofit Foundation",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "julie@homelandheroesfoundation.org"
+    },
+    {
+      "id": "VSO-086",
+      "organization_name": "The Local Veteran",
+      "website_url": "https://thelocalveteran.com/",
+      "service_categories": [
+        "Community Veteran Networking & Support"
+      ],
+      "contact_info": "thelocalveteraninc@gmail.com",
+      "organization_type": "Community Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-087",
+      "organization_name": "THP Incorporated (The Hope Project)",
+      "website_url": "https://thehope-project.org/",
+      "service_categories": [
+        "Mental Health & Community Programs"
+      ],
+      "contact_info": "allison@thehope-project.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-088",
+      "organization_name": "TOURS OF DUTY",
+      "website_url": "https://toursofduty.org/",
+      "service_categories": [
+        "Mental Health & Veteran Advocacy"
+      ],
+      "contact_info": "margolapointe33@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "margolapointe33@gmail.com"
+    },
+    {
+      "id": "VSO-089",
+      "organization_name": "UpReach Therapeutic Equestrian Center, Inc.",
+      "website_url": "https://upreachtec.org/",
+      "service_categories": [
+        "Equine-Assisted Activities & Therapies"
+      ],
+      "contact_info": "Karen@upreachtec.org",
+      "organization_type": "Therapeutic Riding Center",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "karen@upreachtec.org"
+    },
+    {
+      "id": "VSO-090",
+      "organization_name": "Valor1 Foundation",
+      "website_url": "https://valor1foundation.org/",
+      "service_categories": [
+        "Mental Health & First Responder / Vet Wellness"
+      ],
+      "contact_info": "shawn.linhares@valor1foundation.org",
+      "organization_type": "Nonprofit Foundation",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-091",
+      "organization_name": "Vet's Rest Stop, Inc.",
+      "website_url": "https://www.vrsnh.org/",
+      "service_categories": [
+        "Mental Health",
+        "Companion Animals",
+        "Retreats"
+      ],
+      "contact_info": "vetsreststop@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "vetsreststop@gmail.com"
+    },
+    {
+      "id": "VSO-092",
+      "organization_name": "Veteran Pathways of New England",
+      "website_url": "https://www.veteranpathwaysne.org/",
+      "service_categories": [
+        "Housing",
+        "Food Pantry",
+        "Service Dogs",
+        "Peer Mentoring"
+      ],
+      "contact_info": "gbent@vetpathne.org / (978) 384-8800",
+      "organization_type": "Regional Veteran Center",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-093",
+      "organization_name": "Veteran Sailing Inc.",
+      "website_url": "https://veteransailing.com/",
+      "service_categories": [
+        "Therapeutic Sailing & Nautical Recreation"
+      ],
+      "contact_info": "joe@veteransailing.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-094",
+      "organization_name": "Veterans Inc.",
+      "website_url": "https://veteransinc.org/",
+      "service_categories": [
+        "Housing Support",
+        "Employment",
+        "Case Management"
+      ],
+      "contact_info": "cynthialangdon@veteransinc.org",
+      "organization_type": "Regional Service Provider",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "jimricker@veteransinc.org"
+    },
+    {
+      "id": "VSO-095",
+      "organization_name": "Veterans Legal Justice",
+      "website_url": "https://vljnh.org/",
+      "service_categories": [
+        "Pro Bono Legal Representation for Veterans"
+      ],
+      "contact_info": "zack@vljnh.org",
+      "organization_type": "Legal Assistance Org",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "info@vljnh.org"
+    },
+    {
+      "id": "VSO-096",
+      "organization_name": "Veterans on the 48",
+      "website_url": "https://veteransonthe48.org/",
+      "service_categories": [
+        "Therapeutic Hiking in NH 4",
+        "000-Footers"
+      ],
+      "contact_info": "michael.york@veteransonthe48.org",
+      "organization_type": "Outdoor Therapy Group",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "info@veteransonthe48.org, michael.york@veteransonthe48.org"
+    },
+    {
+      "id": "VSO-097",
+      "organization_name": "Veterans Resource Alliance NH (VRANH)",
+      "website_url": "https://vrahelps.org/",
+      "service_categories": [
+        "Food Support",
+        "Mental Health",
+        "Service Animals"
+      ],
+      "contact_info": "Rae@VRANH.org",
+      "organization_type": "Statewide Alliance",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-098",
+      "organization_name": "Veterans Yoga Project",
+      "website_url": "https://veteransyogaproject.org/",
+      "service_categories": [
+        "Mindful Resilience",
+        "Yoga & Mental Health"
+      ],
+      "contact_info": "brianna@veteransyogaproject.org",
+      "organization_type": "Mindfulness & Yoga Org",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-099",
+      "organization_name": "Veterans2Veterans Group",
+      "website_url": "https://veterans2veteransgroup.org/",
+      "service_categories": [
+        "Food Support & Peer-to-Peer Relief"
+      ],
+      "contact_info": "veterans2veteransgroup@gmail.com",
+      "organization_type": "Peer Support Group",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-100",
+      "organization_name": "VFW Post 168 - Emerson Hovey (Portsmouth)",
+      "website_url": "https://vfw168.org/",
+      "service_categories": [
+        "Veterans Advocacy",
+        "Community Post",
+        "Meetings"
+      ],
+      "contact_info": "DC9guy@comcast.net / (603) 973-5000 | 25 Cottage Street, Portsmouth, NH 03801",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-101",
+      "organization_name": "VFW Post 1631 - Concord VFW",
+      "website_url": "https://www.facebook.com/ConcordVeteransOfForeignWarsPost1631",
+      "service_categories": [
+        "Veterans Advocacy",
+        "Community Post",
+        "Meetings"
+      ],
+      "contact_info": "pjl64@comcast.net / (603) 228-8907 | 6 Court Street, Concord, NH 03301",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "pjl64@comcast.net"
+    },
+    {
+      "id": "VSO-102",
+      "organization_name": "VFW Michael W. Ouellette Memorial Post",
+      "website_url": "https://vfw.org/",
+      "service_categories": [
+        "Mental Health & Veteran Advocacy"
+      ],
+      "contact_info": "STEVEN.SOULE@VFW.ORG",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-103",
+      "organization_name": "Vouchers for Veterans",
+      "website_url": "https://vouchersforveterans.org/",
+      "service_categories": [
+        "Fresh Farmers Market Vouchers for Vets"
+      ],
+      "contact_info": "morgan@vouchersforveterans.org",
+      "organization_type": "Food Security Program",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "info@vouchersforveterans.org"
+    },
+    {
+      "id": "VSO-104",
+      "organization_name": "Walking With Honor",
+      "website_url": "https://walkingwithhonor.org/",
+      "service_categories": [
+        "Community Outreach & Veteran Support"
+      ],
+      "contact_info": "walkingwithhonor@gmail.com",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "Included in Check-in",
+      "matched_checkin_emails": "info@walkingwithhonor.org"
+    },
+    {
+      "id": "VSO-105",
+      "organization_name": "Walking With Tiger",
+      "website_url": "https://walkwithtiger.org/",
+      "service_categories": [
+        "Mental Health & Peer Support Walk"
+      ],
+      "contact_info": "tiger@walkwithtiger.org",
+      "organization_type": "Nonprofit Organization",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-106",
+      "organization_name": "Warrior Dog Foundation",
+      "website_url": "https://warriordogfoundation.org/",
+      "service_categories": [
+        "Rehabilitation for Working Dogs (SOF / MWD)"
+      ],
+      "contact_info": "laura@warriordogfoundation.org",
+      "organization_type": "Working Dog Foundation",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-107",
+      "organization_name": "Warrior Health Foundation",
+      "website_url": "https://warriorhealthfoundation.org/",
+      "service_categories": [
+        "Proactive Health & Wellness Tracking for Vets"
+      ],
+      "contact_info": "srosario@warriorhealthfoundation.org",
+      "organization_type": "Health Foundation",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-108",
+      "organization_name": "Wild Soul Serenity",
+      "website_url": "https://wildsoulserenity.com/",
+      "service_categories": [
+        "Holistic Mental Health & Mindfulness"
+      ],
+      "contact_info": "Kat@wildsoulserenity.com",
+      "organization_type": "Wellness Practice",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-109",
+      "organization_name": "Women of GWOT",
+      "website_url": "https://womenofgwot.org/",
+      "service_categories": [
+        "Peer Support & Community for Women Vets"
+      ],
+      "contact_info": "womenofgwot@gmail.com",
+      "organization_type": "Veterans Network",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-110",
+      "organization_name": "Worker Bee Fund",
+      "website_url": "https://workerbeefund.org/",
+      "service_categories": [
+        "Financial Assistance & Community Aid"
+      ],
+      "contact_info": "brianh@workerbeefund.org",
+      "organization_type": "Nonprofit Fund",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-111",
+      "organization_name": "Wounded Warrior Project",
+      "website_url": "https://woundedwarriorproject.org/",
+      "service_categories": [
+        "Mental Health",
+        "Career Transition",
+        "Adaptive Sports"
+      ],
+      "contact_info": "khale@woundedwarriorproject.org",
+      "organization_type": "National Veterans Nonprofit",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-112",
+      "organization_name": "Yoga in Action",
+      "website_url": "https://yogainaction.org/",
+      "service_categories": [
+        "Trauma-Informed Yoga & Mental Health"
+      ],
+      "contact_info": "michelle.james@yogainaction.org",
+      "organization_type": "Yoga Nonprofit",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-113",
+      "organization_name": "VFW Post 483 - Nashua Post",
+      "website_url": "https://www.facebook.com/VFWPOST483/",
+      "service_categories": [
+        "Veterans Community Post (District 6)"
+      ],
+      "contact_info": "8 E. Pearl St, Nashua, NH 03060 | Phone: 603-402-2992",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-114",
+      "organization_name": "VFW Post 799 - Keene Daley Whipple",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "459 Winchester St, Keene, NH 03431 | Phone: 978-297-2328",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-115",
+      "organization_name": "VFW Post 808 - Oliver Lacasse",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "150 Charlestown Rd, Claremont, NH 03743 | Phone: 603-542-6092",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-116",
+      "organization_name": "VFW Post 816 - Howard Shawney",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 1)"
+      ],
+      "contact_info": "600 Cottage St, Littleton, NH 03561 | Phone: 603-444-5750",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-117",
+      "organization_name": "VFW Post 1088 - Kingston Memorial",
+      "website_url": "https://www.facebook.com/vfwpost1088",
+      "service_categories": [
+        "Veterans Community Post (District 7)"
+      ],
+      "contact_info": "93 Rte 125, Kingston, NH 03848 | Phone: 603-642-5510",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-118",
+      "organization_name": "VFW Post 1617 - Derry / Salem VFW",
+      "website_url": "https://www.facebook.com/DerryMemorialVFWPost1617",
+      "service_categories": [
+        "Veterans Community Post (District 6)"
+      ],
+      "contact_info": "18 Railroad Ave, Derry, NH 03038 | Phone: 603-432-9702",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-119",
+      "organization_name": "VFW Post 1670 - Laconia Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 4)"
+      ],
+      "contact_info": "143 Court St, Laconia, NH 03246 | Phone: 603-524-9725",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-120",
+      "organization_name": "VFW Post 1698 - Franklin Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 4)"
+      ],
+      "contact_info": "26 Peabody Pl, Franklin, NH 03235 | Phone: 603-934-9869",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-121",
+      "organization_name": "VFW Post 2520 - White Mountain Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 1)"
+      ],
+      "contact_info": "1107 Main St, Berlin, NH 03570 | Phone: 603-449-5391",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-122",
+      "organization_name": "VFW Post 3041 - John W. Weeks Post",
+      "website_url": "https://www.facebook.com/JohnWWeeksVFWPost3041",
+      "service_categories": [
+        "Veterans Community Post (District 1)"
+      ],
+      "contact_info": "259 Main St, Lancaster, NH 03584 | Phone: 603-788-3312",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-123",
+      "organization_name": "VFW Post 3968 - Winchester Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "35 Main St, Winchester, NH 03470 | Phone: 603-239-8848",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-124",
+      "organization_name": "VFW Post 4234 - Hinsdale Memorial Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "66 Main St, Hinsdale, NH 03451 | Phone: 603-336-6210",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-125",
+      "organization_name": "VFW Post 4368 - Harley Sanford Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "1 VFW Way, Milford, NH 03055 | Phone: 603-673-9817",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-126",
+      "organization_name": "VFW Post 4479 - Maple Wheadon Post",
+      "website_url": "https://vfw4479.org/",
+      "service_categories": [
+        "Veterans Community Post (District 7)"
+      ],
+      "contact_info": "39 Main St, Raymond, NH 03077 | Phone: 603-895-3361",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-127",
+      "organization_name": "VFW Post 4483 - Mount Prospect Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 4)"
+      ],
+      "contact_info": "258 Highland St, Plymouth, NH 03264 | Phone: 603-520-9810",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-128",
+      "organization_name": "VFW Post 4485 - Dumont Lessard Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 7)"
+      ],
+      "contact_info": "43 High St, Somersworth, NH 03878 | Phone: 603-692-5994",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-129",
+      "organization_name": "VFW Post 5245 - Haverhill Memorial Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 1)"
+      ],
+      "contact_info": "76 Benton Rd, N. Haverhill, NH 03774 | Phone: 603-787-6819",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-130",
+      "organization_name": "VFW Post 5386 - Francis P. Murphy Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 1)"
+      ],
+      "contact_info": "River St, Bartlett, NH 03812 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-131",
+      "organization_name": "VFW Post 5613 - Jaffrey Memorial Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "22 Hathorn Rd, Jaffrey, NH 03452 | Phone: 603-532-8887",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-132",
+      "organization_name": "VFW Post 5791 - Hudson Memorial Post",
+      "website_url": "https://vfw5791.org/",
+      "service_categories": [
+        "Veterans Community Post (District 6)"
+      ],
+      "contact_info": "15 Bockes Rd, Hudson, NH 03051 | Phone: 603-598-4594",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-133",
+      "organization_name": "VFW Post 6808 - Ammonoosuc Valley Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 1)"
+      ],
+      "contact_info": "207 State St, Groveton, NH 03582 | Phone: 603-636-2002",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-134",
+      "organization_name": "VFW Post 7217 - Joseph J. Jeffrey Memorial",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 7)"
+      ],
+      "contact_info": "135 Main St, Northwood, NH 03261 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-135",
+      "organization_name": "VFW Post 8214 - Queen City Memorial",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 4)"
+      ],
+      "contact_info": "251 Maple St, Manchester, NH 03108 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-136",
+      "organization_name": "VFW Post 8268 - Brown-Knight Memorial",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "9 Hancock Rd, Bennington, NH 03442 | Phone: 603-831-2208",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-137",
+      "organization_name": "VFW Post 8393 - Milton Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 7)"
+      ],
+      "contact_info": "30 Charles St, Milton, NH 03851 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-138",
+      "organization_name": "VFW Post 8401 - Richard K. Harvell Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 4)"
+      ],
+      "contact_info": "70 Bedford Center Rd, Bedford, NH 03110 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-139",
+      "organization_name": "VFW Post 8497 - Charlestown Memorial Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 5)"
+      ],
+      "contact_info": "365 Lovers Lane Rd, Charlestown, NH 03603 | Phone: 603-826-5186",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-140",
+      "organization_name": "VFW Post 8641 - Merrimack VFW Post 8641",
+      "website_url": "https://www.facebook.com/MerrimackVFW",
+      "service_categories": [
+        "Veterans Community Post (District 6)"
+      ],
+      "contact_info": "282 Daniel Webster Hwy, Merrimack, NH 03054 | Phone: 603-424-7719",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-141",
+      "organization_name": "VFW Post 9552 - Wood-Guarino Memorial",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 4)"
+      ],
+      "contact_info": "189 Mechanic St, Lebanon, NH 03766 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-142",
+      "organization_name": "VFW Post 10675 - Whitefield Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 1)"
+      ],
+      "contact_info": "52 Faraway Rd, Dalton, NH 03598 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-143",
+      "organization_name": "VFW Post 10676 - Lee Memorial Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 7)"
+      ],
+      "contact_info": "20 George Bennett Rd, Lee, NH 03824 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-144",
+      "organization_name": "VFW Post 10722 - John H. Hargreaves Memorial",
+      "website_url": "https://www.facebook.com/PelhamVFW10722",
+      "service_categories": [
+        "Veterans Community Post (District 6)"
+      ],
+      "contact_info": "6 Main St, Pelham, NH 03076 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-145",
+      "organization_name": "VFW Post 11254 - Hampstead Post",
+      "website_url": "https://vfwnh.org/",
+      "service_categories": [
+        "Veterans Community Post (District 6)"
+      ],
+      "contact_info": "11 Main St, Hampstead, NH 03841 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    },
+    {
+      "id": "VSO-146",
+      "organization_name": "VFW Post 11373 - Hollis Post",
+      "website_url": "http://hollisvfw.org/",
+      "service_categories": [
+        "Veterans Community Post (District 6)"
+      ],
+      "contact_info": "38 Main St, Brookline, NH 03033 | Phone: N/A",
+      "organization_type": "VFW Local Post",
+      "checkin_status": "NOT Included in Check-in",
+      "matched_checkin_emails": "None"
+    }
+  ]
+}

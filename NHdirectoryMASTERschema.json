@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NHVetWiki Directory Master Schema",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "state": { "type": "string", "default": "New Hampshire" },
+        "version": { "type": "string", "default": "2.0.0" },
+        "last_updated": { "type": "string", "format": "date" }
+      }
+    },
+    "taxonomy_categories": {
+      "type": "array",
+      "description": "The 11 official service classification categories for standardization.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "description": "The 7 official New Hampshire regions plus statewide coverage.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "primary_counties": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "organization": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "categories",
+        "city",
+        "zip",
+        "county",
+        "region_id",
+        "last_verified",
+        "source_url"
+      ],
+      "properties": {
+        "id": { "type": "string", "description": "Unique slug identifier." },
+        "name": { "type": "string", "description": "Organization or service name." },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "benefits-advocacy",
+              "education-employment",
+              "family-youth",
+              "financial-legal",
+              "food-basic-needs",
+              "healthcare-medical",
+              "housing-shelter",
+              "mental-health-wellness",
+              "recreation-outdoors",
+              "service-animals-equine",
+              "veterans-posts-community"
+            ]
+          },
+          "description": "One or more taxonomy category IDs."
+        },
+        "address": { "type": "string" },
+        "city": { "type": "string" },
+        "zip": { "type": "string", "pattern": "^[0-9]{5}$" },
+        "county": { "type": "string" },
+        "region_id": { "type": "string" },
+        "secondary_region_id": { "type": "string" },
+        "is_statewide": { "type": "boolean", "default": false },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "website": { "type": "string" },
+        "last_verified": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the listing was last audited and confirmed active."
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Direct URL where listing data or flyer was sourced."
+        }
+      }
+    }
+  }
+}

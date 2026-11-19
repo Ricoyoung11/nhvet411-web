@@ -1,0 +1,4765 @@
+[
+  {
+    "id": "vso-001",
+    "name": "51 Vets Incorporated",
+    "categories": [
+      "education-employment"
+    ],
+    "description": "Nonprofit Organization providing Education & Training, Career Transition for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "maggie@51vets.org",
+    "website": "https://51vets.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Margaret Larson",
+        "email": "maggie@51vets.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://51vets.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-002",
+    "name": "603 Legal Aid",
+    "categories": [
+      "housing-shelter",
+      "financial-legal",
+      "education-employment"
+    ],
+    "description": "Civil Legal Aid providing Housing Support, Employment, Legal Advice in Concord, NH (Merrimack County).",
+    "address": "93 North State Street",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 224-3333",
+    "email": "aclemmer@603legalaid.org",
+    "website": "https://www.603legalaid.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Ariel Clemmer",
+        "email": "aclemmer@603legalaid.org"
+      },
+      {
+        "name": "Harmony Gilbert",
+        "email": "hgilbert@603legalaid.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.603legalaid.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-003",
+    "name": "Aiming For Zero, Inc",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Mental Health & Wellness, Suicide Prevention for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "michael.johns@aimingforzero.org",
+    "website": "https://aimingforzero.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Michael Johns",
+        "email": "michael.johns@aimingforzero.org"
+      },
+      {
+        "name": "Chris Tessier",
+        "email": "chris.tessier@aimingforzero.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://aimingforzero.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-004",
+    "name": "All Secure Foundation",
+    "categories": [
+      "mental-health-wellness",
+      "family-youth"
+    ],
+    "description": "Nonprofit Organization providing Special Ops Veteran & Family PTSD Healing for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "jen@allsecurefoundation.org",
+    "website": "https://allsecurefoundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jenn Satterly",
+        "email": "jen@allsecurefoundation.org"
+      },
+      {
+        "name": "Tom Satterly",
+        "email": "tom@allsecurefoundation.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://allsecurefoundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-005",
+    "name": "American Legion Auxiliary Unit 16 Goffstown, NH",
+    "categories": [
+      "family-youth",
+      "veterans-posts-community"
+    ],
+    "description": "Veterans Auxiliary Post providing Community Support, Family Assistance in Goffstown, NH (Hillsborough County).",
+    "address": "453 Mast Road",
+    "city": "Goffstown",
+    "zip": "03045",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "iwont4gt@gmail.com",
+    "website": "https://www.legionnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Linda Lambert",
+        "email": "iwont4gt@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.legionnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-006",
+    "name": "American Red Cross NH",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Humanitarian Organization providing Mental Health & Wellness, Emergency Support in Concord, NH (Merrimack County).",
+    "address": "2 Central Plaza",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(877) 272-7337",
+    "email": "katherine.breeden@redcross.org",
+    "website": "https://www.redcross.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Katherine Breeden",
+        "email": "katherine.breeden@redcross.org"
+      },
+      {
+        "name": "Dee Chase",
+        "email": "dee.chase@redcross.org"
+      },
+      {
+        "name": "Sharon Heser",
+        "email": "sheser@comcast.net"
+      },
+      {
+        "name": "Celeste Stimpson",
+        "email": "celeste.stimpson@redcross.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.redcross.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-007",
+    "name": "Animal Welfare Alliance Resource & Education of NH (AWARE)",
+    "categories": [
+      "mental-health-wellness",
+      "education-employment",
+      "service-animals-equine"
+    ],
+    "description": "Nonprofit Organization providing Mental Health & Wellness, Animal Support for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "AWARENH@gmail.com",
+    "website": "https://www.facebook.com/AWARENH/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Journey Ewell",
+        "email": "AWARENH@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/AWARENH/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-008",
+    "name": "ARCNH (Stronger Together)",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Recovery & Wellness Center providing Mental Health, Therapeutic Programs, Companion Animals in Milford, NH (Hillsborough County).",
+    "address": "180 Elm Street",
+    "city": "Milford",
+    "zip": "03055",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "secondary_region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "(603) 953-6145",
+    "email": "gsomers@arcnh.org",
+    "website": "https://arcnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Gray Somers",
+        "email": "gsomers@arcnh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://arcnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-009",
+    "name": "At Liberty Connections",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Therapeutic & Wellness Programs in Northwood, NH (Rockingham County).",
+    "address": "Northwood Equine Facility",
+    "city": "Northwood",
+    "zip": "03261",
+    "county": "Rockingham",
+    "region_id": "merrimack-valley",
+    "secondary_region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "kathy@atlibertyconnections.org",
+    "website": "https://atlibertyconnections.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Dr. Kathleen Roth",
+        "email": "kathy@atlibertyconnections.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://atlibertyconnections.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-010",
+    "name": "Azimuth Check Foundation",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors"
+    ],
+    "description": "Nonprofit Organization providing Mental Health, Outdoor Therapeutic Programs for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "eric.furey@azimuthcheckfoundation.org",
+    "website": "https://azimuthcheckfoundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Eric Furey",
+        "email": "eric.furey@azimuthcheckfoundation.org"
+      },
+      {
+        "name": "Sara Shovlin",
+        "email": "sara.shovlin@azimuthcheckfoundation.org"
+      },
+      {
+        "name": "Yuma Haidara",
+        "email": "yuma.haidara@azimuthcheckfoundation.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://azimuthcheckfoundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-011",
+    "name": "Badger Wilderness Guides",
+    "categories": [
+      "recreation-outdoors"
+    ],
+    "description": "Outdoor Wilderness Program providing Outdoor Recreation & Wilderness Expeditions in Tamworth, NH (Carroll County).",
+    "address": "White Mountains Guide Base",
+    "city": "Tamworth",
+    "zip": "03886",
+    "county": "Carroll",
+    "region_id": "lakes",
+    "secondary_region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "",
+    "email": "dan@badgerwildernessguides.org",
+    "website": "https://www.badgerbasecamp.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Dan Badger",
+        "email": "dan@badgerwildernessguides.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.badgerbasecamp.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-012",
+    "name": "BlueSky Equestrian Farm",
+    "categories": [
+      "service-animals-equine"
+    ],
+    "description": "Equestrian Center providing Service & Companion Animals, Equine Therapy in Newmarket, NH (Rockingham County).",
+    "address": "BlueSky Equestrian Farm",
+    "city": "Newmarket",
+    "zip": "03857",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "rick@botnick.net",
+    "website": "https://blueskyequestrianstables.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Richard Botnick",
+        "email": "rick@botnick.net"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://blueskyequestrianstables.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-013",
+    "name": "Boots and Beats (Concord Community Music School)",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Community Music Program providing Music Therapy & Expressive Arts in Concord, NH (Merrimack County).",
+    "address": "23 Wall Street",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 228-1196",
+    "email": "aashishbalani27@gmail.com",
+    "website": "https://ccmusicschool.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Anthony Varga",
+        "email": "avarga@ccmusicschool.org"
+      },
+      {
+        "name": "Anthony Varga (Direct)",
+        "email": "aashishbalani27@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://ccmusicschool.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-014",
+    "name": "Bridge Club of Greater Lowell",
+    "categories": [
+      "housing-shelter",
+      "mental-health-wellness",
+      "education-employment"
+    ],
+    "description": "Community Recovery Center providing Mental Health, Housing Support, Education for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "randyc@bridgecluboflowell.org",
+    "website": "https://bridgecluboflowell.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Randy Carter",
+        "email": "randyc@bridgecluboflowell.org"
+      },
+      {
+        "name": "Robert Cox",
+        "email": "bobc@bridgecluboflowell.org"
+      },
+      {
+        "name": "Kyana Mora",
+        "email": "kyanam@bridgecluboflowell.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://bridgecluboflowell.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-015",
+    "name": "Building Dreams for Marines NH",
+    "categories": [
+      "housing-shelter"
+    ],
+    "description": "Nonprofit Organization providing Home Accessibility Modifications for Injured Marines for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "tstanton@bdfm.org",
+    "website": "https://bdfm.org/",
+    "branches": [
+      "marines"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Tim Stanton",
+        "email": "tstanton@bdfm.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://bdfm.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-016",
+    "name": "Camp Resilience (Patriot Resilient Leader Institute)",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Retreat Center providing Mental Health, Retreats & Experiential Programs in Gilford, NH (Belknap County).",
+    "address": "1943 Lake Shore Road",
+    "city": "Gilford",
+    "zip": "03249",
+    "county": "Belknap",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(978) 219-4003",
+    "email": "jladieu@camp-resilience.org",
+    "website": "https://www.camp-resilience.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jeff Ladieu",
+        "email": "jladieu@camp-resilience.org"
+      },
+      {
+        "name": "Elizabeth Mullaney",
+        "email": "emullaney@camp-resilience.org"
+      },
+      {
+        "name": "Lori Sanderson",
+        "email": "lsanderson@camp-resilience.org"
+      },
+      {
+        "name": "Holly Summers",
+        "email": "hsummers@camp-resilience.org"
+      },
+      {
+        "name": "Kurt Webber",
+        "email": "kwebber@camp-resilience.org"
+      },
+      {
+        "name": "Steve Veinotte",
+        "email": "sveinotte@camp-resilience.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.camp-resilience.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-017",
+    "name": "Camp Southern Ground",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Mental Health & Veteran Wellness Retreats for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "kimberly@campsouthernground.org",
+    "website": "https://campsouthernground.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Kimberly Walther",
+        "email": "kimberly@campsouthernground.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://campsouthernground.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-018",
+    "name": "Candorful",
+    "categories": [
+      "education-employment"
+    ],
+    "description": "Nonprofit Organization providing Employment & Career Coaching / Interview Prep for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "shannonkopp@candorful.com",
+    "website": "https://candorful.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Shannon Kopp",
+        "email": "shannonkopp@candorful.com"
+      },
+      {
+        "name": "Pat Hubbell",
+        "email": "pathubbell@candorful.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://candorful.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-019",
+    "name": "Care Coordination Program of NH (CCPNH / DMAVS)",
+    "categories": [
+      "benefits-advocacy"
+    ],
+    "description": "State Government Program providing Case Management, Care Coordination in Concord, NH (Merrimack County).",
+    "address": "4 Pembroke Road",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 225-1200",
+    "email": "info@dmavs.nh.gov",
+    "website": "https://www.nhveterans.nh.gov/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Leslie Ela",
+        "email": "info@dmavs.nh.gov"
+      },
+      {
+        "name": "Ana McKenna",
+        "email": "amckenna@eastersealsnh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.nhveterans.nh.gov/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-020",
+    "name": "Carroll County Coalition for Public Health / Granite United Way",
+    "categories": [
+      "mental-health-wellness",
+      "veterans-posts-community"
+    ],
+    "description": "Public Health Coalition providing Mental Health, Public Health Resources in Ossipee, NH (Carroll County).",
+    "address": "Carroll County Public Health Hub",
+    "city": "Ossipee",
+    "zip": "03864",
+    "county": "Carroll",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "",
+    "email": "u25carrollcounty@outlook.com",
+    "website": "https://www.graniteuw.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Emily McArdle",
+        "email": "u25carrollcounty@outlook.com"
+      },
+      {
+        "name": "Jennifer Thomas",
+        "email": "jennifer.thomas@graniteuw.org"
+      },
+      {
+        "name": "Jennifer Hunter",
+        "email": "jennifer.hunter@graniteuw.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.graniteuw.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-021",
+    "name": "Cathedral of the Pines",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors",
+      "veterans-posts-community"
+    ],
+    "description": "National Memorial & Sanctuary providing Mental Health, Therapeutic Outdoor Sanctuary in Rindge, NH (Cheshire County).",
+    "address": "10 Hale Hill Road",
+    "city": "Rindge",
+    "zip": "03461",
+    "county": "Cheshire",
+    "region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "(603) 899-3300",
+    "email": "Michelle@cathedralofthepines.org",
+    "website": "https://cathedralofthepines.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Michelle Lowe",
+        "email": "Michelle@cathedralofthepines.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://cathedralofthepines.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-022",
+    "name": "Central Region Veteran’s Coalition",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "Regional Veteran Coalition providing Regional Veteran Support & Resources in Plymouth, NH (Grafton County).",
+    "address": "258 Highland Street",
+    "city": "Plymouth",
+    "zip": "03264",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "secondary_region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(603) 536-3720",
+    "email": "jennifer.hunter@graniteuw.org",
+    "website": "https://www.graniteuw.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jennifer Hunter",
+        "email": "jennifer.hunter@graniteuw.org"
+      },
+      {
+        "name": "Jennifer Thomas",
+        "email": "jennifer.thomas@graniteuw.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.graniteuw.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-023",
+    "name": "Challenge Unlimited, Inc. (Ironstone Farm)",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Equine Therapy Center providing Therapeutic Equine Programs for Veterans for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "carlycolombo@ironstonefarm.org",
+    "website": "https://ironstonefarm.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Carly Colombo",
+        "email": "carlycolombo@ironstonefarm.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://ironstonefarm.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-024",
+    "name": "Chasing Zero",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Suicide Prevention & Awareness for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "chasingzero22@gmail.com",
+    "website": "https://www.chasingzero22.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Chase Stanley",
+        "email": "chasingzero22@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.chasingzero22.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-025",
+    "name": "Colonel Edward Cross Chapter of AUSA",
+    "categories": [
+      "veterans-posts-community",
+      "benefits-advocacy"
+    ],
+    "description": "Military Association Chapter providing Military Advocacy & Community Support for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "gregory.darbonne@ausa.org",
+    "website": "https://www.ausa.org/",
+    "branches": [
+      "army"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Gregory d'Arbonne",
+        "email": "gregory.darbonne@ausa.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.ausa.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-026",
+    "name": "Crews Holdings",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Corporate Partner providing Community & Veteran Partnership for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "andy@crewshldgs.com",
+    "website": "https://crewshldgs.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Andy Crews",
+        "email": "andy@crewshldgs.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://crewshldgs.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-027",
+    "name": "Cross Roads House",
+    "categories": [
+      "housing-shelter"
+    ],
+    "description": "Emergency Shelter providing Emergency Housing & Shelter Support in Portsmouth, NH (Rockingham County).",
+    "address": "600 Lafayette Road",
+    "city": "Portsmouth",
+    "zip": "03801",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "(603) 436-2218",
+    "email": "elimcquade@gmail.com",
+    "website": "https://crossroadshouse.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Scott McQuade",
+        "email": "elimcquade@gmail.com"
+      },
+      {
+        "name": "Anna Kay Vorsteg",
+        "email": "a.vorsteg@crossroadshouse.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://crossroadshouse.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-028",
+    "name": "Currier Museum of Art (Art for Vets)",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Museum & Cultural Center providing Mental Health, Wellness, Art Therapy in Manchester, NH (Hillsborough County).",
+    "address": "150 Ash Street",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 669-6144",
+    "email": "sgillery@currier.org",
+    "website": "https://currier.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Sean Gillery",
+        "email": "sgillery@currier.org"
+      },
+      {
+        "name": "Kate Pritchard",
+        "email": "kpritchard@currier.org"
+      },
+      {
+        "name": "Becky McColl",
+        "email": "bmccoll@currier.org"
+      },
+      {
+        "name": "Lynn Chmura",
+        "email": "lchmura@currier.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://currier.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-029",
+    "name": "Dan Healy Foundation",
+    "categories": [
+      "housing-shelter",
+      "food-basic-needs"
+    ],
+    "description": "Nonprofit Foundation providing Food Support, Housing Assistance for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "danhealyfoundation@gmail.com",
+    "website": "https://thedanhealyfoundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "David Dexter",
+        "email": "danhealyfoundation@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://thedanhealyfoundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-030",
+    "name": "Department of Military Affairs and Veterans Services (DMAVS)",
+    "categories": [
+      "mental-health-wellness",
+      "benefits-advocacy"
+    ],
+    "description": "State Government Agency providing State Veteran Benefits, Care Coordination, Advocacy in Concord, NH (Merrimack County).",
+    "address": "4 Pembroke Road",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 225-1200",
+    "email": "nicole.l.desilets-bixler.nfg@army.mil",
+    "website": "https://www.nhveterans.nh.gov/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Nicole Desilets-Bixler",
+        "email": "nicole.l.desilets-bixler.nfg@army.mil"
+      },
+      {
+        "name": "Brenton Fraser",
+        "email": "info@dmavs.nh.gov"
+      },
+      {
+        "name": "Jamie Cummings",
+        "email": "jamie.cummings@va.gov"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.nhveterans.nh.gov/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-031",
+    "name": "Department of NH Disabled American Veterans (DAV NH)",
+    "categories": [
+      "mental-health-wellness",
+      "healthcare-medical",
+      "benefits-advocacy"
+    ],
+    "description": "Veterans Service Organization providing VA Claims Assistance, Transportation, Advocacy in Manchester, NH (Hillsborough County).",
+    "address": "275 Chestnut Street, Room 515",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 222-5788",
+    "email": "commander@davnh.org",
+    "website": "https://davnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jamie Morse",
+        "email": "commander@davnh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://davnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-032",
+    "name": "Dismas Home of NH",
+    "categories": [
+      "housing-shelter",
+      "mental-health-wellness"
+    ],
+    "description": "Transitional Housing Program providing Mental Health, Reentry Housing & Support in Manchester, NH (Hillsborough County).",
+    "address": "102 Fourth Street",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 782-3004",
+    "email": "cheryll.andrews@dismashomenh.org",
+    "website": "https://dismashomenh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Cheryll Andrews",
+        "email": "cheryll.andrews@dismashomenh.org"
+      },
+      {
+        "name": "Colleen Brough",
+        "email": "colleen.brough@dismashomenh.org"
+      },
+      {
+        "name": "Wyndi Cashman",
+        "email": "wyndi.cashman@dismashomenh.org"
+      },
+      {
+        "name": "Angel Colarusso",
+        "email": "angelica.colarusso@dismashomenh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://dismashomenh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-033",
+    "name": "Easterseals NH & Veterans Count",
+    "categories": [
+      "housing-shelter",
+      "financial-legal",
+      "benefits-advocacy"
+    ],
+    "description": "Nonprofit Service Provider providing Emergency Financial Assistance, Housing, Care Coordination in Manchester, NH (Hillsborough County).",
+    "address": "555 Auburn Street",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "603.315.4354",
+    "email": "achrisstoffels@eastersealsnh.org",
+    "website": "https://vetscount.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Andrea Chrisstoffels",
+        "email": "achrisstoffels@eastersealsnh.org"
+      },
+      {
+        "name": "Meghan Bliz",
+        "email": "mbilz@eastersealsnh.org"
+      },
+      {
+        "name": "Courtney Stairs",
+        "email": "cstairs@eastersealsnh.org"
+      },
+      {
+        "name": "Maureen Beauregard",
+        "email": "mbeauregard@eastersealsnh.org"
+      },
+      {
+        "name": "Kathy Flynn",
+        "email": "kaflynn@eastersealsnh.org"
+      },
+      {
+        "name": "Mike Leary",
+        "email": "mleary@eastersealsnh.org"
+      },
+      {
+        "name": "Ana McKenna",
+        "email": "amckenna@eastersealsnh.org"
+      },
+      {
+        "name": "Katja Sieling",
+        "email": "ksieling@eastersealsnh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vetscount.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-034",
+    "name": "Easterseals NH Military and Veterans Campus",
+    "categories": [
+      "housing-shelter"
+    ],
+    "description": "Veterans Campus & Housing providing Comprehensive Housing, Support Services, Campus Hub in Franklin, NH (Merrimack County).",
+    "address": "71 Military Way",
+    "city": "Franklin",
+    "zip": "03235",
+    "county": "Merrimack",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(603) 623-8863",
+    "email": "amckenna@eastersealsnh.org",
+    "website": "https://militaryveteranscampusnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Ana McKenna",
+        "email": "amckenna@eastersealsnh.org"
+      },
+      {
+        "name": "Maureen Beauregard",
+        "email": "mbeauregard@eastersealsnh.org"
+      },
+      {
+        "name": "Kathy Flynn",
+        "email": "kaflynn@eastersealsnh.org"
+      },
+      {
+        "name": "Mike Leary",
+        "email": "mleary@eastersealsnh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://militaryveteranscampusnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-035",
+    "name": "Equine Immersion Foundation",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Nonprofit Organization providing Therapeutic Equine Programs in Stratham, NH (Rockingham County).",
+    "address": "Equine Immersion Center",
+    "city": "Stratham",
+    "zip": "03885",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "scott@equineimmersionfoundation.org",
+    "website": "https://equineimmersionfoundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Scott Brockelman",
+        "email": "scott@equineimmersionfoundation.org"
+      },
+      {
+        "name": "Marge Hart",
+        "email": "marge.hart188@gmail.com"
+      },
+      {
+        "name": "Kelly MacCorquodale",
+        "email": "kelly@equineimmersionproject.com"
+      },
+      {
+        "name": "Tara Mahoney",
+        "email": "tmahoney.eip@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://equineimmersionfoundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-036",
+    "name": "FireIce Frogs Corp.",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Mental Health & Peer Support for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "derek.gordon@fireicefrogs.com",
+    "website": "https://fireicefrogs.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Derek Gordon",
+        "email": "derek.gordon@fireicefrogs.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://fireicefrogs.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-037",
+    "name": "Forge VFR (Mental Health & Substance Use)",
+    "categories": [
+      "mental-health-wellness",
+      "healthcare-medical"
+    ],
+    "description": "Healthcare Provider providing Mental Health & Trauma Treatment for Vets & First Responders in Manchester, NH (Hillsborough County).",
+    "address": "175 Ammon Drive, Suite 208",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(888) 224-7312",
+    "email": "Skilbreth@forgehealth.com",
+    "website": "https://forgehealth.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Sean Kilbreth",
+        "email": "Skilbreth@forgehealth.com"
+      },
+      {
+        "name": "Eileen Meaney",
+        "email": "Emeaney@forgehealth.com"
+      },
+      {
+        "name": "Nathaniel Taylor",
+        "email": "Ntaylor@forgehealth.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://forgehealth.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-038",
+    "name": "Granite United Way Whole Village Family Resource Center",
+    "categories": [
+      "family-youth"
+    ],
+    "description": "Community Resource Center providing Family Resources & Community Support in Plymouth, NH (Grafton County).",
+    "address": "258 Highland Street",
+    "city": "Plymouth",
+    "zip": "03264",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "secondary_region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(603) 536-3720",
+    "email": "jennifer.hunter@graniteuw.org",
+    "website": "https://www.graniteuw.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jennifer Hunter",
+        "email": "jennifer.hunter@graniteuw.org"
+      },
+      {
+        "name": "Jennifer Thomas",
+        "email": "jennifer.thomas@graniteuw.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.graniteuw.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-039",
+    "name": "Greater Nashua Mental Health",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Mental Health Center providing Mental Health & Counseling Services in Nashua, NH (Hillsborough County).",
+    "address": "100 West Pearl Street",
+    "city": "Nashua",
+    "zip": "03060",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 889-6147",
+    "email": "lallyj@gnmhc.org",
+    "website": "https://gnmhc.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "John Lally",
+        "email": "lallyj@gnmhc.org"
+      },
+      {
+        "name": "Kevin O'Brien",
+        "email": "obrienk@gnmhc.org"
+      },
+      {
+        "name": "Alicia Somers",
+        "email": "somersa@gnmhc.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://gnmhc.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-040",
+    "name": "Guardian Revival",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine",
+      "recreation-outdoors"
+    ],
+    "description": "Nonprofit Organization providing Mental Health, Service Dogs, Outdoor Adventures for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "kimhaight@guardianrevival.org",
+    "website": "https://guardianrevival.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Kim Haight",
+        "email": "kimhaight@guardianrevival.org"
+      },
+      {
+        "name": "Alexander Othmer",
+        "email": "alexanderothmer@guardianrevival.org"
+      },
+      {
+        "name": "Elizabeth Ten Dyke",
+        "email": "etendyke@choicewordspr.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://guardianrevival.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-041",
+    "name": "Harbor Care",
+    "categories": [
+      "housing-shelter",
+      "healthcare-medical",
+      "education-employment"
+    ],
+    "description": "Nonprofit Community Health Center providing Housing First, Employment, Healthcare, Veteran Supportive Services in Nashua, NH (Hillsborough County).",
+    "address": "77 Northeastern Blvd",
+    "city": "Nashua",
+    "zip": "03060",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 882-3616",
+    "email": "a.alicea@harborcarenh.org",
+    "website": "https://harborcarenh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Abigail Alicea",
+        "email": "a.alicea@harborcarenh.org"
+      },
+      {
+        "name": "Alexandra Baer",
+        "email": "a.baer@harborcarenh.org"
+      },
+      {
+        "name": "Samuel Dahlberg",
+        "email": "s.dahlberg@harborcarenh.org"
+      },
+      {
+        "name": "Ashley Decato",
+        "email": "a.decato@harborcarenh.org"
+      },
+      {
+        "name": "Finn Gibbons",
+        "email": "f.gibbons@harborcarenh.org"
+      },
+      {
+        "name": "Andrea May",
+        "email": "a.may@harborcarenh.org"
+      },
+      {
+        "name": "Mackenzie Moran",
+        "email": "m.moran@harborcarenh.org"
+      },
+      {
+        "name": "Henry Och",
+        "email": "h.och@harborcarenh.org"
+      },
+      {
+        "name": "Amber Stalker",
+        "email": "amber.s@harborcarenh.org"
+      },
+      {
+        "name": "Doug Starbird",
+        "email": "d.starbird@harborcarenh.org"
+      },
+      {
+        "name": "Brian Tagliaferro",
+        "email": "b.tagliaferro@harborcarenh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://harborcarenh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-042",
+    "name": "Hero Pups Inc",
+    "categories": [
+      "service-animals-equine"
+    ],
+    "description": "Service Dog Organization providing Service Dogs for Vets & First Responders in Stratham, NH (Rockingham County).",
+    "address": "207 Route 108",
+    "city": "Stratham",
+    "zip": "03885",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "(603) 502-6460",
+    "email": "heropupsinc@yahoo.com",
+    "website": "https://heropups.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Laura Barker",
+        "email": "heropupsinc@yahoo.com"
+      },
+      {
+        "name": "Selena Barker",
+        "email": "heropupsinc@yahoo.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://heropups.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-043",
+    "name": "Heroes' Harvests",
+    "categories": [
+      "mental-health-wellness",
+      "education-employment",
+      "recreation-outdoors"
+    ],
+    "description": "Nonprofit Organization providing Outdoor Therapeutic Hunting & Fishing, Career Transition for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "vp@heroesharvests.org",
+    "website": "https://heroesharvests.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Andrew Ruszkiewicz",
+        "email": "vp@heroesharvests.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://heroesharvests.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-044",
+    "name": "Hidden Battles",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Mental Health, Suicide Prevention, Peer Therapy for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "nonaalexander1@gmail.com",
+    "website": "https://hiddenbattles.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Nona Alexander",
+        "email": "nonaalexander1@gmail.com"
+      },
+      {
+        "name": "Leslie Cregg-Hyder",
+        "email": "leslie@plannedperfectly.net"
+      },
+      {
+        "name": "Scott Hyder",
+        "email": "blazrss@yahoo.com"
+      },
+      {
+        "name": "Matt Kowalski",
+        "email": "mkbfd43@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://hiddenbattles.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-045",
+    "name": "High Horses Center for Equine-Assisted Service",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Equine Therapy Center providing Equine-Assisted Therapy & Mental Health in Lebanon, NH (Grafton County).",
+    "address": "Upper Valley / Sharon Equine Center",
+    "city": "Lebanon",
+    "zip": "03756",
+    "county": "Grafton",
+    "region_id": "dartmouth-lake-sunapee",
+    "is_statewide": false,
+    "phone": "(802) 763-3280",
+    "email": "harold@highhorses.org",
+    "website": "https://highhorses.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Harold Pinkham",
+        "email": "harold@highhorses.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://highhorses.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-046",
+    "name": "Holiday Cards 4 Our Military Challenge",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "Community Initiative providing Troop Care, Morale & Support in Hollis, NH (Hillsborough County).",
+    "address": "P.O. Box 103, Hollis, NH",
+    "city": "Hollis",
+    "zip": "03049",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "holidaycardsnh@gmail.com",
+    "website": "https://militaryholidaycardchallenge.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Laura Landerman-Garber",
+        "email": "holidaycardsnh@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://militaryholidaycardchallenge.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-047",
+    "name": "Home Base Program",
+    "categories": [
+      "healthcare-medical"
+    ],
+    "description": "Academic Health Center Program providing Clinical Care for Invisible Wounds of War for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "rcasavant@mgb.org",
+    "website": "https://homebase.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Ryan Casavant",
+        "email": "rcasavant@mgb.org"
+      },
+      {
+        "name": "Katrina Echevarria",
+        "email": "kechevarria@mgh.harvard.edu"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://homebase.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-048",
+    "name": "Homes for Our Troops",
+    "categories": [
+      "housing-shelter"
+    ],
+    "description": "National Nonprofit providing Specially Adapted Custom Homes for Injured Vets for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "ebuddington@hfotusa.org",
+    "website": "https://hfotusa.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Elizabeth Buddington",
+        "email": "ebuddington@hfotusa.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://hfotusa.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-049",
+    "name": "Honor Flight New England",
+    "categories": [
+      "benefits-advocacy"
+    ],
+    "description": "Nonprofit Organization providing Free Flights for Veterans to Memorials in Washington DC in Hooksett, NH (Merrimack County).",
+    "address": "PO Box 162",
+    "city": "Hooksett",
+    "zip": "03106",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 518-5368",
+    "email": "tombyron38@gmail.com",
+    "website": "https://honorflightnewengland.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Joseph \"Tom\" Byron",
+        "email": "tombyron38@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://honorflightnewengland.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-050",
+    "name": "Hounds Town Charities",
+    "categories": [
+      "service-animals-equine"
+    ],
+    "description": "Charity Foundation providing Service & Companion Animal Support for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "mike@houndstownusa.com",
+    "website": "https://houndstownusa.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Michael Gould",
+        "email": "mike@houndstownusa.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://houndstownusa.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-051",
+    "name": "House in the Woods Inc.",
+    "categories": [
+      "housing-shelter",
+      "mental-health-wellness",
+      "recreation-outdoors"
+    ],
+    "description": "Retreat Facility providing Outdoor Outdoor Therapeutic Retreats for Vets for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "angie.gade@houseinthewoods.org",
+    "website": "https://houseinthewoods.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Angie Gustafson",
+        "email": "angie.gade@houseinthewoods.org"
+      },
+      {
+        "name": "Paul House",
+        "email": "me_guide@hotmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://houseinthewoods.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-052",
+    "name": "Irreverent Warriors Portsmouth",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Mental Health, Veteran Camaraderie Events in Portsmouth, NH (Rockingham County).",
+    "address": "Portsmouth Seacoast Chapter",
+    "city": "Portsmouth",
+    "zip": "03801",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "portsmouth@irreverentwarriors.com",
+    "website": "https://irreverentwarriors.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Brianna Brack",
+        "email": "Brianna.brack@snhu.edu"
+      },
+      {
+        "name": "Chris Schroeder",
+        "email": "portsmouth@irreverentwarriors.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://irreverentwarriors.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-053",
+    "name": "Kindred Spirits Ranch",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Therapeutic Ranch providing Equine-Assisted Psychotherapy & Mental Health in Campton, NH (Grafton County).",
+    "address": "Abenaki Farms, Campton, NH",
+    "city": "Campton",
+    "zip": "03223",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "",
+    "email": "sveinotte@ksrnh.org",
+    "website": "https://ksrnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Steve Veinotte",
+        "email": "sveinotte@ksrnh.org"
+      },
+      {
+        "name": "Sarah Young",
+        "email": "syoung@ksrnh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://ksrnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-054",
+    "name": "Labyrinth Therapeutic Services",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Therapeutic Practice providing Mental Health Counseling & Therapeutic Programs for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "Aaron@LabyrinthTS.org",
+    "website": "https://labyrinthts.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Aaron Dugan",
+        "email": "Aaron@LabyrinthTS.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://labyrinthts.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-055",
+    "name": "Lakes Region Veterans Coalition",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "Regional Coalition providing Community Health & Veteran Support Network in Laconia, NH (Belknap County).",
+    "address": "1943 Lake Shore Road (Lakes Region Hub)",
+    "city": "Laconia",
+    "zip": "03246",
+    "county": "Belknap",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "",
+    "email": "1sgpeirce@gmail.com",
+    "website": "https://www.camp-resilience.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Chris Peirce",
+        "email": "1sgpeirce@gmail.com"
+      },
+      {
+        "name": "Kurt Webber",
+        "email": "kwebber@camp-resilience.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.camp-resilience.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-056",
+    "name": "Less Leg More Heart",
+    "categories": [
+      "mental-health-wellness",
+      "healthcare-medical",
+      "benefits-advocacy"
+    ],
+    "description": "Nonprofit Organization providing Hope, Advocacy & Supplies for Amputee Vets for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "lis.greiner@lesslegmoreheart.com",
+    "website": "https://lesslegmoreheart.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Lis Greiner",
+        "email": "lis.greiner@lesslegmoreheart.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://lesslegmoreheart.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-057",
+    "name": "Liberty House",
+    "categories": [
+      "housing-shelter",
+      "food-basic-needs"
+    ],
+    "description": "Transitional Housing & Pantry providing Substance-Free Transitional Housing, Food & Clothing Pantry in Manchester, NH (Hillsborough County).",
+    "address": "221 Orange Street",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 669-0761",
+    "email": "jennifer.barlow@libertyhousenh.org",
+    "website": "https://libertyhousenh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jennifer Barlow",
+        "email": "jennifer.barlow@libertyhousenh.org"
+      },
+      {
+        "name": "Ashley Kitchell",
+        "email": "ashley@libertyhousenh.org"
+      },
+      {
+        "name": "Jeff (Liberty House)",
+        "email": "jeff@libertyhousenh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://libertyhousenh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-058",
+    "name": "Manchester VA Medical Center",
+    "categories": [
+      "housing-shelter",
+      "mental-health-wellness",
+      "healthcare-medical"
+    ],
+    "description": "Federal VA Medical Center providing Comprehensive VA Healthcare, Suicide Prevention, Housing in Manchester, NH (Hillsborough County).",
+    "address": "718 Smyth Road",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 624-4366",
+    "email": "Kevin.Forrest@va.gov",
+    "website": "https://www.va.gov/manchester-health-care/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Kevin Forrest (Medical Center Director)",
+        "email": "Kevin.Forrest@va.gov"
+      },
+      {
+        "name": "Julie Vose",
+        "email": "Julie.Vose@va.gov"
+      },
+      {
+        "name": "Justin Moeling (Suicide Prevention)",
+        "email": "john.moeling@va.gov"
+      },
+      {
+        "name": "Michael Bichrest",
+        "email": "michael.bichrest@va.gov"
+      },
+      {
+        "name": "Michelle Nerish",
+        "email": "michelle.nerish@va.gov"
+      },
+      {
+        "name": "Kaitlyn Grimes",
+        "email": "kaitlyn.grimes@va.gov"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.va.gov/manchester-health-care/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-059",
+    "name": "Military Families Story Project (The Voice Library)",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Digital Archive providing Mental Health, Voice Archiving for Military Families for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "alb@ThevoiceLibrary.net",
+    "website": "https://thevoicelibrary.net/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Al Brandano",
+        "email": "alb@ThevoiceLibrary.net"
+      },
+      {
+        "name": "Joshua Skinner",
+        "email": "joshuaskinner88@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://thevoicelibrary.net/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-060",
+    "name": "Military Kids Program (UNH Extension)",
+    "categories": [
+      "education-employment",
+      "family-youth"
+    ],
+    "description": "University Youth Program providing Support & Youth Programs for Military Children in Durham, NH (Strafford County).",
+    "address": "UNH Cooperative Extension, Taylor Hall",
+    "city": "Durham",
+    "zip": "03824",
+    "county": "Strafford",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "margolapointe33@gmail.com",
+    "website": "https://extension.unh.edu/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Margo LaPointe",
+        "email": "margolapointe33@gmail.com"
+      },
+      {
+        "name": "David Lee (UNH)",
+        "email": "david.lee@unh.edu"
+      },
+      {
+        "name": "Philip Brekke (UNH)",
+        "email": "philip.brekke@unh.edu"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://extension.unh.edu/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-061",
+    "name": "Mobius Mobility",
+    "categories": [
+      "mental-health-wellness",
+      "healthcare-medical"
+    ],
+    "description": "Medical Equipment Partner providing Advanced iBOT Mobility Systems for Disabled Vets in Manchester, NH (Hillsborough County).",
+    "address": "3 Northern Ave",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(844) 346-2468",
+    "email": "marketing@mobiusmobility.com",
+    "website": "https://mobiusmobility.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jocelyne Bisson",
+        "email": "marketing@mobiusmobility.com"
+      },
+      {
+        "name": "Laura Gilman",
+        "email": ""
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://mobiusmobility.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-062",
+    "name": "NAMI New Hampshire (National Alliance on Mental Illness)",
+    "categories": [
+      "mental-health-wellness",
+      "education-employment",
+      "benefits-advocacy"
+    ],
+    "description": "Mental Health Advocacy Org providing Mental Health Support, Education, Crisis Support in Concord, NH (Merrimack County).",
+    "address": "85 North State Street",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 225-5359",
+    "email": "acook@naminh.org",
+    "website": "https://naminh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Amy Cook",
+        "email": "acook@naminh.org"
+      },
+      {
+        "name": "Heidi Mathews-Cantin",
+        "email": "hcantin@naminh.org"
+      },
+      {
+        "name": "S. Allen",
+        "email": "sallen@naminh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://naminh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-063",
+    "name": "Nashua Community Music School",
+    "categories": [
+      "mental-health-wellness",
+      "education-employment"
+    ],
+    "description": "Community Music School providing Music Education & Expressive Arts Therapy in Nashua, NH (Hillsborough County).",
+    "address": "2 Lock Street",
+    "city": "Nashua",
+    "zip": "03060",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 881-7030",
+    "email": "krystal.bloom@nashuacms.org",
+    "website": "https://nashuacms.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Krystal Bloom",
+        "email": "krystal.bloom@nashuacms.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://nashuacms.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-064",
+    "name": "New England Battalion",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors",
+      "veterans-posts-community"
+    ],
+    "description": "Nonprofit Organization providing Mental Health & Outdoor Camaraderie for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "jason@newenglandbattalion.org",
+    "website": "https://newenglandbattalion.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jason Callahan",
+        "email": "jason@newenglandbattalion.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://newenglandbattalion.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-065",
+    "name": "New Hampshire Veterans Home",
+    "categories": [
+      "housing-shelter",
+      "healthcare-medical"
+    ],
+    "description": "State Veterans Home providing Long-Term Care & Housing for NH Vets in Tilton, NH (Belknap County).",
+    "address": "139 Winter Street",
+    "city": "Tilton",
+    "zip": "03276",
+    "county": "Belknap",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(603) 527-4400",
+    "email": "sarah.e.stanley@nhvh.nh.gov",
+    "website": "https://www.veteranshome.nh.gov/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Sarah Stanley",
+        "email": "sarah.e.stanley@nhvh.nh.gov"
+      },
+      {
+        "name": "Kimberly MacKay",
+        "email": "kimberly.m.mackay@nhvh.nh.gov"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.veteranshome.nh.gov/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-066",
+    "name": "NH National Guard - Wellness Division",
+    "categories": [
+      "housing-shelter",
+      "mental-health-wellness",
+      "education-employment"
+    ],
+    "description": "Military Division providing Mental Health, Housing, Employment for Guard Members in Concord, NH (Merrimack County).",
+    "address": "1 Minuteman Way",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 225-1300",
+    "email": "andrew.grassie.civ@army.mil",
+    "website": "https://nh.ng.mil/",
+    "branches": [
+      "army",
+      "air-force"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Andrew Grassie",
+        "email": "andrew.grassie.civ@army.mil"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://nh.ng.mil/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-067",
+    "name": "NH North Country Veterans (Bridge House)",
+    "categories": [
+      "housing-shelter",
+      "mental-health-wellness"
+    ],
+    "description": "Community Shelter & Housing providing Housing Support, Shelter, Mental Health in Plymouth, NH (Grafton County).",
+    "address": "260 Highland Street (Bridge House)",
+    "city": "Plymouth",
+    "zip": "03264",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "secondary_region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(603) 536-7631",
+    "email": "cathybentwoodbridgehouse@gmail.com",
+    "website": "https://bridgehousenh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Catherine Bentwood",
+        "email": "cathybentwoodbridgehouse@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://bridgehousenh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-068",
+    "name": "NH Veterans of Foreign Wars (VFW State Headquarters)",
+    "categories": [
+      "mental-health-wellness",
+      "veterans-posts-community",
+      "benefits-advocacy"
+    ],
+    "description": "State Veterans Organization providing Veterans Advocacy, Claims Assistance, Post Network in Manchester, NH (Hillsborough County).",
+    "address": "275 Chestnut Street",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 222-5780",
+    "email": "nhvfwstateheadquarters@gmail.com",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Paul Lloyd (State HQ)",
+        "email": "nhvfwstateheadquarters@gmail.com"
+      },
+      {
+        "name": "Darwin Beeman",
+        "email": "luckytwobealive@comcast.net"
+      },
+      {
+        "name": "Dennis Manning",
+        "email": "vfwnhmembership@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-069",
+    "name": "North Country Veterans Dental Program",
+    "categories": [
+      "healthcare-medical"
+    ],
+    "description": "Healthcare Program providing Free & Low-Cost Dental Care for Vets in Littleton, NH (Grafton County).",
+    "address": "North Country Dental Hub",
+    "city": "Littleton",
+    "zip": "03561",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "",
+    "email": "balloontraveler@yahoo.com",
+    "website": "https://northcountryveteransdental.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Linda Massimilla",
+        "email": "balloontraveler@yahoo.com"
+      },
+      {
+        "name": "Kathryn Cote",
+        "email": ""
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://northcountryveteransdental.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-070",
+    "name": "Northeast Passage (UNH)",
+    "categories": [
+      "mental-health-wellness",
+      "education-employment",
+      "recreation-outdoors"
+    ],
+    "description": "University Adaptive Sports Program providing Adaptive Sports, Recreation & Therapeutic Recreation in Durham, NH (Strafford County).",
+    "address": "121 Technology Drive",
+    "city": "Durham",
+    "zip": "03824",
+    "county": "Strafford",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "(603) 862-0070",
+    "email": "andrea.lucas@unh.edu",
+    "website": "https://nepassage.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Andrea Lucas",
+        "email": "andrea.lucas@unh.edu"
+      },
+      {
+        "name": "Tye Thompson",
+        "email": "tye.thompson@unh.edu"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://nepassage.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-071",
+    "name": "Operation Delta Dog",
+    "categories": [
+      "service-animals-equine"
+    ],
+    "description": "Service Dog Nonprofit providing Rescued Dogs Trained as Service Dogs for Vets in Hollis, NH (Hillsborough County).",
+    "address": "321 West Street",
+    "city": "Hollis",
+    "zip": "03049",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 557-4560",
+    "email": "abutler@operationdeltadog.org",
+    "website": "https://operationdeltadog.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Alison Butler",
+        "email": "abutler@operationdeltadog.org"
+      },
+      {
+        "name": "Julia D'Orazio",
+        "email": "jdorazio@operationdeltadog.org"
+      },
+      {
+        "name": "Kerry Hildebrand",
+        "email": "khildebrand@operationdeltadog.org"
+      },
+      {
+        "name": "Charlotte Troddy",
+        "email": "ctroddyn@operationdeltadog.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://operationdeltadog.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-072",
+    "name": "Operation HIGH FLIGHT",
+    "categories": [
+      "education-employment"
+    ],
+    "description": "Nonprofit Organization providing Aviation Career Transition & Mentorship for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "Mark.andrews@ophighflight.org",
+    "website": "https://ophighflight.org/",
+    "branches": [
+      "air-force",
+      "space-force"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Mark Andrews",
+        "email": "Mark.andrews@ophighflight.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://ophighflight.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-073",
+    "name": "Overwatch Foundation",
+    "categories": [
+      "benefits-advocacy"
+    ],
+    "description": "Nonprofit Organization providing Crisis Response & Humanitarian Veteran Operations for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "vchambers@overwatch.org",
+    "website": "https://overwatch.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Vince Chambers",
+        "email": "vchambers@overwatch.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://overwatch.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-074",
+    "name": "Patient Airlift Services (PALS)",
+    "categories": [
+      "healthcare-medical"
+    ],
+    "description": "Volunteer Pilot Organization providing Free Medical Flights for Vets & Patients for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "grants@palservices.org",
+    "website": "https://palservices.org/",
+    "branches": [
+      "air-force",
+      "space-force"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Donna Collins",
+        "email": "grants@palservices.org"
+      },
+      {
+        "name": "Jennifer Wahlig",
+        "email": "jennifer.wahlig@palservices.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://palservices.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-075",
+    "name": "Play for Hero's Foundation",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Foundation providing Sports Events & Mental Health Support for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "info@playforheroes.org",
+    "website": "https://playforheroes.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Mason DeFrancesco",
+        "email": "info@playforheroes.org"
+      },
+      {
+        "name": "Sophia DeFrancesco",
+        "email": "sophie.defrancesco@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://playforheroes.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-076",
+    "name": "Plymouth State University Office of Military Services",
+    "categories": [
+      "education-employment",
+      "benefits-advocacy"
+    ],
+    "description": "University Military Office providing Education Benefits, GI Bill, Career Coaching in Plymouth, NH (Grafton County).",
+    "address": "17 High Street",
+    "city": "Plymouth",
+    "zip": "03264",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "secondary_region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(603) 535-5000",
+    "email": "sgmjim@gmail.com",
+    "website": "https://www.plymouth.edu/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jacqui Nelson",
+        "email": "jenelson@plymouth.edu"
+      },
+      {
+        "name": "Jim Goss",
+        "email": "sgmjim@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.plymouth.edu/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-077",
+    "name": "Prevention Strategies",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Public Health Agency providing Mental Health & Substance Misuse Prevention for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "jritson@pphnh.org",
+    "website": "https://pphnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Joshua Ritson",
+        "email": "jritson@pphnh.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://pphnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-078",
+    "name": "Rapid Recovery Center of New England",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Recovery Center providing Holistic Mental Health & Physical Recovery for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "newenglandrapidrecovery@gmail.com",
+    "website": "http://www.newenglandrapidrecovery.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Tina Michaud-Gray",
+        "email": "newenglandrapidrecovery@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "http://www.newenglandrapidrecovery.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-079",
+    "name": "Reigning Hope Ranch",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Therapeutic Ranch providing Equine Therapy & Mental Wellness in Amherst, NH (Hillsborough County).",
+    "address": "Reigning Hope Equestrian Center",
+    "city": "Amherst",
+    "zip": "03031",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "jenna@reigninghoperanch.com",
+    "website": "https://reigninghoperanch.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jenna Baillargeon",
+        "email": "jenna@reigninghoperanch.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://reigninghoperanch.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-080",
+    "name": "Rotors to Reels",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors"
+    ],
+    "description": "Nonprofit Organization providing Therapeutic Fishing & Outdoor Adventures for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "presidentr2r@gmail.com",
+    "website": "https://rotorstoreels.org/",
+    "branches": [
+      "navy",
+      "coast-guard"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Rodney Anderson",
+        "email": "presidentr2r@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://rotorstoreels.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-081",
+    "name": "Shields and Stripes",
+    "categories": [
+      "mental-health-wellness",
+      "healthcare-medical"
+    ],
+    "description": "Rehabilitation Nonprofit providing Rehabilitation for Vets & First Responders (PTSD & TBI) for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "steven.nisbet@shieldsandstripes.org",
+    "website": "https://shieldsandstripes.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Steven Nisbet",
+        "email": "steven.nisbet@shieldsandstripes.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://shieldsandstripes.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-082",
+    "name": "Strongwater Farm",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Equine Therapy Center providing Equestrian Therapeutic Programs for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "aashishbalani27@gmail.com",
+    "website": "https://strongwaterfarm.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Shannon Giguere",
+        "email": "aashishbalani27@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://strongwaterfarm.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-083",
+    "name": "Student Veterans of America (Plymouth State)",
+    "categories": [
+      "education-employment",
+      "benefits-advocacy"
+    ],
+    "description": "Student Veteran Chapter providing Student Veteran Peer Support & Campus Advocacy in Plymouth, NH (Grafton County).",
+    "address": "17 High Street",
+    "city": "Plymouth",
+    "zip": "03264",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "secondary_region_id": "lakes",
+    "is_statewide": false,
+    "phone": "",
+    "email": "sgmjim@gmail.com",
+    "website": "https://studentveterans.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "James Goss",
+        "email": "sgmjim@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://studentveterans.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-084",
+    "name": "Survivor Outreach Services (SOS)",
+    "categories": [
+      "family-youth"
+    ],
+    "description": "Military Family Support Program providing Support for Families of Fallen Service Members in Concord, NH (Merrimack County).",
+    "address": "1 Minuteman Way",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 225-1300",
+    "email": "stephanie.m.ouellette.ctr@army.mil",
+    "website": "https://armymwr.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Stephanie Ouellette",
+        "email": "stephanie.m.ouellette.ctr@army.mil"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://armymwr.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-085",
+    "name": "The Homeland Heroes Foundation",
+    "categories": [
+      "food-basic-needs",
+      "financial-legal",
+      "service-animals-equine"
+    ],
+    "description": "Nonprofit Foundation providing Emergency Financial Aid, Food, Service Dogs, Furnishings in Salem, NH (Rockingham County).",
+    "address": "10 Delaware Drive, Suite 1",
+    "city": "Salem",
+    "zip": "03079",
+    "county": "Rockingham",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 458-2951",
+    "email": "julie@homelandheroesfoundation.org",
+    "website": "https://homelandheroesfoundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Julie Weymouth",
+        "email": "julie@homelandheroesfoundation.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://homelandheroesfoundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-086",
+    "name": "The Local Veteran",
+    "categories": [
+      "benefits-advocacy"
+    ],
+    "description": "Community Organization providing Community Veteran Networking & Support for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "thelocalveteraninc@gmail.com",
+    "website": "https://thelocalveteran.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Jeff Barker",
+        "email": "thelocalveteraninc@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://thelocalveteran.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-087",
+    "name": "THP Incorporated (The Hope Project)",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Organization providing Mental Health & Community Programs for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "allison@thehope-project.org",
+    "website": "https://thehope-project.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Allison Wilson",
+        "email": "allison@thehope-project.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://thehope-project.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-088",
+    "name": "TOURS OF DUTY",
+    "categories": [
+      "mental-health-wellness",
+      "benefits-advocacy"
+    ],
+    "description": "Nonprofit Organization providing Mental Health & Veteran Advocacy for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "margolapointe33@gmail.com",
+    "website": "https://toursofduty.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Margo LaPointe",
+        "email": "margolapointe33@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://toursofduty.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-089",
+    "name": "UpReach Therapeutic Equestrian Center, Inc.",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Therapeutic Riding Center providing Equine-Assisted Activities & Therapies in Goffstown, NH (Hillsborough County).",
+    "address": "153 Paige Hill Road",
+    "city": "Goffstown",
+    "zip": "03045",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 497-2343",
+    "email": "Karen@upreachtec.org",
+    "website": "https://upreachtec.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Karen Kersting",
+        "email": "Karen@upreachtec.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://upreachtec.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-090",
+    "name": "Valor1 Foundation",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Nonprofit Foundation providing Mental Health & First Responder / Vet Wellness for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "shawn.linhares@valor1foundation.org",
+    "website": "https://valor1foundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Shawn Linhares",
+        "email": "shawn.linhares@valor1foundation.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://valor1foundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-091",
+    "name": "Vet's Rest Stop, Inc.",
+    "categories": [
+      "mental-health-wellness",
+      "service-animals-equine"
+    ],
+    "description": "Nonprofit Organization providing Mental Health, Companion Animals, Retreats in Epsom, NH (Merrimack County).",
+    "address": "Vet's Rest Stop Sanctuary",
+    "city": "Epsom",
+    "zip": "03234",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "vetsreststop@gmail.com",
+    "website": "https://www.vrsnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Cindy Simmons",
+        "email": "vetsreststop@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.vrsnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-092",
+    "name": "Veteran Pathways of New England",
+    "categories": [
+      "housing-shelter",
+      "food-basic-needs",
+      "service-animals-equine"
+    ],
+    "description": "Regional Veteran Center providing Housing, Food Pantry, Service Dogs, Peer Mentoring for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "(978) 384-8800",
+    "email": "gbent@vetpathne.org",
+    "website": "https://www.veteranpathwaysne.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Gary Bent",
+        "email": "gbent@vetpathne.org"
+      },
+      {
+        "name": "Wayne Dunham",
+        "email": "wdunham@vetpathne.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.veteranpathwaysne.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-093",
+    "name": "Veteran Sailing Inc.",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors"
+    ],
+    "description": "Nonprofit Organization providing Therapeutic Sailing & Nautical Recreation in Portsmouth, NH (Rockingham County).",
+    "address": "Portsmouth Harbor / Seacoast",
+    "city": "Portsmouth",
+    "zip": "03801",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "joe@veteransailing.com",
+    "website": "https://veteransailing.com/",
+    "branches": [
+      "navy",
+      "coast-guard"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Joseph Mastrangelo Jr.",
+        "email": "joe@veteransailing.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://veteransailing.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-094",
+    "name": "Veterans Inc.",
+    "categories": [
+      "housing-shelter",
+      "education-employment"
+    ],
+    "description": "Regional Service Provider providing Housing Support, Employment, Case Management for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "cynthialangdon@veteransinc.org",
+    "website": "https://veteransinc.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Cynthia Langdon",
+        "email": "cynthialangdon@veteransinc.org"
+      },
+      {
+        "name": "Jim Ricker",
+        "email": "JimRicker@VeteransInc.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://veteransinc.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-095",
+    "name": "Veterans Legal Justice",
+    "categories": [
+      "financial-legal"
+    ],
+    "description": "Legal Assistance Org providing Pro Bono Legal Representation for Veterans for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "zack@vljnh.org",
+    "website": "https://vljnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Zachary Phillips",
+        "email": "zack@vljnh.org"
+      },
+      {
+        "name": "Larry Vogelman",
+        "email": "vogelmanlarry@yahoo.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vljnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-096",
+    "name": "Veterans on the 48",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors"
+    ],
+    "description": "Outdoor Therapy Group providing Therapeutic Hiking in NH 4, 000-Footers in Lincoln, NH (Grafton County).",
+    "address": "White Mountains 4,000-Footer Base",
+    "city": "Lincoln",
+    "zip": "03251",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "",
+    "email": "michael.york@veteransonthe48.org",
+    "website": "https://veteransonthe48.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Michael York",
+        "email": "michael.york@veteransonthe48.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://veteransonthe48.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-097",
+    "name": "Veterans Resource Alliance NH (VRANH)",
+    "categories": [
+      "mental-health-wellness",
+      "food-basic-needs",
+      "service-animals-equine"
+    ],
+    "description": "Statewide Alliance providing Food Support, Mental Health, Service Animals in Salem, NH (Rockingham County).",
+    "address": "10 Delaware Drive",
+    "city": "Salem",
+    "zip": "03079",
+    "county": "Rockingham",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 458-2951",
+    "email": "Rae@VRANH.org",
+    "website": "https://vrahelps.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Rae O'Donnell",
+        "email": "Rae@VRANH.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vrahelps.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-098",
+    "name": "Veterans Yoga Project",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Mindfulness & Yoga Org providing Mindful Resilience, Yoga & Mental Health for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "brianna@veteransyogaproject.org",
+    "website": "https://veteransyogaproject.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Brianna Renner",
+        "email": "brianna@veteransyogaproject.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://veteransyogaproject.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-099",
+    "name": "Veterans2Veterans Group",
+    "categories": [
+      "food-basic-needs"
+    ],
+    "description": "Peer Support Group providing Food Support & Peer-to-Peer Relief for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "veterans2veteransgroup@gmail.com",
+    "website": "https://veterans2veteransgroup.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Chuck Bradley",
+        "email": "veterans2veteransgroup@gmail.com"
+      },
+      {
+        "name": "Eric McNail",
+        "email": "veterans2veteransgroup@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://veterans2veteransgroup.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-100",
+    "name": "VFW Post 168 - Emerson Hovey (Portsmouth)",
+    "categories": [
+      "veterans-posts-community",
+      "benefits-advocacy"
+    ],
+    "description": "VFW Local Post providing Veterans Advocacy, Community Post, Meetings in Portsmouth, NH (Rockingham County).",
+    "address": "25 Cottage Street",
+    "city": "Portsmouth",
+    "zip": "03801",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "(603) 973-5000",
+    "email": "DC9guy@comcast.net",
+    "website": "https://vfw168.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Bill Kingston",
+        "email": "DC9guy@comcast.net"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfw168.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-101",
+    "name": "VFW Post 1631 - Concord VFW",
+    "categories": [
+      "veterans-posts-community",
+      "benefits-advocacy"
+    ],
+    "description": "VFW Local Post providing Veterans Advocacy, Community Post, Meetings in Concord, NH (Merrimack County).",
+    "address": "6 Court Street",
+    "city": "Concord",
+    "zip": "03301",
+    "county": "Merrimack",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "(603) 228-8907",
+    "email": "pjl64@comcast.net",
+    "website": "https://www.facebook.com/ConcordVeteransOfForeignWarsPost1631",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Paul Lloyd",
+        "email": "pjl64@comcast.net"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/ConcordVeteransOfForeignWarsPost1631",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-102",
+    "name": "VFW Michael W. Ouellette Memorial Post",
+    "categories": [
+      "mental-health-wellness",
+      "veterans-posts-community",
+      "benefits-advocacy"
+    ],
+    "description": "VFW Local Post providing Mental Health & Veteran Advocacy for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "STEVEN.SOULE@VFW.ORG",
+    "website": "https://vfw.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Steven Soule",
+        "email": "STEVEN.SOULE@VFW.ORG"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfw.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-103",
+    "name": "Vouchers for Veterans",
+    "categories": [
+      "food-basic-needs",
+      "service-animals-equine"
+    ],
+    "description": "Food Security Program providing Fresh Farmers Market Vouchers for Vets in Rochester, NH (Strafford County).",
+    "address": "PO Box 338",
+    "city": "Rochester",
+    "zip": "03839",
+    "county": "Strafford",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "(603) 817-6407",
+    "email": "morgan@vouchersforveterans.org",
+    "website": "https://vouchersforveterans.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Morgan Morani",
+        "email": "morgan@vouchersforveterans.org"
+      },
+      {
+        "name": "Kelly O'Neil",
+        "email": "kelly@vouchersforveterans.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vouchersforveterans.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-104",
+    "name": "Walking With Honor",
+    "categories": [
+      "recreation-outdoors"
+    ],
+    "description": "Nonprofit Organization providing Community Outreach & Veteran Support for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "walkingwithhonor@gmail.com",
+    "website": "https://walkingwithhonor.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Faith Harris",
+        "email": "walkingwithhonor@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://walkingwithhonor.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-105",
+    "name": "Walking With Tiger",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors"
+    ],
+    "description": "New Hampshire veteran peer support & wellness walking organization (\"Changing Lives, One Mile at a Time\"). Led by Founder & President Lawrence \"Tiger\" Prentice.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "(603) 264-2079",
+    "email": "tiger@walkwithtiger.org",
+    "website": "https://walkwithtiger.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Lawrence \"Tiger\" Prentice (Founder & President)",
+        "email": "tiger@walkwithtiger.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://walkwithtiger.org/",
+    "amplifier_doc": "walkwithtiger.pdf"
+  },
+  {
+    "id": "vso-106",
+    "name": "Warrior Dog Foundation",
+    "categories": [
+      "healthcare-medical",
+      "service-animals-equine"
+    ],
+    "description": "Working Dog Foundation providing Rehabilitation for Working Dogs (SOF / MWD) for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "laura@warriordogfoundation.org",
+    "website": "https://warriordogfoundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Laura Sellards",
+        "email": "laura@warriordogfoundation.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://warriordogfoundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-107",
+    "name": "Warrior Health Foundation",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Health Foundation providing Proactive Health & Wellness Tracking for Vets for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "srosario@warriorhealthfoundation.org",
+    "website": "https://warriorhealthfoundation.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Sean Rosario",
+        "email": "srosario@warriorhealthfoundation.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://warriorhealthfoundation.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-108",
+    "name": "Wild Soul Serenity",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Wellness Practice providing Holistic Mental Health & Mindfulness in Conway, NH (Carroll County).",
+    "address": "Mount Washington Valley Hub",
+    "city": "Conway",
+    "zip": "03818",
+    "county": "Carroll",
+    "region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "",
+    "email": "Kat@wildsoulserenity.com",
+    "website": "https://wildsoulserenity.com/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Kat Rogers",
+        "email": "Kat@wildsoulserenity.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://wildsoulserenity.com/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-109",
+    "name": "Women of GWOT",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "Veterans Network providing Peer Support & Community for Women Vets for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "womenofgwot@gmail.com",
+    "website": "https://womenofgwot.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Michelle King",
+        "email": "womenofgwot@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://womenofgwot.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-110",
+    "name": "Worker Bee Fund",
+    "categories": [
+      "financial-legal"
+    ],
+    "description": "Nonprofit Fund providing Financial Assistance & Community Aid for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "brianh@workerbeefund.org",
+    "website": "https://workerbeefund.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Brian Hansen",
+        "email": "brianh@workerbeefund.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://workerbeefund.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-111",
+    "name": "Wounded Warrior Project",
+    "categories": [
+      "mental-health-wellness",
+      "healthcare-medical",
+      "education-employment",
+      "recreation-outdoors"
+    ],
+    "description": "National Veterans Nonprofit providing Mental Health, Career Transition, Adaptive Sports for veterans across all 10 New Hampshire counties.",
+    "address": "",
+    "city": "Statewide",
+    "zip": "",
+    "county": "All Counties",
+    "region_id": "statewide",
+    "is_statewide": true,
+    "phone": "",
+    "email": "khale@woundedwarriorproject.org",
+    "website": "https://woundedwarriorproject.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Kandie Hale",
+        "email": "khale@woundedwarriorproject.org"
+      },
+      {
+        "name": "Christian Lanman",
+        "email": "clanman@woundedwarriorproject.org"
+      },
+      {
+        "name": "Bruce Laureiro",
+        "email": "blaureiro@woundedwarriorproject.org"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://woundedwarriorproject.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-112",
+    "name": "Yoga in Action",
+    "categories": [
+      "mental-health-wellness"
+    ],
+    "description": "Yoga Nonprofit providing Trauma-Informed Yoga & Mental Health in Portsmouth, NH (Rockingham County).",
+    "address": "113 Rogers Road",
+    "city": "Portsmouth",
+    "zip": "03801",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "(603) 766-3929",
+    "email": "michelle.james@yogainaction.org",
+    "website": "https://yogainaction.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Nancy Garnhart",
+        "email": "nancygarnhart@gmail.com"
+      },
+      {
+        "name": "Michelle James",
+        "email": "michelle.james@yogainaction.org"
+      },
+      {
+        "name": "Rochelle Jewell",
+        "email": "rochelle.jewell@yogainaction.org"
+      },
+      {
+        "name": "Michelle Gonzales Verdi",
+        "email": "michelleverdi@me.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://yogainaction.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-113",
+    "name": "VFW Post 483 - Nashua Post",
+    "categories": [
+      "recreation-outdoors",
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 6) in Nashua, NH (Hillsborough County).",
+    "address": "8 E. Pearl St",
+    "city": "Nashua",
+    "zip": "03060",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "603-402-2992",
+    "email": "",
+    "website": "https://www.facebook.com/VFWPOST483/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/VFWPOST483/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-114",
+    "name": "VFW Post 799 - Keene Daley Whipple",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Keene, NH (Cheshire County).",
+    "address": "459 Winchester St",
+    "city": "Keene",
+    "zip": "03431",
+    "county": "Cheshire",
+    "region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "978-297-2328",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-115",
+    "name": "VFW Post 808 - Oliver Lacasse",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Claremont, NH (Sullivan County).",
+    "address": "150 Charlestown Rd",
+    "city": "Claremont",
+    "zip": "03743",
+    "county": "Sullivan",
+    "region_id": "dartmouth-lake-sunapee",
+    "is_statewide": false,
+    "phone": "603-542-6092",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-116",
+    "name": "VFW Post 816 - Howard Shawney",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 1) in Littleton, NH (Grafton County).",
+    "address": "600 Cottage St",
+    "city": "Littleton",
+    "zip": "03561",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "603-444-5750",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-117",
+    "name": "VFW Post 1088 - Kingston Memorial",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 7) in Kingston, NH (Rockingham County).",
+    "address": "93 Rte 125",
+    "city": "Kingston",
+    "zip": "03848",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "603-642-5510",
+    "email": "",
+    "website": "https://www.facebook.com/vfwpost1088",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/vfwpost1088",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-118",
+    "name": "VFW Post 1617 - Derry / Salem VFW",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 6) in Derry, NH (Rockingham County).",
+    "address": "18 Railroad Ave",
+    "city": "Derry",
+    "zip": "03038",
+    "county": "Rockingham",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "603-432-9702",
+    "email": "",
+    "website": "https://www.facebook.com/DerryMemorialVFWPost1617",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/DerryMemorialVFWPost1617",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-119",
+    "name": "VFW Post 1670 - Laconia Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 4) in Laconia, NH (Belknap County).",
+    "address": "143 Court St",
+    "city": "Laconia",
+    "zip": "03246",
+    "county": "Belknap",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "603-524-9725",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-120",
+    "name": "VFW Post 1698 - Franklin Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 4) in Franklin, NH (Merrimack County).",
+    "address": "26 Peabody Pl",
+    "city": "Franklin",
+    "zip": "03235",
+    "county": "Merrimack",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "603-934-9869",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-121",
+    "name": "VFW Post 2520 - White Mountain Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 1) in Berlin, NH (Coos County).",
+    "address": "1107 Main St",
+    "city": "Berlin",
+    "zip": "03570",
+    "county": "Coos",
+    "region_id": "white-mountains",
+    "secondary_region_id": "great-north-woods",
+    "is_statewide": false,
+    "phone": "603-449-5391",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-122",
+    "name": "VFW Post 3041 - John W. Weeks Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 1) in Lancaster, NH (Coos County).",
+    "address": "259 Main St",
+    "city": "Lancaster",
+    "zip": "03584",
+    "county": "Coos",
+    "region_id": "great-north-woods",
+    "secondary_region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "603-788-3312",
+    "email": "",
+    "website": "https://www.facebook.com/JohnWWeeksVFWPost3041",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/JohnWWeeksVFWPost3041",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-123",
+    "name": "VFW Post 3968 - Winchester Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Winchester, NH (Cheshire County).",
+    "address": "35 Main St",
+    "city": "Winchester",
+    "zip": "03470",
+    "county": "Cheshire",
+    "region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "603-239-8848",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-124",
+    "name": "VFW Post 4234 - Hinsdale Memorial Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Hinsdale, NH (Cheshire County).",
+    "address": "66 Main St",
+    "city": "Hinsdale",
+    "zip": "03451",
+    "county": "Cheshire",
+    "region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "603-336-6210",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-125",
+    "name": "VFW Post 4368 - Harley Sanford Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Milford, NH (Hillsborough County).",
+    "address": "1 VFW Way",
+    "city": "Milford",
+    "zip": "03055",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "secondary_region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "603-673-9817",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-126",
+    "name": "VFW Post 4479 - Maple Wheadon Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 7) in Raymond, NH (Rockingham County).",
+    "address": "39 Main St",
+    "city": "Raymond",
+    "zip": "03077",
+    "county": "Rockingham",
+    "region_id": "seacoast",
+    "secondary_region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "603-895-3361",
+    "email": "",
+    "website": "https://vfw4479.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfw4479.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-127",
+    "name": "VFW Post 4483 - Mount Prospect Post",
+    "categories": [
+      "recreation-outdoors",
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 4) in Plymouth, NH (Grafton County).",
+    "address": "258 Highland St",
+    "city": "Plymouth",
+    "zip": "03264",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "secondary_region_id": "lakes",
+    "is_statewide": false,
+    "phone": "603-520-9810",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-128",
+    "name": "VFW Post 4485 - Dumont Lessard Post",
+    "categories": [
+      "recreation-outdoors",
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 7) in Somersworth, NH (Strafford County).",
+    "address": "43 High St",
+    "city": "Somersworth",
+    "zip": "03878",
+    "county": "Strafford",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "603-692-5994",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-129",
+    "name": "VFW Post 5245 - Haverhill Memorial Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 1) in North Haverhill, NH (Grafton County).",
+    "address": "76 Benton Rd",
+    "city": "North Haverhill",
+    "zip": "03774",
+    "county": "Grafton",
+    "region_id": "white-mountains",
+    "secondary_region_id": "dartmouth-lake-sunapee",
+    "is_statewide": false,
+    "phone": "603-787-6819",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-130",
+    "name": "VFW Post 5386 - Francis P. Murphy Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 1) in Bartlett, NH (Carroll County).",
+    "address": "River St",
+    "city": "Bartlett",
+    "zip": "03812",
+    "county": "Carroll",
+    "region_id": "white-mountains",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-131",
+    "name": "VFW Post 5613 - Jaffrey Memorial Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Jaffrey, NH (Cheshire County).",
+    "address": "22 Hathorn Rd",
+    "city": "Jaffrey",
+    "zip": "03452",
+    "county": "Cheshire",
+    "region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "603-532-8887",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-132",
+    "name": "VFW Post 5791 - Hudson Memorial Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 6) in Hudson, NH (Hillsborough County).",
+    "address": "15 Bockes Rd",
+    "city": "Hudson",
+    "zip": "03051",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "603-598-4594",
+    "email": "",
+    "website": "https://vfw5791.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfw5791.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-133",
+    "name": "VFW Post 6808 - Ammonoosuc Valley Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 1) in Groveton, NH (Coos County).",
+    "address": "207 State St",
+    "city": "Groveton",
+    "zip": "03582",
+    "county": "Coos",
+    "region_id": "great-north-woods",
+    "is_statewide": false,
+    "phone": "603-636-2002",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-134",
+    "name": "VFW Post 7217 - Joseph J. Jeffrey Memorial",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 7) in Northwood, NH (Rockingham County).",
+    "address": "135 Main St",
+    "city": "Northwood",
+    "zip": "03261",
+    "county": "Rockingham",
+    "region_id": "merrimack-valley",
+    "secondary_region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-135",
+    "name": "VFW Post 8214 - Queen City Memorial",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 4) in Manchester, NH (Hillsborough County).",
+    "address": "251 Maple St",
+    "city": "Manchester",
+    "zip": "03101",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-136",
+    "name": "VFW Post 8268 - Brown-Knight Memorial",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Bennington, NH (Hillsborough County).",
+    "address": "9 Hancock Rd",
+    "city": "Bennington",
+    "zip": "03442",
+    "county": "Hillsborough",
+    "region_id": "monadnock",
+    "is_statewide": false,
+    "phone": "603-831-2208",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-137",
+    "name": "VFW Post 8393 - Milton Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 7) in Milton, NH (Strafford County).",
+    "address": "30 Charles St",
+    "city": "Milton",
+    "zip": "03851",
+    "county": "Strafford",
+    "region_id": "seacoast",
+    "secondary_region_id": "lakes",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-138",
+    "name": "VFW Post 8401 - Richard K. Harvell Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 4) in Bedford, NH (Hillsborough County).",
+    "address": "70 Bedford Center Rd",
+    "city": "Bedford",
+    "zip": "03110",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-139",
+    "name": "VFW Post 8497 - Charlestown Memorial Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 5) in Charlestown, NH (Sullivan County).",
+    "address": "365 Lovers Lane Rd",
+    "city": "Charlestown",
+    "zip": "03603",
+    "county": "Sullivan",
+    "region_id": "dartmouth-lake-sunapee",
+    "is_statewide": false,
+    "phone": "603-826-5186",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-140",
+    "name": "VFW Post 8641 - Merrimack VFW Post 8641",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 6) in Merrimack, NH (Hillsborough County).",
+    "address": "282 Daniel Webster Hwy",
+    "city": "Merrimack",
+    "zip": "03054",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "603-424-7719",
+    "email": "",
+    "website": "https://www.facebook.com/MerrimackVFW",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/MerrimackVFW",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-141",
+    "name": "VFW Post 9552 - Wood-Guarino Memorial",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 4) in Lebanon, NH (Grafton County).",
+    "address": "189 Mechanic St",
+    "city": "Lebanon",
+    "zip": "03756",
+    "county": "Grafton",
+    "region_id": "dartmouth-lake-sunapee",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-142",
+    "name": "VFW Post 10675 - Whitefield Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 1) in Dalton, NH (Coos County).",
+    "address": "52 Faraway Rd",
+    "city": "Dalton",
+    "zip": "03598",
+    "county": "Coos",
+    "region_id": "white-mountains",
+    "secondary_region_id": "great-north-woods",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-143",
+    "name": "VFW Post 10676 - Lee Memorial Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 7) in Lee, NH (Strafford County).",
+    "address": "20 George Bennett Rd",
+    "city": "Lee",
+    "zip": "03861",
+    "county": "Strafford",
+    "region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-144",
+    "name": "VFW Post 10722 - John H. Hargreaves Memorial",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 6) in Pelham, NH (Hillsborough County).",
+    "address": "6 Main St",
+    "city": "Pelham",
+    "zip": "03076",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://www.facebook.com/PelhamVFW10722",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.facebook.com/PelhamVFW10722",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-145",
+    "name": "VFW Post 11254 - Hampstead Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 6) in Hampstead, NH (Rockingham County).",
+    "address": "11 Main St",
+    "city": "Hampstead",
+    "zip": "03841",
+    "county": "Rockingham",
+    "region_id": "merrimack-valley",
+    "secondary_region_id": "seacoast",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "https://vfwnh.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "https://vfwnh.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "vso-146",
+    "name": "VFW Post 11373 - Hollis Post",
+    "categories": [
+      "veterans-posts-community"
+    ],
+    "description": "VFW Local Post providing Veterans Community Post (District 6) in Brookline, NH (Hillsborough County).",
+    "address": "38 Main St",
+    "city": "Brookline",
+    "zip": "03033",
+    "county": "Hillsborough",
+    "region_id": "merrimack-valley",
+    "is_statewide": false,
+    "phone": "",
+    "email": "",
+    "website": "http://hollisvfw.org/",
+    "branches": [
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [],
+    "last_verified": "2026-11-19",
+    "source_url": "http://hollisvfw.org/",
+    "amplifier_doc": null
+  },
+  {
+    "id": "the-honor-bear-project-laconia",
+    "name": "The Honor Bear Project",
+    "categories": [
+      "mental-health-wellness",
+      "recreation-outdoors"
+    ],
+    "description": "A 501(c)(3) non-profit charity hosting 'Flags for Forgotten Heroes' and providing ocean fishing trips for Veterans.",
+    "address": "P.O. Box 7225",
+    "city": "Laconia",
+    "zip": "03246",
+    "county": "Belknap",
+    "region_id": "lakes",
+    "is_statewide": false,
+    "phone": "(978) 828-7811",
+    "email": "thehonorbear@gmail.com",
+    "website": "https://www.thehonorbearproject.com",
+    "branches": [
+      "navy",
+      "coast-guard",
+      "all"
+    ],
+    "verified_vso": true,
+    "staff_contacts": [
+      {
+        "name": "Kim Hebert (Founder & President)",
+        "email": "thehonorbear@gmail.com"
+      }
+    ],
+    "last_verified": "2026-11-19",
+    "source_url": "https://www.thehonorbearproject.com",
+    "amplifier_doc": "The Honor Bear project.pdf"
+  }
+]
