@@ -47,6 +47,10 @@ function createAppHarness({ fetchMock = null } = {}) {
         this.options.push(child);
         return child;
       },
+      focus() {},
+      reset() {},
+      getAttribute(k) { return (this.attrs && this.attrs[k]) || ''; },
+      setAttribute(k, v) { this.attrs = this.attrs || {}; this.attrs[k] = String(v); },
       scrollIntoView() {},
       classList: {
         add(c) { classes.add(c); },
@@ -67,7 +71,7 @@ function createAppHarness({ fetchMock = null } = {}) {
     return el;
   }
 
-  // Core DOM IDs read/written by initFilters, renderDirectory, runAiAssistantFromInput, resetAllFilters
+  // Core DOM IDs read/written by initFilters, renderDirectory, runAiAssistantFromInput, resetAllFilters & moderation UI
   makeEl('search-input', { value: '' });
   makeEl('county-select', { value: 'all' });
   makeEl('include-statewide-toggle', { checked: true });
@@ -85,13 +89,31 @@ function createAppHarness({ fetchMock = null } = {}) {
   makeEl('directory-section');
   makeEl('total-count-badge');
   makeEl('nav-total-count');
+  makeEl('nav-all-vsos-count');
+  makeEl('btn-view-all-count');
   makeEl('stat-total-vsos');
   makeEl('stat-total-counties');
   makeEl('stat-total-regions');
   makeEl('stat-total-categories');
   makeEl('stat-total-contacts');
   makeEl('api-status-btn-text');
-  makeEl('review-queue-badge');
+  makeEl('review-queue-count');
+  makeEl('mod-login-btn');
+  makeEl('mod-review-btn', { classes: ['hidden'] });
+  makeEl('mod-bell-dot', { classes: ['hidden'] });
+  makeEl('mod-account-btn', { classes: ['hidden'] });
+  makeEl('mod-account-label');
+  makeEl('workflow-switch-bar', { classes: ['hidden'] });
+  makeEl('submitter-info-row');
+  makeEl('review-queue-modal', { classes: ['hidden'] });
+  makeEl('review-queue-notice', { classes: ['hidden'] });
+  makeEl('review-queue-body');
+  makeEl('rq-new-badge', { classes: ['hidden'] });
+  makeEl('mod-auth-modal', { classes: ['hidden'] });
+  makeEl('submit-modal', { classes: ['hidden'] });
+  makeEl('amplifier-modal', { classes: ['hidden'] });
+  makeEl('sub-success', { classes: ['hidden'] });
+  makeEl('ai-parse-banner', { classes: ['hidden'] });
   makeEl('parsed-contacts-list');
 
   const store = new Map();
@@ -101,9 +123,17 @@ function createAppHarness({ fetchMock = null } = {}) {
     removeItem(k) { store.delete(k); },
     clear() { store.clear(); }
   };
+  const sStore = new Map();
+  const sessionStorage = {
+    getItem(k) { return sStore.has(k) ? sStore.get(k) : null; },
+    setItem(k, v) { sStore.set(k, String(v)); },
+    removeItem(k) { sStore.delete(k); },
+    clear() { sStore.clear(); }
+  };
 
   const domListeners = {};
   const document = {
+    hidden: false,
     getElementById(id) {
       if (!elements.has(id)) makeEl(id);
       return elements.get(id);
@@ -124,22 +154,41 @@ function createAppHarness({ fetchMock = null } = {}) {
     }
   };
 
+  const activeIntervals = new Set();
+  const historyCalls = [];
   const sandbox = {
     console,
     document,
     window: {
       isSecureContext: false,
       addEventListener() {},
-      location: { href: 'http://localhost/' }
+      location: { href: 'https://nhvet411.org/', origin: 'https://nhvet411.org', pathname: '/', search: '', hash: '' },
+      history: {
+        replaceState(stateObj, title, url) {
+          historyCalls.push(url);
+          sandbox.window.location.hash = '';
+          sandbox.window.location.search = '';
+        }
+      }
     },
     navigator: {},
     localStorage,
+    sessionStorage,
     fetch: fetchMock || (async () => { throw new Error('Network disabled in offline test'); }),
     setTimeout,
     clearTimeout,
+    setInterval(fn, ms) {
+      const id = { fn, ms };
+      activeIntervals.add(id);
+      return id;
+    },
+    clearInterval(id) {
+      activeIntervals.delete(id);
+    },
     encodeURIComponent,
     decodeURIComponent,
     URL,
+    URLSearchParams,
     Blob: class {},
     FileReader: class {}
   };
@@ -188,7 +237,7 @@ function createAppHarness({ fetchMock = null } = {}) {
   // Trigger initial render
   vm.runInContext('renderDirectory()', ctx);
 
-  return { ctx, document, localStorage, getRenderedCards, html };
+  return { ctx, document, localStorage, sessionStorage, historyCalls, getRenderedCards, html };
 }
 
 test('1. Baseline data integrity: 147 orgs, RYoung28 removed, shared emails preserved, SWAM/Angers excluded', () => {
@@ -643,3 +692,455 @@ test('13. Approved Item #3: Supabase Edge Function gemini-search-proxy handles p
   );
   assert.equal(bigQueryRes.status, 400);
 });
+
+test('14. Public visitor security lockout & Supabase pending_submissions routing (with flyer upload)', async () => {
+  const calls = [];
+  const fetchMock = async (url, opts = {}) => {
+    calls.push({ url, method: opts.method || 'GET', headers: opts.headers || {}, body: opts.body });
+    if (url.includes('/storage/v1/object/vso-flyers/submissions/')) {
+      return { ok: true, status: 200, json: async () => ({ Key: 'vso-flyers/submissions/test.png' }) };
+    }
+    if (url.includes('/rest/v1/pending_submissions')) {
+      return { ok: true, status: 201, json: async () => ({}) };
+    }
+    return { ok: false, status: 404, json: async () => ({}) };
+  };
+
+  const { ctx, document } = createAppHarness({ fetchMock });
+  ctx.window.NHVET411_GEMINI_PROXY_URL = 'https://demo-proj.supabase.co/functions/v1/gemini-search-proxy';
+  ctx.window.NHVET411_SUPABASE_ANON_KEY = 'anon-key-123';
+  assert.equal(ctx.getSupabaseUrl(), 'https://demo-proj.supabase.co', 'Should auto-derive SUPABASE_URL from proxy URL');
+
+  ctx.updateModeratorUi();
+  assert.equal(document.getElementById('mod-login-btn').classList.contains('hidden'), false);
+  assert.equal(document.getElementById('mod-review-btn').classList.contains('hidden'), true);
+  assert.equal(document.getElementById('workflow-switch-bar').classList.contains('hidden'), true);
+
+  // Attempting to force live workflow or open review queue while logged out must fail safely
+  ctx.setSubmissionWorkflow('live');
+  assert.equal(vm.runInContext('state.submissionWorkflow', ctx), 'queue', 'Logged-out visitor cannot enable live edit');
+  ctx.toggleReviewQueueModal(true);
+  assert.equal(document.getElementById('review-queue-modal').classList.contains('hidden'), true, 'Review modal stays closed for public');
+  assert.equal(document.getElementById('mod-auth-modal').classList.contains('hidden'), false, 'Redirects public user to Moderator Login modal');
+
+  // Public edit + flyer upload routes to Storage + pending_submissions with Prefer: return=minimal
+  ctx.openEditModalForOrg('vso-030');
+  document.getElementById('sub-phone').value = '(603) 555-9999';
+  document.getElementById('sub-submitter-name').value = 'VSO Officer Pat';
+  document.getElementById('sub-submitter-email').value = 'pat@vso.org';
+  vm.runInContext('state.uploadedFileObj = { name: "new-card.png", type: "image/png", size: 2048 }; state.uploadedFileName = "new-card.png";', ctx);
+
+  await ctx.handleVsoSubmit({ preventDefault() {} });
+
+  const storageCall = calls.find(c => c.url.includes('/storage/v1/object/vso-flyers/submissions/'));
+  const pendingCall = calls.find(c => c.url.includes('/rest/v1/pending_submissions'));
+  assert.ok(storageCall, 'Public flyer must upload to vso-flyers/submissions/ bucket');
+  assert.ok(pendingCall, 'Public edit must POST to pending_submissions');
+  assert.equal(pendingCall.headers['Prefer'], 'return=minimal', 'Public insert must use Prefer: return=minimal so anon RLS does not fail on RETURNING');
+  const submitted = JSON.parse(pendingCall.body);
+  assert.equal(submitted.review_status, 'pending');
+  assert.equal(submitted.target_org_id, 'vso-030');
+  assert.equal(submitted.submitter_name, 'VSO Officer Pat');
+  assert.equal(submitted.submitter_email, 'pat@vso.org');
+  assert.ok(submitted.payload.flyerMeta.url.includes('/storage/v1/object/public/vso-flyers/submissions/'));
+
+  // Live directory must remain untouched before moderator approval
+  const dmavsPhone = vm.runInContext('ORGANIZATIONS.find(o => o.id === "vso-030").phone', ctx);
+  assert.notEqual(dmavsPhone, '(603) 555-9999', 'Public edit must NOT mutate live ORGANIZATIONS directly');
+});
+
+test('15. Moderator login allowlist check, strong password enforcement, and password recovery flow', async () => {
+  const calls = [];
+  const fetchMock = async (url, opts = {}) => {
+    calls.push({ url, method: opts.method || 'GET', body: opts.body });
+    if (url.includes('/auth/v1/token?grant_type=password')) {
+      const b = JSON.parse(opts.body);
+      if (b.email === 'random@example.com') {
+        return { ok: true, status: 200, json: async () => ({ access_token: 'non-mod-tok', refresh_token: 'r0', expires_in: 3600, user: { id: 'u-nonmod', email: b.email } }) };
+      }
+      return { ok: true, status: 200, json: async () => ({ access_token: 'mod-tok-1', refresh_token: 'r1', expires_in: 3600, user: { id: 'u-mod1', email: b.email } }) };
+    }
+    if (url.includes('/rest/v1/moderators?user_id=eq.u-nonmod')) {
+      return { ok: true, status: 200, json: async () => [] };
+    }
+    if (url.includes('/rest/v1/moderators?user_id=eq.u-mod1')) {
+      return { ok: true, status: 200, json: async () => [{ user_id: 'u-mod1', email: 'mod1@nhvet411.org', display_name: 'Jane Mod', role: 'moderator' }] };
+    }
+    if (url.includes('/rest/v1/pending_submissions?select=id')) {
+      return { ok: true, status: 200, json: async () => [{ id: 'sub-1' }, { id: 'sub-2' }] };
+    }
+    if (url.includes('/auth/v1/recover') || url.includes('/auth/v1/user') || url.includes('/auth/v1/logout')) {
+      return { ok: true, status: 200, json: async () => ({ ok: true }) };
+    }
+    return { ok: true, status: 200, json: async () => [] };
+  };
+
+  const { ctx, document, historyCalls } = createAppHarness({ fetchMock });
+  ctx.window.NHVET411_SUPABASE_URL = 'https://demo-proj.supabase.co';
+  ctx.window.NHVET411_SUPABASE_ANON_KEY = 'anon-key-123';
+
+  // Strong password criteria checks (12+ chars, upper, lower, digit, symbol)
+  assert.equal(ctx.validateStrongPassword('Short1!').valid, false);
+  assert.equal(ctx.validateStrongPassword('alllowercase123!').valid, false);
+  assert.equal(ctx.validateStrongPassword('ALLUPPERCASE123!').valid, false);
+  assert.equal(ctx.validateStrongPassword('NoDigitsHere!!').valid, false);
+  assert.equal(ctx.validateStrongPassword('NoSymbolsHere123').valid, false);
+  assert.equal(ctx.validateStrongPassword('GraniteState#2026!').valid, true);
+
+  // Non-moderator user rejected & logged out
+  document.getElementById('mod-login-email').value = 'random@example.com';
+  document.getElementById('mod-login-password').value = 'GraniteState#2026!';
+  const nonModOk = await ctx.handleModeratorLoginSubmit({ preventDefault() {} });
+  assert.equal(nonModOk, false);
+  assert.equal(ctx.isModeratorLoggedIn(), false);
+  assert.ok(calls.some(c => c.url.includes('/auth/v1/logout')));
+
+  // Allowlisted moderator signs in & unlocks review bell + live edit switch
+  document.getElementById('mod-login-email').value = 'mod1@nhvet411.org';
+  document.getElementById('mod-login-password').value = 'GraniteState#2026!';
+  const modOk = await ctx.handleModeratorLoginSubmit({ preventDefault() {} });
+  assert.equal(modOk, true);
+  assert.equal(ctx.isModeratorLoggedIn(), true);
+  assert.equal(document.getElementById('mod-login-btn').classList.contains('hidden'), true);
+  assert.equal(document.getElementById('mod-review-btn').classList.contains('hidden'), false);
+  assert.equal(document.getElementById('workflow-switch-bar').classList.contains('hidden'), false);
+  assert.equal(vm.runInContext('state.submissionWorkflow', ctx), 'live');
+
+  // Forgot password triggers Supabase recover endpoint with redirect_to
+  document.getElementById('mod-forgot-email').value = 'mod1@nhvet411.org';
+  assert.equal(await ctx.handleForgotPasswordSubmit({ preventDefault() {} }), true);
+  assert.ok(calls.some(c => c.url.includes('/auth/v1/recover?redirect_to=')));
+
+  // Recovery URL hash opens strong-password reset view and strips token from URL bar
+  ctx.window.location.hash = '#access_token=recovery-secret-jwt&type=recovery';
+  const detected = await ctx.checkUrlForPasswordRecovery();
+  assert.equal(detected, true);
+  assert.equal(historyCalls.length >= 1, true, 'Sensitive recovery token must be stripped via history.replaceState');
+  assert.equal(vm.runInContext('state.modAuthMode', ctx), 'recovery');
+
+  // Weak password rejected on recovery submit; strong matching password succeeds
+  document.getElementById('mod-recovery-pw-new').value = 'weakpass';
+  document.getElementById('mod-recovery-pw-confirm').value = 'weakpass';
+  assert.equal(await ctx.handleSetNewPasswordSubmit({ preventDefault() {} }, true), false);
+
+  document.getElementById('mod-recovery-pw-new').value = 'NHVetStrong#2026!';
+  document.getElementById('mod-recovery-pw-confirm').value = 'NHVetStrong#2026!';
+  assert.equal(await ctx.handleSetNewPasswordSubmit({ preventDefault() {} }, true), true);
+  assert.ok(calls.some(c => c.url.includes('/auth/v1/user') && c.method === 'PUT'));
+});
+
+test('16. Bell icon red-dot notification never pops up over ongoing approvals', async () => {
+  let pendingIds = [{ id: 'sub-1' }];
+  const fetchMock = async (url) => {
+    if (url.includes('/rest/v1/pending_submissions?select=id')) {
+      return { ok: true, status: 200, json: async () => pendingIds };
+    }
+    return { ok: true, status: 200, json: async () => [] };
+  };
+
+  const { ctx, document } = createAppHarness({ fetchMock });
+  ctx.window.NHVET411_SUPABASE_URL = 'https://demo-proj.supabase.co';
+  ctx.window.NHVET411_SUPABASE_ANON_KEY = 'anon-key-123';
+  vm.runInContext('state.modSession = { access_token: "t1", expires_at: Math.floor(Date.now()/1000) + 3600, user: { id: "u1" } }; state.modProfile = { user_id: "u1", email: "m@org.org", display_name: "Mod A", role: "moderator" };', ctx);
+  ctx.updateModeratorUi();
+
+  // Background poll finds 1 item -> red dot lights up, review modal stays CLOSED (no interrupting pop-up!)
+  await ctx.pollModeratorPendingCount(true);
+  assert.equal(document.getElementById('review-queue-count').textContent, 1);
+  assert.equal(document.getElementById('mod-bell-dot').classList.contains('hidden'), false, 'Red dot must show on bell icon');
+  assert.equal(document.getElementById('review-queue-modal').classList.contains('hidden'), true, 'Must NOT pop up over page automatically');
+
+  // While moderator IS actively reviewing item #1 inside open modal, 2 new submissions arrive
+  document.getElementById('review-queue-modal').classList.remove('hidden');
+  vm.runInContext('state.modPendingItems = [{ id: "sub-1", payload: { name: "Org 1" } }]; state.modPendingIndex = 0; state.modRejectOpenForId = "sub-1";', ctx);
+  pendingIds = [{ id: 'sub-1' }, { id: 'sub-2' }, { id: 'sub-3' }];
+  await ctx.pollModeratorPendingCount(true);
+
+  assert.equal(vm.runInContext('state.modPendingIndex', ctx), 0, 'Active item index must not be disturbed');
+  assert.equal(vm.runInContext('state.modRejectOpenForId', ctx), 'sub-1', 'Open rejection comment box must not be wiped');
+  assert.equal(document.getElementById('rq-new-badge').classList.contains('hidden'), false, 'Subtle +N new refresh pill should appear');
+  assert.equal(document.getElementById('rq-new-badge').textContent, '+2 new');
+});
+
+test('17. Clean Review modal: side-by-side image/PDF flyer preview, XSS/apostrophe safety, Prev/Next & History toggle', () => {
+  const { ctx, document } = createAppHarness();
+  vm.runInContext('state.modSession = { access_token: "t1", expires_at: 9999999999, user: { id: "u1" } }; state.modProfile = { user_id: "u1", email: "m@org.org", display_name: "Mod A", role: "moderator" };', ctx);
+
+  vm.runInContext(`
+    state.modPendingItems = [
+      {
+        id: 'sub-img',
+        target_org_id: 'vso-030',
+        submitter_name: "O'Brien <script>alert(1)</script>",
+        submitter_email: 'obrien@vso.org',
+        created_at: '2026-11-20T18:00:00Z',
+        payload: {
+          uploadMode: 'edit',
+          targetOrgId: 'vso-030',
+          targetOrgName: "Veteran's <img src=x onerror=alert(1)> Center",
+          phone: '(603) 555-1212',
+          flyerMeta: { url: 'https://demo-proj.supabase.co/storage/v1/object/public/vso-flyers/submissions/card.png', fileName: "O'Brien Card.png", mimeType: 'image/png' },
+          incomingContacts: [{ name: 'Pat New', email: 'pat@dmavs.nh.gov' }]
+        }
+      },
+      {
+        id: 'sub-pdf',
+        target_org_id: null,
+        submitter_name: 'PDF Submitter',
+        submitter_email: '',
+        created_at: '2026-11-20T18:05:00Z',
+        payload: {
+          uploadMode: 'new',
+          name: 'Granite Vets PDF Org',
+          city: 'Concord',
+          flyerMeta: { url: 'https://demo-proj.supabase.co/storage/v1/object/public/vso-flyers/submissions/flyer.pdf', fileName: 'flyer.pdf', mimeType: 'application/pdf' },
+          incomingContacts: []
+        }
+      },
+      {
+        id: 'sub-text',
+        target_org_id: 'vso-031',
+        submitter_name: 'Text Only Editor',
+        submitter_email: 'editor@dav.org',
+        created_at: '2026-11-20T18:10:00Z',
+        payload: { uploadMode: 'edit', targetOrgId: 'vso-031', targetOrgName: 'DAV NH', description: 'Updated claims hours Mon-Fri 8-4.' }
+      }
+    ];
+    state.modHistoryItems = [
+      { id: 'hist-1', review_status: 'rejected', reviewed_by_name: 'Jane Mod', reviewed_at: '2026-11-20T17:00:00Z', submitter_name: 'Sam', submitter_email: 'sam@vso.org', rejection_reason: 'Phone number disconnected; please reconfirm.', payload: { name: 'Sample VSO' } }
+    ];
+    state.modPendingIndex = 0;
+  `, ctx);
+
+  // Item 1: Image flyer renders side-by-side split + escapes XSS & uses safe data-flyer-* attributes
+  ctx.renderReviewQueueModal();
+  let html1 = document.getElementById('review-queue-body').innerHTML;
+  assert.ok(html1.includes('review-split-grid'), 'Image submission must render side-by-side layout');
+  assert.ok(html1.includes('class="review-flyer-img"'), 'Image flyer must render inside <img> preview');
+  assert.ok(html1.includes('onclick="openFlyerLightboxFromEl(this)"'), 'Flyer button must use safe data-attribute handler');
+  assert.equal(html1.includes('<script>alert(1)'), false, 'XSS in submitter_name must be escaped');
+  assert.equal(html1.includes('<img src=x'), false, 'XSS in org name must be escaped');
+  assert.ok(html1.includes('Submission 1 of 3'));
+
+  // Navigate to Item 2: PDF flyer renders side-by-side <iframe>
+  ctx.navigatePendingSubmission(1);
+  let html2 = document.getElementById('review-queue-body').innerHTML;
+  assert.ok(html2.includes('Submission 2 of 3'));
+  assert.ok(html2.includes('class="review-flyer-pdf"'), 'PDF flyer must render inside <iframe> preview');
+
+  // Toggle to History & back to Pending -> preserves modPendingIndex === 1
+  ctx.setReviewQueueTab('history');
+  const histHtml = document.getElementById('review-queue-body').innerHTML;
+  assert.ok(histHtml.includes('Phone number disconnected; please reconfirm.'));
+  assert.ok(histHtml.includes('mailto:sam@vso.org'));
+  ctx.setReviewQueueTab('pending');
+  assert.equal(vm.runInContext('state.modPendingIndex', ctx), 1, 'Returning from History must preserve exact Pending position');
+
+  // Navigate to Item 3 (no flyer): full-width clean layout (no review-split-grid)
+  ctx.navigatePendingSubmission(1);
+  let html3 = document.getElementById('review-queue-body').innerHTML;
+  assert.ok(html3.includes('Submission 3 of 3'));
+  assert.equal(html3.includes('review-split-grid'), false, 'Text-only edit must use full modal width without empty flyer column');
+
+  // Lightbox rejects javascript: URLs
+  assert.equal(ctx.sanitizeSafeMediaUrl('javascript:alert(1)'), '');
+  assert.equal(ctx.sanitizeSafeMediaUrl('data:text/html;base64,PHNjcmlwdD4='), '');
+});
+
+test('18. Rejection requires customer-service comment, persists to RPC, advances queue & creates mailto link', async () => {
+  const rpcCalls = [];
+  const fetchMock = async (url, opts = {}) => {
+    if (url.includes('/rest/v1/rpc/reject_pending_submission')) {
+      rpcCalls.push(JSON.parse(opts.body));
+      return { ok: true, status: 200, json: async () => ({ ok: true, conflict: false, reviewed_by_name: 'Jane Mod', rejection_reason: JSON.parse(opts.body).p_rejection_reason }) };
+    }
+    return { ok: true, status: 200, json: async () => [] };
+  };
+
+  const { ctx, document } = createAppHarness({ fetchMock });
+  ctx.window.NHVET411_SUPABASE_URL = 'https://demo-proj.supabase.co';
+  ctx.window.NHVET411_SUPABASE_ANON_KEY = 'anon-key-123';
+  vm.runInContext(`
+    state.modSession = { access_token: 't1', expires_at: Math.floor(Date.now()/1000) + 3600, user: { id: 'u1' } };
+    state.modProfile = { user_id: 'u1', email: 'mod@nhvet411.org', display_name: 'Jane Mod', role: 'moderator' };
+    state.modPendingItems = [
+      { id: 'sub-r1', submitter_name: 'Alex VSO', submitter_email: 'alex@vso.org', payload: { name: 'Granite Vets', uploadMode: 'new' } },
+      { id: 'sub-r2', submitter_name: 'Next Person', submitter_email: '', payload: { name: 'Second Org', uploadMode: 'new' } }
+    ];
+    state.modPendingIndex = 0;
+  `, ctx);
+
+  ctx.toggleRejectBoxForItem('sub-r1');
+  // Blank / too-short comment must be blocked with zero RPC call
+  document.getElementById('rq-reject-reason-input').value = '  ';
+  assert.equal(await ctx.confirmRejectQueueItem('sub-r1'), false);
+  assert.equal(rpcCalls.length, 0, 'Must not call reject RPC without a comment');
+  assert.equal(document.getElementById('rq-reject-error').classList.contains('hidden'), false);
+
+  // Real courteous comment succeeds, advances queue to sub-r2, and offers mailto link
+  document.getElementById('rq-reject-reason-input').value = 'Please include your 603 phone number so veterans can reach your office directly.';
+  assert.equal(await ctx.confirmRejectQueueItem('sub-r1'), true);
+  assert.equal(rpcCalls.length, 1);
+  assert.equal(rpcCalls[0].p_submission_id, 'sub-r1');
+  assert.equal(rpcCalls[0].p_rejection_reason, 'Please include your 603 phone number so veterans can reach your office directly.');
+  assert.equal(vm.runInContext('state.modPendingItems.length', ctx), 1, 'Auto-removed rejected item');
+  assert.equal(vm.runInContext('state.modPendingItems[0].id', ctx), 'sub-r2', 'Auto-advanced to next pending item');
+  const noticeHtml = document.getElementById('review-queue-notice').innerHTML;
+  assert.ok(noticeHtml.includes('mailto:alex@vso.org'), 'Notice must include 1-click Email Submitter Feedback mailto link');
+  assert.ok(noticeHtml.includes(encodeURIComponent('Please include your 603 phone number')), 'mailto body must prefill the rejection reason');
+});
+
+test('19. Concurrent multi-moderator race protection, Concord statewide HQ preservation & contact turnover removal', async () => {
+  const fetchMock = async (url, opts = {}) => {
+    if (url.includes('/rest/v1/organizations?id=eq.vso-030')) {
+      return { ok: true, status: 200, json: async () => [] };
+    }
+    if (url.includes('/rest/v1/rpc/approve_pending_submission')) {
+      const body = JSON.parse(opts.body);
+      if (body.p_submission_id === 'sub-race') {
+        // Simulate Moderator A beating Moderator B by 50ms under Postgres FOR UPDATE lock
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({ ok: false, conflict: true, code: 'ALREADY_REVIEWED', review_status: 'approved', reviewed_by_name: 'Rich Admin' })
+        };
+      }
+      return { ok: true, status: 200, json: async () => ({ ok: true, conflict: false, org_id: body.p_resolved_org.id, reviewed_by_name: 'Mod B' }) };
+    }
+    return { ok: true, status: 200, json: async () => [] };
+  };
+
+  const { ctx, document } = createAppHarness({ fetchMock });
+  ctx.window.NHVET411_SUPABASE_URL = 'https://demo-proj.supabase.co';
+  ctx.window.NHVET411_SUPABASE_ANON_KEY = 'anon-key-123';
+  vm.runInContext(`
+    state.modSession = { access_token: 't2', expires_at: Math.floor(Date.now()/1000) + 3600, user: { id: 'u2' } };
+    state.modProfile = { user_id: 'u2', email: 'modb@nhvet411.org', display_name: 'Mod B', role: 'moderator' };
+    state.modPendingItems = [
+      { id: 'sub-race', target_org_id: 'vso-030', payload: { uploadMode: 'edit', targetOrgId: 'vso-030', name: 'DMAVS', city: 'Concord', zip: '03301', phone: '(603) 000-0000' } },
+      { id: 'sub-next', target_org_id: 'vso-030', payload: { uploadMode: 'edit', targetOrgId: 'vso-030', name: 'NH Department of Military Affairs and Veterans Services (DMAVS)', city: 'Concord', zip: '03301', replaceContacts: true, incomingContacts: [{ name: 'New Officer', email: 'new@dmavs.nh.gov' }] } }
+    ];
+    state.modPendingIndex = 0;
+  `, ctx);
+
+  // Moderator B tries approving sub-race -> graceful conflict notice, no clobber, advances to sub-next
+  await ctx.approveQueueItem('sub-race');
+  assert.ok(document.getElementById('review-queue-notice').innerHTML.includes('Already approved by Rich Admin'));
+  assert.equal(vm.runInContext('state.modPendingItems.length', ctx), 1);
+  assert.equal(vm.runInContext('state.modPendingItems[0].id', ctx), 'sub-next');
+  assert.notEqual(vm.runInContext('ORGANIZATIONS.find(o => o.id === "vso-030").phone', ctx), '(603) 000-0000');
+
+  // Approving sub-next on Concord statewide HQ (vso-030) MUST preserve is_statewide:true AND replace departed contacts cleanly
+  await ctx.approveQueueItem('sub-next');
+  const dmavs = vm.runInContext('ORGANIZATIONS.find(o => o.id === "vso-030")', ctx);
+  assert.equal(dmavs.is_statewide, true, 'Editing Concord statewide HQ must NOT wipe is_statewide flag');
+  assert.equal(dmavs.city, 'Concord');
+  assert.equal(dmavs.staff_contacts.length, 1);
+  assert.equal(dmavs.staff_contacts[0].name, 'New Officer');
+
+  // Also verify UI contact removal clears #sub-staff so removed contacts are never resurrected
+  ctx.openEditModalForOrg('vso-030');
+  assert.equal(document.getElementById('sub-staff').value, 'New Officer');
+  ctx.removeParsedContactRow(0);
+  assert.equal(document.getElementById('sub-staff').value, '', 'Removing last contact row must clear #sub-staff');
+});
+
+test('20. Moderator direct live edit RPC & 260-org single-query scale stress test', async () => {
+  const baselineOrgs = JSON.parse(fs.readFileSync(DATA_JSON_PATH, 'utf8'));
+  const scaledRows = baselineOrgs.map(o => ({ ...o, status: 'approved', staff_contacts: o.staff_contacts || [], amplifier_docs: [] }));
+  for (let i = 1; i <= 113; i++) {
+    scaledRows.push({
+      id: `vso-extra-${i}`,
+      name: `Granite Veteran Support Hub #${i}`,
+      categories: ['housing-homelessness', 'benefits-advocacy'],
+      description: `Regional New Hampshire veteran outreach hub #${i} offering VA claims assistance and emergency rent relief.`,
+      address: `${100 + i} Main Street`,
+      city: i % 2 === 0 ? 'Manchester' : 'Plymouth',
+      zip: i % 2 === 0 ? '03101' : '03264',
+      county: i % 2 === 0 ? 'Hillsborough' : 'Grafton',
+      region_id: i % 2 === 0 ? 'merrimack-valley' : 'white-mountains',
+      is_statewide: false,
+      phone: '(603) 555-0100',
+      email: `hub${i}@nhvets.org`,
+      website: 'https://nhvet411.org',
+      branches: ['all'],
+      verified_vso: true,
+      status: 'approved',
+      staff_contacts: [{ name: `Advocate #${i}`, role: 'VSO', email: `adv${i}@nhvets.org`, phone: '' }],
+      amplifier_docs: []
+    });
+  }
+
+  let liveSaveCalled = false;
+  let orgQueryCount = 0;
+  const fetchMock = async (url, opts = {}) => {
+    if (url.includes('/rest/v1/organizations?select=*')) {
+      orgQueryCount += 1;
+      return { ok: true, status: 200, json: async () => scaledRows };
+    }
+    if (url.includes('/rest/v1/organizations?id=eq.')) {
+      return { ok: true, status: 200, json: async () => [] };
+    }
+    if (url.includes('/rest/v1/rpc/moderator_save_organization')) {
+      liveSaveCalled = true;
+      const body = JSON.parse(opts.body);
+      return { ok: true, status: 200, json: async () => ({ ok: true, org_id: body.p_org.id, saved_by: 'Rich Admin' }) };
+    }
+    return { ok: true, status: 200, json: async () => [] };
+  };
+
+  const { ctx, document, getRenderedCards } = createAppHarness({ fetchMock });
+  ctx.window.NHVET411_SUPABASE_URL = 'https://demo-proj.supabase.co';
+  ctx.window.NHVET411_SUPABASE_ANON_KEY = 'anon-key-123';
+
+  // Stress test 260 orgs loading in 1 single relational query + fast rendering & searching
+  const t0 = performance.now();
+  const synced = await ctx.syncLiveDirectoryFromSupabase();
+  const syncMs = performance.now() - t0;
+  assert.equal(synced, true);
+  assert.equal(orgQueryCount, 1, '260 orgs must load in ONE single relational query');
+  assert.equal(vm.runInContext('ORGANIZATIONS.length', ctx), 260);
+  assert.equal(document.getElementById('total-count-badge').textContent, 260);
+  assert.equal(document.getElementById('nav-all-vsos-count').textContent, 260);
+  assert.equal(document.getElementById('btn-view-all-count').textContent, 260);
+  assert.equal(document.getElementById('stat-total-vsos').textContent, 260);
+  assert.ok(syncMs < 400, `260-org sync + render should stay fast (<400ms), took ${syncMs.toFixed(1)}ms`);
+
+  const tSearch = performance.now();
+  ctx.onLiveSearchInput('Plymouth VA claims emergency rent relief');
+  const searchMs = performance.now() - tSearch;
+  const searchCards = getRenderedCards();
+  assert.ok(searchCards.length >= 20, `Expected strong matches across 260 orgs, got ${searchCards.length}`);
+  assert.ok(searchMs < 150, `Live search over 260 orgs must stay snappy (<150ms), took ${searchMs.toFixed(1)}ms`);
+
+  // Signed-in moderator direct live edit calls moderator_save_organization RPC and updates directory immediately
+  vm.runInContext(`
+    state.modSession = { access_token: 'admin-tok', expires_at: Math.floor(Date.now()/1000) + 3600, user: { id: 'u-admin' } };
+    state.modProfile = { user_id: 'u-admin', email: 'rich@nhvet411.org', display_name: 'Rich Admin', role: 'admin' };
+    state.submissionWorkflow = 'live';
+  `, ctx);
+  ctx.updateModeratorUi();
+  ctx.openEditModalForOrg('vso-extra-1');
+  document.getElementById('sub-desc').value = 'Live moderator edit verified for stress testing.';
+  await ctx.handleVsoSubmit({ preventDefault() {} });
+  assert.equal(liveSaveCalled, true, 'Moderator live edit must invoke moderator_save_organization RPC');
+});
+
+test('21. Migration 002 RLS & concurrency SQL audit + build_website.js env var derivation check', () => {
+  const sql = fs.readFileSync(path.join(ROOT, 'supabase/migrations/002_moderation_and_rls.sql'), 'utf8');
+  for (const tbl of ['moderators', 'organizations', 'staff_contacts', 'amplifier_docs', 'pending_submissions', 'audit_logs']) {
+    assert.ok(sql.includes(`alter table public.${tbl} enable row level security;`), `Missing RLS enforcement for ${tbl}`);
+  }
+  assert.ok(sql.includes('add column if not exists rejection_reason text'), 'Must add rejection_reason column');
+  assert.ok(sql.includes('for update;'), 'Must use FOR UPDATE row locking for concurrent moderator safety');
+  assert.ok(sql.includes('if not public.is_moderator() then'), 'Must enforce is_moderator() server-side in RPCs');
+  assert.ok(sql.includes('revoke all on function public.approve_pending_submission'), 'Must revoke anon/public execute on approve RPC');
+  assert.ok(sql.includes('revoke all on function public.reject_pending_submission'), 'Must revoke anon/public execute on reject RPC');
+  assert.ok(sql.includes('revoke all on function public.moderator_save_organization'), 'Must revoke anon/public execute on live save RPC');
+  assert.ok(sql.includes('length(v_clean_reason) < 3'), 'Server-side RPC must enforce non-empty rejection reason');
+
+  const builderSrc = fs.readFileSync(path.join(ROOT, 'build_website.js'), 'utf8');
+  assert.equal(builderSrc.includes('SUPABASE_SERVICE_ROLE_KEY'), false, 'build_website.js must NEVER touch SUPABASE_SERVICE_ROLE_KEY');
+  assert.equal(builderSrc.includes('process.env.GEMINI_API_KEY'), false, 'build_website.js must NEVER touch GEMINI_API_KEY');
+});
+

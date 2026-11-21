@@ -14,11 +14,16 @@ if (!fs.existsSync(LOOKUP_PATH)) {
 
 const nhLookup = JSON.parse(fs.readFileSync(LOOKUP_PATH, 'utf-8'));
 const todayISO = new Date().toISOString().split('T')[0];
-const rawSupabaseUrl = String(process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '');
+const rawSupabaseUrl = String(process.env.NHVET411_SUPABASE_URL || process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '');
 const geminiProxyUrl = String(
   process.env.NHVET411_GEMINI_PROXY_URL ||
   (rawSupabaseUrl ? `${rawSupabaseUrl}/functions/v1/gemini-search-proxy` : '')
 ).trim();
+const derivedSupabaseFromProxy = (() => {
+  const m = geminiProxyUrl.match(/^(https?:\/\/[^/]+)\/functions\/v1\//i);
+  return m ? m[1] : '';
+})();
+const supabaseUrl = rawSupabaseUrl || derivedSupabaseFromProxy;
 const supabaseAnonKey = String(process.env.NHVET411_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '').trim();
 
 const swamSvgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
@@ -999,6 +1004,7 @@ const htmlContent = `<!DOCTYPE html>
     /* SCOPED MODAL VIEWPORT FIT, Z-INDEX & INTERNAL SCROLL FIX */
     #submit-modal,
     #review-queue-modal,
+    #mod-auth-modal,
     #apikey-modal,
     #amplifier-modal {
       z-index: 70 !important;
@@ -1007,11 +1013,15 @@ const htmlContent = `<!DOCTYPE html>
       padding-bottom: 1rem !important;
       overflow-y: auto !important;
     }
+    #amplifier-modal {
+      z-index: 75 !important;
+    }
     #toast-msg {
       z-index: 80 !important;
     }
     #submit-modal > .modal-frosted,
     #review-queue-modal > .modal-frosted,
+    #mod-auth-modal > .modal-frosted,
     #apikey-modal > div {
       margin-top: auto !important;
       margin-bottom: auto !important;
@@ -1019,8 +1029,12 @@ const htmlContent = `<!DOCTYPE html>
       overflow-y: auto;
       overscroll-behavior: contain;
     }
+    #review-queue-modal > .modal-frosted {
+      max-width: 60rem;
+    }
     #submit-modal > .modal-frosted > button:first-child,
-    #review-queue-modal > .modal-frosted > button:first-child {
+    #review-queue-modal > .modal-frosted > button:first-child,
+    #mod-auth-modal > .modal-frosted > button:first-child {
       position: sticky !important;
       top: 0 !important;
       float: right;
@@ -1028,6 +1042,105 @@ const htmlContent = `<!DOCTYPE html>
       margin-left: 0.5rem;
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
     }
+
+    /* SCOPED MODERATOR BELL RED-DOT, SIDE-BY-SIDE FLYER PREVIEW & PASSWORD RULES */
+    .mod-bell-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .mod-bell-dot {
+      position: absolute;
+      top: -3px;
+      right: -4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 9999px;
+      background-color: #DC2626;
+      border: 1.5px solid #FFFFFF;
+      box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.45);
+    }
+    @keyframes modDotPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+      50% { transform: scale(1.18); box-shadow: 0 0 0 5px rgba(220, 38, 38, 0); }
+    }
+    .mod-bell-dot-pulse {
+      animation: modDotPulse 1.8s ease-in-out infinite;
+    }
+    .review-split-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+    @media (min-width: 860px) {
+      body:not(.force-mobile-view) .review-split-grid {
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      }
+    }
+    .review-flyer-box {
+      background-color: #FAF8F3;
+      border: 1px solid #D5CCB8;
+      border-radius: 0.85rem;
+      padding: 0.75rem;
+      min-width: 0;
+    }
+    .review-flyer-media {
+      background-color: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 0.65rem;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      max-height: 440px;
+      overflow: hidden;
+    }
+    .review-flyer-img {
+      max-width: 100%;
+      max-height: 410px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 0.4rem;
+      display: block;
+    }
+    .review-flyer-pdf {
+      width: 100%;
+      height: 410px;
+      border: none;
+      border-radius: 0.4rem;
+      background-color: #FFFFFF;
+    }
+    .review-diff-row {
+      background-color: #FAF8F3;
+      border: 1px solid #E5DEC9;
+      border-left: 3px solid #535E46;
+      border-radius: 0.6rem;
+      padding: 0.55rem 0.75rem;
+      overflow-wrap: anywhere;
+    }
+    .pw-rule-item {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      border: 1px solid #E2E8F0;
+    }
+    .pw-rule-ok {
+      background-color: #DCE5D0;
+      border-color: #535E46;
+      color: #1E2418;
+    }
+    .pw-rule-no {
+      background-color: #FAF8F3;
+      border-color: #D5CCB8;
+      color: #6E6C63;
+    }
+    .py-1\\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col" id="top">
@@ -1086,7 +1199,7 @@ const htmlContent = `<!DOCTYPE html>
             <span>🏔️</span> <span>NH Regions</span>
           </a>
           <a href="#directory-section" class="nav-cell">
-            <span>📋</span> <span>All VSOs (${finalOrganizations.length})</span>
+            <span>📋</span> <span>All VSOs (<span id="nav-all-vsos-count">${finalOrganizations.length}</span>)</span>
           </a>
           <div class="inline-flex items-center bg-slate-100 rounded-lg p-0.5 border ml-2 my-1">
             <button type="button" id="view-web-btn" onclick="setViewportMode('web')" class="text-[11px] font-bold px-2 py-1 rounded bg-crimson text-white cursor-pointer" title="Standard Desktop/Responsive Web View">🖥️ Web</button>
@@ -1115,8 +1228,15 @@ const htmlContent = `<!DOCTYPE html>
           <button onclick="toggleApiKeyModal(true)" class="bg-amber-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
             <span>🔑</span> <span id="api-status-btn-text">Configure AI Key</span>
           </button>
-          <button onclick="toggleReviewQueueModal(true)" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="View Pending Submissions &amp; Local Directory Overrides">
-            <span>📋</span> <span>Review Queue (<strong id="review-queue-count">0</strong>)</span>
+          <button type="button" id="mod-login-btn" onclick="toggleModAuthModal(true, 'login')" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Sign In for NHVet411 Approvals">
+            <span>🔐</span> <span>Moderator Login</span>
+          </button>
+          <button type="button" id="mod-review-btn" onclick="toggleReviewQueueModal(true)" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 relative" title="1-Click Open Pending VSO Review Queue">
+            <span class="mod-bell-wrap" aria-hidden="true">🔔<span id="mod-bell-dot" class="mod-bell-dot hidden"></span></span>
+            <span>Review (<strong id="review-queue-count">0</strong>)</span>
+          </button>
+          <button type="button" id="mod-account-btn" onclick="toggleModAuthModal(true, 'account')" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Account &amp; Password Settings">
+            <span>🛡️</span> <span id="mod-account-label">Moderator</span>
           </button>
           <button onclick="openEditModalForOrg(null)" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
             <span>✏️</span> <span>Suggest an Edit</span>
@@ -1273,7 +1393,7 @@ const htmlContent = `<!DOCTYPE html>
         <p class="text-xs font-semibold text-slate-700" style="margin:2px 0 0 0;">Direct contact details, selectable phone numbers, and 1-click sharing for every verified VSO across New Hampshire.</p>
       </div>
       <button type="button" onclick="resetAllFilters()" class="bg-olive condensed-font uppercase font-extrabold text-sm px-5 py-3 rounded-lg shadow-sm cursor-pointer">
-        VIEW ALL ${finalOrganizations.length} RESOURCES
+        VIEW ALL <span id="btn-view-all-count">${finalOrganizations.length}</span> RESOURCES
       </button>
     </div>
 
@@ -1394,12 +1514,12 @@ const htmlContent = `<!DOCTYPE html>
         <button type="button" id="mode-amp-btn" onclick="setUploadMode('amplifier')" class="flex-1 py-2 px-2 rounded-lg text-xs font-bold bg-transparent text-slate-600 hover:text-slate-900 cursor-pointer">📎 Attach Amplifier</button>
       </div>
 
-      <!-- SUBMISSION WORKFLOW SWITCH: INSTANT LIVE UPDATE VS PENDING REVIEW QUEUE -->
-      <div class="flex flex-wrap items-center justify-between gap-2 mb-3 px-3 py-2 rounded-xl border text-xs" style="background-color:#F7F4EC; border-color:#D5CCB8;">
-        <span class="font-extrabold text-slate-800">🛡️ Submission Mode:</span>
+      <!-- SUBMISSION WORKFLOW SWITCH (VISIBLE ONLY TO SIGNED-IN MODERATORS) -->
+      <div id="workflow-switch-bar" class="hidden flex flex-wrap items-center justify-between gap-2 mb-3 px-3 py-2 rounded-xl border text-xs" style="background-color:#F7F4EC; border-color:#D5CCB8;">
+        <span class="font-extrabold text-slate-800">🛡️ Moderator Mode:</span>
         <div class="inline-flex rounded-lg p-0.5 bg-white border">
-          <button type="button" id="workflow-live-btn" onclick="setSubmissionWorkflow('live')" class="px-2.5 py-1 rounded-md text-[11px] font-extrabold bg-olive text-white cursor-pointer">⚡ Instant Live Update (Admin)</button>
-          <button type="button" id="workflow-queue-btn" onclick="setSubmissionWorkflow('queue')" class="px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-700 cursor-pointer">📋 Send to Review Queue (Public)</button>
+          <button type="button" id="workflow-live-btn" onclick="setSubmissionWorkflow('live')" class="px-2.5 py-1 rounded-md text-[11px] font-extrabold bg-olive text-white cursor-pointer">⚡ Instant Live Update (Moderator)</button>
+          <button type="button" id="workflow-queue-btn" onclick="setSubmissionWorkflow('queue')" class="px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-700 cursor-pointer">📋 Send to Review Queue</button>
         </div>
       </div>
 
@@ -1452,33 +1572,142 @@ const htmlContent = `<!DOCTYPE html>
             <input type="url" id="sub-website" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="w-full rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Website URL (https://...)" />
             <textarea id="sub-desc" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" rows="2" class="w-full rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Service description &amp; mission..."></textarea>
           </div>
+
+          <!-- OPTIONAL SUBMITTER INFO FOR PUBLIC WIKI EDITS -->
+          <div id="submitter-info-row" class="pt-2 border-t space-y-1.5">
+            <div class="text-[11px] font-bold text-slate-700">Your Info (Optional — helps moderators verify or follow up with you):</div>
+            <div class="flex flex-col sm-row gap-2">
+              <input type="text" id="sub-submitter-name" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Your Name / Organization (Optional)" />
+              <input type="email" id="sub-submitter-email" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Your Email (Optional — for status updates)" />
+            </div>
+          </div>
         </div>
 
         <div class="pt-2 flex justify-end gap-2">
           <button type="button" onclick="toggleSubmitModal(false)" class="px-4 py-2.5 rounded-xl border text-xs font-semibold text-slate-700 bg-white cursor-pointer">Close</button>
-          <button type="submit" id="sub-submit-btn" class="px-5 py-2.5 rounded-xl bg-crimson text-white text-xs font-bold shadow-md cursor-pointer">✅ Apply Live to Directory</button>
+          <button type="submit" id="sub-submit-btn" class="px-5 py-2.5 rounded-xl bg-crimson text-white text-xs font-bold shadow-md cursor-pointer">📋 Submit Update for Moderator Review</button>
         </div>
       </form>
       <div id="sub-success" class="hidden mt-4 p-3.5 bg-emerald-50 border rounded-xl text-xs font-semibold text-emerald-950"></div>
     </div>
   </div>
 
-  <!-- PENDING REVIEW QUEUE & SUPABASE HANDOFF MODAL -->
+  <!-- MODERATOR REVIEW QUEUE & HISTORY MODAL -->
   <div id="review-queue-modal" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
-    <div class="modal-frosted rounded-2xl w-full max-w-3xl p-6 shadow-2xl relative my-8">
+    <div class="modal-frosted rounded-2xl w-full p-6 shadow-2xl relative my-8">
       <button onclick="toggleReviewQueueModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
-      <div class="flex flex-wrap items-center justify-between gap-2 mb-2 pr-8">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-3" style="padding-right: 2.75rem;">
         <div>
-          <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">MODERATION &amp; SUPABASE STAGING</span>
-          <h3 class="text-lg font-extrabold text-slate-900 mt-1" style="margin-bottom:0;">📋 Pending VSO Submissions &amp; Local Overrides</h3>
+          <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">NHVET411 MODERATION</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1" style="margin-bottom:0;">🔔 VSO Approval Workspace</h3>
         </div>
         <div class="flex flex-wrap items-center gap-2">
-          <button type="button" onclick="exportDirectoryQueueJson()" class="bg-gold-btn text-xs font-extrabold px-3 py-2 rounded-lg shadow-sm cursor-pointer">📥 Export Pending JSON</button>
-          <button type="button" onclick="clearLocalDirectoryDeltas()" class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-2 rounded-lg border cursor-pointer">🔄 Reset Local Overrides</button>
+          <div class="inline-flex items-center gap-1 bg-slate-100 p-1 rounded-xl border">
+            <button type="button" id="rq-tab-pending" onclick="setReviewQueueTab('pending')" class="px-3 py-1.5 rounded-lg text-xs font-extrabold bg-olive text-white cursor-pointer">⏳ Pending (<span id="rq-pending-tab-count">0</span>)</button>
+            <button type="button" id="rq-tab-history" onclick="setReviewQueueTab('history')" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 bg-white border cursor-pointer">📜 History (<span id="rq-history-tab-count">0</span>)</button>
+          </div>
+          <button type="button" onclick="refreshReviewQueueData(false)" class="bg-white text-slate-800 text-xs font-bold px-3 py-2 rounded-lg border cursor-pointer flex items-center gap-1.5">
+            <span>↻ Refresh</span>
+            <span id="rq-new-badge" class="hidden px-1.5 py-0.5 rounded-full bg-red-600 text-white text-[10px] font-extrabold">+0</span>
+          </button>
+          <button type="button" onclick="exportDirectoryQueueJson()" class="bg-gold-btn text-xs font-extrabold px-3 py-2 rounded-lg shadow-sm cursor-pointer">📥 Export JSON</button>
         </div>
       </div>
-      <p class="text-xs text-slate-600 mb-4">Review public VSO submissions before merging them into the live directory, or export the staged JSON payload for future Supabase database seeding.</p>
-      <div id="review-queue-body" class="space-y-3" style="max-height:65vh; overflow-y:auto;"></div>
+      <div id="review-queue-notice" class="hidden mb-3"></div>
+      <div id="review-queue-body" class="space-y-3" style="max-height:70vh; overflow-y:auto;"></div>
+    </div>
+  </div>
+
+  <!-- MODERATOR LOGIN, PASSWORD RESET & ACCOUNT MODAL -->
+  <div id="mod-auth-modal" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="modal-frosted rounded-2xl w-full max-w-md p-6 shadow-2xl relative my-8">
+      <button onclick="toggleModAuthModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
+
+      <!-- VIEW 1: EMAIL + PASSWORD LOGIN -->
+      <div id="mod-auth-view-login">
+        <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">MODERATOR PORTAL</span>
+        <h3 class="text-lg font-extrabold text-slate-900 mt-1 mb-1">🔐 Moderator Sign In</h3>
+        <p class="text-xs text-slate-600 mb-4">Sign in with your approved NHVet411 moderator email and password to review VSO edits or apply live directory updates.</p>
+        <form onsubmit="handleModeratorLoginSubmit(event)" class="space-y-3">
+          <div>
+            <label for="mod-login-email" class="text-xs font-bold text-slate-700 mb-1" style="display:block;">Moderator Email</label>
+            <input type="email" id="mod-login-email" autocomplete="username" required class="w-full rounded-xl border px-3.5 py-2.5 text-xs bg-white" placeholder="moderator@organization.org" />
+          </div>
+          <div>
+            <label for="mod-login-password" class="text-xs font-bold text-slate-700 mb-1" style="display:block;">Password</label>
+            <input type="password" id="mod-login-password" autocomplete="current-password" required class="w-full rounded-xl border px-3.5 py-2.5 text-xs bg-white" placeholder="Enter your strong password" />
+          </div>
+          <div class="flex items-center justify-between gap-2 pt-1">
+            <button type="button" onclick="setModAuthView('forgot')" class="text-xs font-bold text-blue-700 hover:underline cursor-pointer" style="background:none; border:none; padding:0;">Forgot password?</button>
+            <button type="submit" id="mod-login-submit-btn" class="bg-olive text-white text-xs font-extrabold px-4 py-2.5 rounded-xl shadow-sm cursor-pointer">🔐 Sign In as Moderator</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- VIEW 2: FORGOT PASSWORD -->
+      <div id="mod-auth-view-forgot" class="hidden">
+        <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">PASSWORD RECOVERY</span>
+        <h3 class="text-lg font-extrabold text-slate-900 mt-1 mb-1">✉️ Reset Moderator Password</h3>
+        <p class="text-xs text-slate-600 mb-4">Enter your moderator email address. We will send a secure one-time recovery link to set a new strong password.</p>
+        <form onsubmit="handleForgotPasswordSubmit(event)" class="space-y-3">
+          <div>
+            <label for="mod-forgot-email" class="text-xs font-bold text-slate-700 mb-1" style="display:block;">Moderator Email</label>
+            <input type="email" id="mod-forgot-email" autocomplete="email" required class="w-full rounded-xl border px-3.5 py-2.5 text-xs bg-white" placeholder="moderator@organization.org" />
+          </div>
+          <div class="flex items-center justify-between gap-2 pt-1">
+            <button type="button" onclick="setModAuthView('login')" class="text-xs font-bold text-slate-600 hover:underline cursor-pointer" style="background:none; border:none; padding:0;">← Back to Sign In</button>
+            <button type="submit" id="mod-forgot-submit-btn" class="bg-navy text-white text-xs font-extrabold px-4 py-2.5 rounded-xl shadow-sm cursor-pointer">✉️ Send Password Reset Email</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- VIEW 3: SET NEW STRONG PASSWORD (FROM RECOVERY EMAIL LINK) -->
+      <div id="mod-auth-view-recovery" class="hidden">
+        <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">STRONG PASSWORD REQUIRED</span>
+        <h3 class="text-lg font-extrabold text-slate-900 mt-1 mb-1">🔒 Set New Strong Password</h3>
+        <p class="text-xs text-slate-600 mb-3">Create a strong password meeting all 5 security criteria below.</p>
+        <form onsubmit="handleSetNewPasswordSubmit(event, true)" class="space-y-3">
+          <div>
+            <label for="mod-recovery-pw-new" class="text-xs font-bold text-slate-700 mb-1" style="display:block;">New Strong Password</label>
+            <input type="password" id="mod-recovery-pw-new" oninput="updatePasswordChecklistUi('mod-recovery-pw-new', 'mod-recovery-pw-checklist')" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2.5 text-xs bg-white" placeholder="12+ chars, upper, lower, number, symbol" />
+          </div>
+          <div id="mod-recovery-pw-checklist" class="flex flex-wrap gap-1.5"></div>
+          <div>
+            <label for="mod-recovery-pw-confirm" class="text-xs font-bold text-slate-700 mb-1" style="display:block;">Confirm New Password</label>
+            <input type="password" id="mod-recovery-pw-confirm" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2.5 text-xs bg-white" placeholder="Re-enter new password" />
+          </div>
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="submit" id="mod-recovery-submit-btn" class="bg-olive text-white text-xs font-extrabold px-4 py-2.5 rounded-xl shadow-sm cursor-pointer">✅ Save New Strong Password</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- VIEW 4: SIGNED-IN MODERATOR ACCOUNT & CHANGE PASSWORD -->
+      <div id="mod-auth-view-account" class="hidden space-y-4">
+        <div>
+          <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">ACTIVE MODERATOR</span>
+          <h3 id="mod-profile-name" class="text-lg font-extrabold text-slate-900 mt-1 mb-0.5">Moderator</h3>
+          <div class="text-xs text-slate-600 flex flex-wrap items-center gap-2">
+            <span id="mod-profile-email"></span>
+            <span id="mod-profile-role" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-950 text-[10px] font-extrabold border">MODERATOR</span>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="toggleModAuthModal(false); toggleReviewQueueModal(true);" class="flex-1 bg-gold-btn text-xs font-extrabold px-3.5 py-2.5 rounded-xl shadow-sm cursor-pointer">🔔 Open Review Queue</button>
+          <button type="button" onclick="signOutModerator(false)" class="bg-slate-100 text-slate-800 text-xs font-bold px-3.5 py-2.5 rounded-xl border cursor-pointer">🚪 Sign Out</button>
+        </div>
+        <form onsubmit="handleSetNewPasswordSubmit(event, false)" class="pt-3 border-t space-y-2.5">
+          <div class="text-xs font-extrabold text-slate-900">Change Your Password (Strong Criteria Required)</div>
+          <input type="password" id="mod-change-pw-new" oninput="updatePasswordChecklistUi('mod-change-pw-new', 'mod-change-pw-checklist')" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2 text-xs bg-white" placeholder="New strong password (12+ chars)" />
+          <div id="mod-change-pw-checklist" class="flex flex-wrap gap-1.5"></div>
+          <input type="password" id="mod-change-pw-confirm" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2 text-xs bg-white" placeholder="Confirm new password" />
+          <div class="flex justify-end">
+            <button type="submit" id="mod-change-pw-submit-btn" class="bg-navy text-white text-xs font-extrabold px-4 py-2 rounded-xl cursor-pointer">🔒 Update Password</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="mod-auth-feedback" class="hidden mt-3"></div>
     </div>
   </div>
 
@@ -1509,15 +1738,30 @@ const htmlContent = `<!DOCTYPE html>
     };
     const LOOKUP_DATA = ${JSON.stringify(nhLookup)};
     let ORGANIZATIONS = ${JSON.stringify(finalOrganizations)};
+    const SUPABASE_URL = ${JSON.stringify(supabaseUrl)};
     const GEMINI_PROXY_URL = ${JSON.stringify(geminiProxyUrl)};
     const SUPABASE_ANON_KEY = ${JSON.stringify(supabaseAnonKey)};
 
     function getGeminiProxyUrl() {
       return String((typeof window !== 'undefined' && window.NHVET411_GEMINI_PROXY_URL) || GEMINI_PROXY_URL || '').trim();
     }
+    function getSupabaseUrl() {
+      const winUrl = (typeof window !== 'undefined' && window.NHVET411_SUPABASE_URL) || '';
+      if (String(winUrl).trim()) return String(winUrl).trim().replace(/\\/+$/, '');
+      if (SUPABASE_URL) return SUPABASE_URL;
+      const p = getGeminiProxyUrl();
+      const m = p.match(/^(https?:\\/\\/[^/]+)\\/functions\\/v1\\//i);
+      return m ? m[1] : '';
+    }
+    function getSupabaseAnonKey() {
+      return String((typeof window !== 'undefined' && window.NHVET411_SUPABASE_ANON_KEY) || SUPABASE_ANON_KEY || '').trim();
+    }
+    function isSupabaseConfigured() {
+      return !!(getSupabaseUrl() && getSupabaseAnonKey());
+    }
     function buildGeminiProxyHeaders() {
       const headers = { 'Content-Type': 'application/json' };
-      const anon = String((typeof window !== 'undefined' && window.NHVET411_SUPABASE_ANON_KEY) || SUPABASE_ANON_KEY || '').trim();
+      const anon = getSupabaseAnonKey();
       if (anon) {
         headers['apikey'] = anon;
         headers['Authorization'] = 'Bearer ' + anon;
@@ -1538,13 +1782,30 @@ const htmlContent = `<!DOCTYPE html>
       highlightTerms: [],
       matchedTown: '',
       uploadMode: 'new',
-      submissionWorkflow: 'live',
+      submissionWorkflow: 'queue',
+      uploadedFileObj: null,
+      uploadedFileMime: null,
       uploadedFileDataUrl: null,
       uploadedFileName: null,
       duplicateResolution: null,
       matchedDuplicateOrgId: null,
       parsedContacts: [],
-      conflictChoices: {}
+      conflictChoices: {},
+      modSession: null,
+      modProfile: null,
+      modPendingItems: [],
+      modHistoryItems: [],
+      modReviewTab: 'pending',
+      modHistoryFilter: 'all',
+      modPendingIndex: 0,
+      modRejectOpenForId: null,
+      modActionBusy: false,
+      modNewArrivalsCount: 0,
+      modLastKnownPendingCount: 0,
+      modPollTimer: null,
+      modLastNoticeHtml: '',
+      modAuthMode: 'login',
+      modRecoveryToken: null
     };
 
     function escapeHtml(str) {
@@ -2444,6 +2705,10 @@ const htmlContent = `<!DOCTYPE html>
       document.getElementById('total-count-badge').textContent = totalOrgs;
       const navCount = document.getElementById('nav-total-count');
       if (navCount) navCount.textContent = totalOrgs;
+      const navAllCount = document.getElementById('nav-all-vsos-count');
+      if (navAllCount) navAllCount.textContent = totalOrgs;
+      const btnViewAllCount = document.getElementById('btn-view-all-count');
+      if (btnViewAllCount) btnViewAllCount.textContent = totalOrgs;
       const statVsos = document.getElementById('stat-total-vsos');
       if (statVsos) statVsos.textContent = totalOrgs;
       const statCounties = document.getElementById('stat-total-counties');
@@ -2459,7 +2724,10 @@ const htmlContent = `<!DOCTYPE html>
     function initFilters() {
       if (getGeminiProxyUrl()) document.getElementById('api-status-btn-text').textContent = 'AI Search Live ✓';
       else if (localStorage.getItem('nhvet411_gemini_key')) document.getElementById('api-status-btn-text').textContent = 'AI Vault Active ✓';
-      loadDirectoryDeltas();
+      if (!isSupabaseConfigured()) {
+        loadDirectoryDeltas();
+      }
+      updateModeratorUi();
       updateReviewQueueBadge();
       updateStateDirectoryStats();
 
@@ -2475,6 +2743,15 @@ const htmlContent = `<!DOCTYPE html>
       populateOrgDropdown();
       renderParsedContactsList();
       renderDirectory();
+
+      if (typeof document !== 'undefined' && document.addEventListener) {
+        document.addEventListener('visibilitychange', function() {
+          if (!document.hidden && isModeratorLoggedIn() && isSupabaseConfigured()) {
+            pollModeratorPendingCount(true);
+          }
+        });
+      }
+      bootstrapSupabaseAndModeration();
     }
 
     function populateOrgDropdown() {
@@ -2738,7 +3015,7 @@ const htmlContent = `<!DOCTYPE html>
           priorityRows += '<div class="contact-row">' +
             '<span class="text-slate-600 font-semibold flex items-center gap-1"><span>📞</span> <span>Phone:</span></span>' +
             '<div class="flex items-center gap-2">' +
-              '<span class="selectable-text font-extrabold text-slate-900">' + org.phone + '</span>' +
+              '<span class="selectable-text font-extrabold text-slate-900">' + escapeHtml(org.phone) + '</span>' +
               '<a href="tel:' + cleanDigits + '" class="text-[11px] font-bold bg-crimson text-white px-2 py-0.5 rounded shadow-sm" title="Call Now">Call ↗</a>' +
             '</div>' +
           '</div>';
@@ -2746,13 +3023,13 @@ const htmlContent = `<!DOCTYPE html>
         if (primaryEmail) {
           priorityRows += '<div class="contact-row">' +
             '<span class="text-slate-600 font-semibold flex items-center gap-1 shrink-0"><span>✉️</span> <span>Email:</span></span>' +
-            '<a href="' + emailMailto + '" class="selectable-text font-bold text-blue-700 hover:underline break-all" title="Open in your email app">' + primaryEmailHtml + '</a>' +
+            '<a href="' + escapeHtml(emailMailto) + '" class="selectable-text font-bold text-blue-700 hover:underline break-all" title="Open in your email app">' + primaryEmailHtml + '</a>' +
           '</div>';
         }
         if (org.address) {
           priorityRows += '<div class="contact-row">' +
             '<span class="text-slate-600 font-semibold flex items-center gap-1 shrink-0"><span>🏢</span> <span>Location:</span></span>' +
-            '<a href="' + mapHref + '" target="_blank" rel="noopener" class="selectable-text font-semibold text-blue-700 hover:underline text-right" title="Open in Google Maps">' + org.address + (org.city && org.city !== 'Statewide' ? ', ' + org.city + ' ↗' : ' ↗') + '</a>' +
+            '<a href="' + mapHref + '" target="_blank" rel="noopener" class="selectable-text font-semibold text-blue-700 hover:underline text-right" title="Open in Google Maps">' + escapeHtml(org.address) + (org.city && org.city !== 'Statewide' ? ', ' + escapeHtml(org.city) + ' ↗' : ' ↗') + '</a>' +
           '</div>';
         }
         if (org.staff_contacts && org.staff_contacts.length > 0) {
@@ -2761,7 +3038,7 @@ const htmlContent = `<!DOCTYPE html>
           const leadEmailHtml = lead.email ? (isEmailQ ? highlightText(lead.email, [rawQ]) : escapeHtml(lead.email)) : '';
           priorityRows += '<div class="contact-row">' +
             '<span class="text-slate-600 font-semibold flex items-center gap-1 shrink-0"><span>👤</span> <span>VSO Contact:</span></span>' +
-            '<span class="font-bold text-slate-800 text-right">' + lead.name + (lead.email ? ' (<a href="' + leadMail + '" class="selectable-text text-blue-700 hover:underline">' + leadEmailHtml + '</a>)' : '') + '</span>' +
+            '<span class="font-bold text-slate-800 text-right">' + escapeHtml(lead.name) + (lead.email ? ' (<a href="' + escapeHtml(leadMail) + '" class="selectable-text text-blue-700 hover:underline">' + leadEmailHtml + '</a>)' : '') + '</span>' +
           '</div>';
         }
 
@@ -2774,10 +3051,11 @@ const htmlContent = `<!DOCTYPE html>
           ? '<a href="tel:' + cleanDigits + '" class="flex-1 text-center bg-crimson text-white text-xs font-bold py-2.5 px-2.5 rounded-xl shadow-sm">📞 Call</a>'
           : '';
         const emailBtn = primaryEmail
-          ? '<a href="' + emailMailto + '" class="flex-1 text-center bg-navy text-white text-xs font-bold py-2.5 px-2.5 rounded-xl shadow-sm">✉️ Email</a>'
+          ? '<a href="' + escapeHtml(emailMailto) + '" class="flex-1 text-center bg-navy text-white text-xs font-bold py-2.5 px-2.5 rounded-xl shadow-sm">✉️ Email</a>'
           : '';
-        const webBtn = org.website
-          ? '<a href="' + org.website + '" target="_blank" rel="noopener" class="flex-1 text-center bg-slate-100 text-slate-800 hover:bg-slate-200 text-xs font-bold py-2.5 px-2.5 rounded-xl border">🌐 Website</a>'
+        const safeWebsiteUrl = (org.website && /^https?:\\/\\//i.test(org.website.trim())) ? org.website.trim() : '';
+        const webBtn = safeWebsiteUrl
+          ? '<a href="' + escapeHtml(safeWebsiteUrl) + '" target="_blank" rel="noopener" class="flex-1 text-center bg-slate-100 text-slate-800 hover:bg-slate-200 text-xs font-bold py-2.5 px-2.5 rounded-xl border">🌐 Website</a>'
           : '';
 
         const shareData = buildBuddyShareData(org);
@@ -2795,8 +3073,8 @@ const htmlContent = `<!DOCTYPE html>
             const sMail = s.email ? ('mailto:' + s.email + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
             const sEmailHtml = s.email ? (isEmailQ ? highlightText(s.email, [rawQ]) : escapeHtml(s.email)) : '';
             return '<li class="flex items-center justify-between gap-2 py-1 border-b border-slate-100">' +
-              '<span class="font-bold text-slate-800 selectable-text">' + s.name + '</span>' +
-              (s.email ? '<a href="' + sMail + '" class="selectable-text text-blue-700 font-semibold break-all hover:underline">✉️ ' + sEmailHtml + '</a>' : '') +
+              '<span class="font-bold text-slate-800 selectable-text">' + escapeHtml(s.name) + '</span>' +
+              (s.email ? '<a href="' + escapeHtml(sMail) + '" class="selectable-text text-blue-700 font-semibold break-all hover:underline">✉️ ' + sEmailHtml + '</a>' : '') +
             '</li>';
           }).join('');
           contactsDrawer = '<details class="text-xs bg-slate-50 rounded-xl p-2.5 border">' +
@@ -3089,13 +3367,17 @@ const htmlContent = `<!DOCTYPE html>
     }
 
     function updateReviewQueueBadge() {
+      if (isSupabaseConfigured()) {
+        updateBellNotificationUi(isModeratorLoggedIn() ? (state.modLastKnownPendingCount || 0) : 0, false);
+        return;
+      }
       const q = getPendingQueue();
-      const el = document.getElementById('review-queue-count');
-      if (el) el.textContent = q.length;
+      updateBellNotificationUi(isModeratorLoggedIn() ? q.length : 0, false);
     }
 
     function setSubmissionWorkflow(mode) {
-      state.submissionWorkflow = (mode === 'queue') ? 'queue' : 'live';
+      const canUseLive = isModeratorLoggedIn();
+      state.submissionWorkflow = (canUseLive && mode === 'live') ? 'live' : 'queue';
       const liveBtn = document.getElementById('workflow-live-btn');
       const queueBtn = document.getElementById('workflow-queue-btn');
       if (liveBtn && queueBtn) {
@@ -3112,24 +3394,24 @@ const htmlContent = `<!DOCTYPE html>
     function updateSubmitButtonLabel() {
       const btn = document.getElementById('sub-submit-btn');
       if (!btn) return;
-      if (state.submissionWorkflow === 'queue') {
-        btn.textContent = '📋 Submit to Pending Review Queue';
+      if (!isModeratorLoggedIn() || state.submissionWorkflow === 'queue') {
+        btn.textContent = '📋 Submit Update for Moderator Review';
         return;
       }
       if (state.uploadMode === 'add-contact') {
-        btn.textContent = '👤 Add Contact to VSO Card';
+        btn.textContent = '👤 Add Contact Live to VSO Card';
       } else if (state.uploadMode === 'new' && state.matchedDuplicateOrgId) {
         if (state.duplicateResolution === 'force-new') {
-          btn.textContent = '🆕 Create Separate VSO Card';
+          btn.textContent = '🆕 Publish Separate VSO Card Live';
         } else {
-          btn.textContent = '➕ Merge Contact / Info into Existing Card';
+          btn.textContent = '➕ Merge Info Live into Existing Card';
         }
       } else if (state.uploadMode === 'edit') {
-        btn.textContent = '✅ Save Changes to Existing VSO';
+        btn.textContent = '✅ Save Live Changes to VSO';
       } else if (state.uploadMode === 'amplifier') {
-        btn.textContent = '📎 Attach Flyer & Merge Info';
+        btn.textContent = '📎 Attach Flyer & Publish Live';
       } else {
-        btn.textContent = '✅ Apply Live to Directory';
+        btn.textContent = '✅ Publish Live to Directory';
       }
     }
 
@@ -3185,6 +3467,14 @@ const htmlContent = `<!DOCTYPE html>
     function removeParsedContactRow(idx) {
       if (!Array.isArray(state.parsedContacts)) return;
       state.parsedContacts.splice(idx, 1);
+      if (idx === 0) {
+        const staffEl = document.getElementById('sub-staff');
+        if (staffEl) {
+          staffEl.value = state.parsedContacts[0]
+            ? formatContactWithRole(state.parsedContacts[0].name, state.parsedContacts[0].role)
+            : '';
+        }
+      }
       renderParsedContactsList();
     }
 
@@ -3512,9 +3802,12 @@ const htmlContent = `<!DOCTYPE html>
 
     function toggleSubmitModal(show) {
       document.getElementById('submit-modal').classList.toggle('hidden', !show);
-      if (!show) {
+      if (show) {
+        updateModeratorUi();
+      } else {
         document.getElementById('sub-success').classList.add('hidden');
         document.getElementById('ai-parse-banner').classList.add('hidden');
+        clearUploadedFileState();
         renderDuplicateAlertBanner(null);
         renderAddContactTargetBanner(null);
         renderConflictDiffPanel(null, null);
@@ -3562,6 +3855,7 @@ const htmlContent = `<!DOCTYPE html>
       renderConflictDiffPanel(null, null);
       if (mode === 'new') {
         document.getElementById('vso-submission-form').reset();
+        clearUploadedFileState();
         renderAddContactTargetBanner(null);
       } else if (isAddContact) {
         const selId = document.getElementById('amp-org-select').value;
@@ -3625,7 +3919,7 @@ const htmlContent = `<!DOCTYPE html>
         document.getElementById('sub-desc').value = org.description || '';
         document.getElementById('sub-staff').value = (org.staff_contacts && org.staff_contacts[0]) ? org.staff_contacts[0].name : '';
         state.parsedContacts = (org.staff_contacts || []).map(function(s) {
-          return { name: s.name || '', role: '', email: s.email || '', phone: '', checked: true };
+          return { name: s.name || '', role: s.role || '', email: s.email || '', phone: s.phone || '', checked: true };
         });
         renderParsedContactsList();
         renderConflictDiffPanel(null, null);
@@ -4423,6 +4717,8 @@ const htmlContent = `<!DOCTYPE html>
       const file = fileInput && fileInput.files ? fileInput.files[0] : null;
       if (!file) return;
 
+      state.uploadedFileObj = file;
+      state.uploadedFileMime = file.type || '';
       state.uploadedFileName = file.name;
       const reader = new FileReader();
 
@@ -4597,7 +4893,126 @@ const htmlContent = `<!DOCTYPE html>
       return { addedCount: addedCount, updatedCount: updatedCount, addedNames: addedNames, alreadyListedNames: alreadyListedNames };
     }
 
-    function applySubmissionPayloadLive(payload) {
+    function sanitizeSafeMediaUrl(rawUrl) {
+      const s = String(rawUrl || '').trim();
+      if (!s) return '';
+      if (/^https?:\\/\\//i.test(s)) return s;
+      if (/^data:(?:image\\/(?:png|jpeg|jpg|webp|svg\\+xml)|application\\/pdf);base64,/i.test(s)) return s;
+      if (/^[A-Za-z0-9 _.-]+\\.(?:pdf|png|jpe?g|webp|svg)$/i.test(s)) return s;
+      return '';
+    }
+
+    function isImageFlyerUrl(url, mimeType) {
+      const u = String(url || '').toLowerCase();
+      const m = String(mimeType || '').toLowerCase();
+      if (m.indexOf('image/') === 0) return true;
+      if (u.indexOf('data:image/') === 0) return true;
+      const cleanPath = u.split('?')[0].split('#')[0];
+      return /\\.(png|jpe?g|webp|svg)$/.test(cleanPath);
+    }
+
+    function formatShortTimestamp(isoStr) {
+      if (!isoStr) return '';
+      try {
+        const d = new Date(isoStr);
+        if (isNaN(d.getTime())) return '';
+        return d.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+      } catch (err) {
+        return '';
+      }
+    }
+
+    function buildSubmitterMailto(email, orgName, statusLabel, reasonText) {
+      const cleanEmail = String(email || '').trim().replace(/[\\r\\n<>]/g, '');
+      if (!cleanEmail || cleanEmail.indexOf('@') === -1) return '';
+      const subject = 'NHVet411 Resource Directory Update — ' + (orgName || 'Your VSO Submission');
+      let body = 'Hello,\\n\\nThank you for contributing to NHVet411.org regarding ' + (orgName || 'your organization') + '.\\n\\n';
+      if (statusLabel === 'rejected') {
+        body += 'Our moderation team reviewed your submission and was unable to publish it just yet for the following reason:\\n\\n"' + (reasonText || '') + '"\\n\\nPlease reply with any updated details or resubmit anytime on https://nhvet411.org so we can get this published quickly for New Hampshire veterans.\\n\\nRespectfully,\\nNHVet411 Moderation Team';
+      } else {
+        body += 'Your update has been verified and published live on https://nhvet411.org.\\n\\nRespectfully,\\nNHVet411 Moderation Team';
+      }
+      return 'mailto:' + cleanEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    }
+
+    function computeContactsDiff(previousContacts, incomingContacts, replaceContacts) {
+      const prev = Array.isArray(previousContacts) ? previousContacts : [];
+      const inc = Array.isArray(incomingContacts) ? incomingContacts : [];
+      const added = [];
+      const updated = [];
+      const removed = [];
+
+      inc.forEach(function(c) {
+        const cName = String(c.name || '').trim();
+        const cEmail = String(c.email || '').trim();
+        if (!cName && !cEmail) return;
+        const normName = normalizeContactName(cName);
+        const normEmail = cEmail.toLowerCase();
+        const match = prev.find(function(p) {
+          const pNorm = normalizeContactName(p.name || '');
+          const pEmail = String(p.email || '').trim().toLowerCase();
+          if (normName && pNorm) return normName === pNorm;
+          if (normEmail && pEmail && normEmail === pEmail) return true;
+          return false;
+        });
+        if (!match) {
+          added.push(c);
+        } else if (
+          (cEmail && cEmail.toLowerCase() !== String(match.email || '').trim().toLowerCase()) ||
+          (c.phone && String(c.phone).trim() !== String(match.phone || '').trim()) ||
+          (cName && cName !== String(match.name || '').trim())
+        ) {
+          updated.push({ before: match, after: c });
+        }
+      });
+
+      if (replaceContacts) {
+        prev.forEach(function(p) {
+          const pNorm = normalizeContactName(p.name || '');
+          const pEmail = String(p.email || '').trim().toLowerCase();
+          const stillPresent = inc.some(function(c) {
+            const cNorm = normalizeContactName(c.name || '');
+            const cEmail = String(c.email || '').trim().toLowerCase();
+            if (pNorm && cNorm) return pNorm === cNorm;
+            if (pEmail && cEmail && pEmail === cEmail) return true;
+            return false;
+          });
+          if (!stillPresent) removed.push(p);
+        });
+      }
+
+      return { added: added, updated: updated, removed: removed };
+    }
+
+    function computeOrgFieldDiffs(baseOrg, payload) {
+      if (!payload) return [];
+      const fields = [
+        { key: 'name', label: 'Organization Name' },
+        { key: 'address', label: 'Street / Venue' },
+        { key: 'city', label: 'City / Coverage' },
+        { key: 'zip', label: 'ZIP Code' },
+        { key: 'phone', label: 'Phone' },
+        { key: 'email', label: 'Primary Email' },
+        { key: 'website', label: 'Website' },
+        { key: 'description', label: 'Description & Services' }
+      ];
+      const diffs = [];
+      const isAddContact = payload.uploadMode === 'add-contact';
+      fields.forEach(function(f) {
+        if (isAddContact && (f.key === 'name' || f.key === 'address' || f.key === 'city' || f.key === 'zip' || f.key === 'website' || f.key === 'description')) {
+          return;
+        }
+        const beforeVal = baseOrg ? String(baseOrg[f.key] || '').trim() : '';
+        const afterVal = String(payload[f.key] || '').trim();
+        if (!afterVal) return;
+        if (!baseOrg || beforeVal !== afterVal) {
+          diffs.push({ key: f.key, label: f.label, before: beforeVal, after: afterVal });
+        }
+      });
+      return diffs;
+    }
+
+    function buildResolvedOrgFromPayload(baseOrg, payload) {
       const name = (payload.name || '').trim();
       const address = (payload.address || '').trim();
       const rawCityInput = (payload.city || '').trim();
@@ -4608,26 +5023,25 @@ const htmlContent = `<!DOCTYPE html>
       const desc = (payload.description || '').trim();
       const uploadMode = payload.uploadMode || 'new';
       const isMergeMode = !!payload.isMergeMode;
+      const replaceContacts = !!payload.replaceContacts || uploadMode === 'edit';
       const conflictChoices = payload.conflictChoices || {};
       const incomingContacts = Array.isArray(payload.incomingContacts) ? payload.incomingContacts : [];
-      const ampSource = payload.ampSource || null;
+      const ampSource = payload.ampSource || (payload.flyerMeta && payload.flyerMeta.url) || null;
       const isSwam = !!payload.isSwam;
 
       const matchedGeo = LOOKUP_DATA.zip_lookup.find(function(z) {
         return (rawCityInput && z.city.toLowerCase() === rawCityInput.toLowerCase()) || (zipInput && z.zip === zipInput);
       });
 
-      const targetOrg = payload.targetOrgId
-        ? ORGANIZATIONS.find(function(o) { return o.id === payload.targetOrgId; })
-        : null;
-
-      if (targetOrg) {
+      if (baseOrg) {
+        const targetOrg = JSON.parse(JSON.stringify(baseOrg));
         const updatedFields = [];
 
-        // 1. Protect Existing Geo / County / Region Data unless explicitly resolved or explicitly edited
+        // 1. Protect Existing Geo / County / Region Data & Statewide HQ Flags unless explicitly changed
         if (uploadMode !== 'add-contact') {
           if (matchedGeo) {
-            if (!isMergeMode || !targetOrg.city || targetOrg.is_statewide) {
+            const hasPhysicalCity = !!(targetOrg.city && targetOrg.city.toLowerCase() !== 'statewide');
+            if (!isMergeMode || !hasPhysicalCity) {
               if (targetOrg.city !== matchedGeo.city || targetOrg.zip !== matchedGeo.zip) {
                 updatedFields.push('Location (' + matchedGeo.city + ')');
               }
@@ -4635,7 +5049,9 @@ const htmlContent = `<!DOCTYPE html>
               targetOrg.zip = matchedGeo.zip;
               targetOrg.county = matchedGeo.county;
               targetOrg.region_id = matchedGeo.region_id;
-              targetOrg.is_statewide = false;
+              if (!baseOrg.is_statewide) {
+                targetOrg.is_statewide = false;
+              }
             }
           } else if (!isMergeMode && rawCityInput.toLowerCase() === 'statewide') {
             if (!targetOrg.is_statewide) updatedFields.push('Statewide Coverage');
@@ -4687,18 +5103,47 @@ const htmlContent = `<!DOCTYPE html>
           targetOrg.amplifier_doc = ampSource;
         }
 
-        // 4. Append Staff Contacts (Never Overwrite Existing List)
-        const mergeResult = mergeContactsIntoTarget(targetOrg, incomingContacts);
-        saveDirectoryDelta(targetOrg, false);
+        // 4. Contacts update: replace roster in Full Edit mode (allowing contact turnover), non-destructive merge otherwise
+        let mergeResult;
+        if (replaceContacts && !isMergeMode) {
+          const prevContacts = Array.isArray(targetOrg.staff_contacts) ? targetOrg.staff_contacts : [];
+          const cleanRoster = incomingContacts
+            .filter(function(c) { return (c.name && c.name.trim()) || (c.email && c.email.trim()) || (c.phone && c.phone.trim()); })
+            .map(function(c) {
+              return {
+                name: (c.name || (targetOrg.name + ' Contact')).trim(),
+                role: (c.role || '').trim(),
+                email: (c.email || '').trim(),
+                phone: (c.phone || '').trim()
+              };
+            });
+          const diff = computeContactsDiff(prevContacts, cleanRoster, true);
+          targetOrg.staff_contacts = cleanRoster;
+          if (diff.added.length > 0 || diff.updated.length > 0 || diff.removed.length > 0) {
+            updatedFields.push('Contacts Roster');
+          }
+          mergeResult = {
+            addedCount: diff.added.length,
+            updatedCount: diff.updated.length + diff.removed.length,
+            addedNames: diff.added.map(function(c) { return c.name; }),
+            alreadyListedNames: []
+          };
+        } else {
+          mergeResult = mergeContactsIntoTarget(targetOrg, incomingContacts);
+        }
 
-        updateStateDirectoryStats();
-        renderRegionPhotoCards();
-        populateOrgDropdown();
-        renderDirectory();
-
+        targetOrg.last_verified = new Date().toISOString().slice(0, 10);
         return {
           mode: 'existing',
           org: targetOrg,
+          replaceContacts: replaceContacts && !isMergeMode,
+          contactsForRpc: (replaceContacts && !isMergeMode) ? targetOrg.staff_contacts : incomingContacts,
+          ampDocsForRpc: ampSource ? [payload.flyerMeta ? {
+            title: (payload.flyerMeta.fileName || (targetOrg.name + ' Resource Flyer')),
+            storage_path: payload.flyerMeta.storagePath || ampSource,
+            public_url: ampSource,
+            mime_type: payload.flyerMeta.mimeType || (ampSource.toLowerCase().indexOf('.pdf') !== -1 ? 'application/pdf' : 'image/png')
+          } : ampSource] : [],
           updatedFields: updatedFields,
           mergeResult: mergeResult
         };
@@ -4713,41 +5158,787 @@ const htmlContent = `<!DOCTYPE html>
 
         const initialContacts = [];
         incomingContacts.forEach(function(c) {
-          if ((c.name && c.name.trim()) || (c.email && c.email.trim())) {
-            initialContacts.push({ name: (c.name || (name + ' Contact')).trim(), email: (c.email || '').trim() });
+          if ((c.name && c.name.trim()) || (c.email && c.email.trim()) || (c.phone && c.phone.trim())) {
+            initialContacts.push({
+              name: (c.name || (name + ' Contact')).trim(),
+              role: (c.role || '').trim(),
+              email: (c.email || '').trim(),
+              phone: (c.phone || '').trim()
+            });
           }
         });
 
         const newOrg = {
-          id: (isSwam && !ORGANIZATIONS.some(function(o) { return o.id === 'swim-with-a-mission-bedford'; })) ? 'swim-with-a-mission-bedford' : ('vso-live-' + Date.now()),
+          id: (isSwam && !ORGANIZATIONS.some(function(o) { return o.id === 'swim-with-a-mission-bedford'; })) ? 'swim-with-a-mission-bedford' : ('vso-live-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6)),
           name: name,
           categories: isSwam ? ['benefits-advocacy', 'financial-legal', 'service-animals-equine', 'mental-health-wellness', 'recreation-outdoors'] : ['mental-health-wellness', 'veterans-posts-community'],
           description: desc || ('Verified New Hampshire veteran organization serving ' + city + '.'),
           address: address, city: city, zip: zip, county: county, region_id: region_id, is_statewide: isStatewide, phone: phone, email: email, website: website, branches: ['all'], verified_vso: true,
           staff_contacts: initialContacts,
-          last_verified: '${todayISO}',
+          last_verified: new Date().toISOString().slice(0, 10),
+          source_url: website || '',
           amplifier_doc: initialAmp,
           amplifier_docs: initialAmp ? [initialAmp] : []
         };
-        ORGANIZATIONS.unshift(newOrg);
-        saveDirectoryDelta(newOrg, true);
-
-        updateStateDirectoryStats();
-        renderRegionPhotoCards();
-        populateOrgDropdown();
-        renderDirectory();
 
         return {
           mode: 'new',
           org: newOrg,
+          replaceContacts: true,
+          contactsForRpc: initialContacts,
+          ampDocsForRpc: initialAmp ? [payload.flyerMeta ? {
+            title: (payload.flyerMeta.fileName || (newOrg.name + ' Resource Flyer')),
+            storage_path: payload.flyerMeta.storagePath || initialAmp,
+            public_url: initialAmp,
+            mime_type: payload.flyerMeta.mimeType || (initialAmp.toLowerCase().indexOf('.pdf') !== -1 ? 'application/pdf' : 'image/png')
+          } : initialAmp] : [],
           updatedFields: [],
           mergeResult: { addedCount: initialContacts.length, updatedCount: 0, addedNames: initialContacts.map(function(c) { return c.name; }), alreadyListedNames: [] }
         };
       }
     }
 
-    function handleVsoSubmit(e) {
-      e.preventDefault();
+    function applyResolvedOrgInMemory(resolved, persistLocalFallback) {
+      if (!resolved || !resolved.org) return resolved;
+      const org = resolved.org;
+      const existingIdx = ORGANIZATIONS.findIndex(function(o) { return o.id === org.id; });
+      if (existingIdx !== -1) {
+        ORGANIZATIONS[existingIdx] = org;
+      } else {
+        ORGANIZATIONS.unshift(org);
+      }
+      if (persistLocalFallback) {
+        saveDirectoryDelta(org, existingIdx === -1);
+      }
+      updateStateDirectoryStats();
+      renderRegionPhotoCards();
+      populateOrgDropdown();
+      renderDirectory();
+      return resolved;
+    }
+
+    function applySubmissionPayloadLive(payload) {
+      const baseOrg = payload && payload.targetOrgId
+        ? ORGANIZATIONS.find(function(o) { return o.id === payload.targetOrgId; })
+        : null;
+      const resolved = buildResolvedOrgFromPayload(baseOrg, payload);
+      return applyResolvedOrgInMemory(resolved, !isSupabaseConfigured());
+    }
+
+    // =========================================================================
+    // PHASE 4: LIVE SUPABASE SYNC, MODERATOR AUTH, STRONG PASSWORDS & CONCURRENT QUEUE
+    // =========================================================================
+    const SS_MOD_SESSION_KEY = 'nhvet411_mod_session_v1';
+
+    function safeSessionGet(key) {
+      try {
+        return (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(key)) || null;
+      } catch (err) {
+        return null;
+      }
+    }
+    function safeSessionSet(key, val) {
+      try {
+        if (typeof sessionStorage !== 'undefined') sessionStorage.setItem(key, val);
+      } catch (err) {}
+    }
+    function safeSessionRemove(key) {
+      try {
+        if (typeof sessionStorage !== 'undefined') sessionStorage.removeItem(key);
+      } catch (err) {}
+    }
+
+    function isModeratorLoggedIn() {
+      return !!(state.modSession && state.modSession.access_token && state.modProfile && state.modProfile.user_id);
+    }
+
+    function buildSupabaseHeaders(accessToken, extraHeaders) {
+      const anon = getSupabaseAnonKey();
+      const headers = Object.assign({
+        'apikey': anon,
+        'Authorization': 'Bearer ' + (accessToken || anon)
+      }, extraHeaders || {});
+      return headers;
+    }
+
+    function validateStrongPassword(pw) {
+      const s = String(pw || '');
+      const checks = {
+        length: s.length >= 12,
+        upper: /[A-Z]/.test(s),
+        lower: /[a-z]/.test(s),
+        number: /[0-9]/.test(s),
+        symbol: /[^A-Za-z0-9]/.test(s)
+      };
+      const missing = [];
+      if (!checks.length) missing.push('at least 12 characters');
+      if (!checks.upper) missing.push('an uppercase letter (A-Z)');
+      if (!checks.lower) missing.push('a lowercase letter (a-z)');
+      if (!checks.number) missing.push('a number (0-9)');
+      if (!checks.symbol) missing.push('a special symbol (!@#$%^&*)');
+      return {
+        valid: checks.length && checks.upper && checks.lower && checks.number && checks.symbol,
+        checks: checks,
+        missing: missing
+      };
+    }
+
+    function updatePasswordChecklistUi(inputId, checklistId) {
+      const inputEl = document.getElementById(inputId);
+      const listEl = document.getElementById(checklistId);
+      if (!inputEl || !listEl) return;
+      const res = validateStrongPassword(inputEl.value);
+      const items = [
+        { ok: res.checks.length, label: '12+ characters' },
+        { ok: res.checks.upper, label: 'Uppercase (A-Z)' },
+        { ok: res.checks.lower, label: 'Lowercase (a-z)' },
+        { ok: res.checks.number, label: 'Number (0-9)' },
+        { ok: res.checks.symbol, label: 'Symbol (!@#$...)' }
+      ];
+      listEl.innerHTML = items.map(function(it) {
+        return '<span class="pw-rule-item ' + (it.ok ? 'pw-rule-ok' : 'pw-rule-no') + '">' + (it.ok ? '✓ ' : '○ ') + it.label + '</span>';
+      }).join('');
+    }
+
+    function mapSupabaseOrgRow(row) {
+      const contacts = Array.isArray(row.staff_contacts)
+        ? row.staff_contacts
+            .filter(function(c) { return c && (c.name || c.email || c.phone); })
+            .map(function(c) {
+              return {
+                name: formatContactWithRole(c.name || '', c.role || ''),
+                role: c.role || '',
+                email: c.email || '',
+                phone: c.phone || ''
+              };
+            })
+        : [];
+      const ampUrls = [];
+      if (Array.isArray(row.amplifier_docs)) {
+        row.amplifier_docs.forEach(function(d) {
+          const u = (d && (d.public_url || d.storage_path)) || '';
+          if (u && ampUrls.indexOf(u) === -1) ampUrls.push(u);
+        });
+      }
+      if (row.amplifier_doc && ampUrls.indexOf(row.amplifier_doc) === -1) {
+        ampUrls.unshift(row.amplifier_doc);
+      }
+      const primaryAmp = row.amplifier_doc || (ampUrls.length > 0 ? ampUrls[ampUrls.length - 1] : null);
+      return {
+        id: row.id,
+        name: row.name || '',
+        categories: Array.isArray(row.categories) && row.categories.length > 0 ? row.categories : ['veterans-posts-community'],
+        description: row.description || '',
+        address: row.address || '',
+        city: row.city || 'Statewide',
+        zip: row.zip || '',
+        county: row.county || 'All Counties',
+        region_id: row.region_id || 'statewide',
+        secondary_region_id: row.secondary_region_id || null,
+        is_statewide: !!row.is_statewide,
+        phone: row.phone || '',
+        email: row.email || '',
+        website: row.website || '',
+        branches: Array.isArray(row.branches) && row.branches.length > 0 ? row.branches : ['all'],
+        verified_vso: row.verified_vso !== false,
+        staff_contacts: contacts,
+        last_verified: row.last_verified || '',
+        source_url: row.source_url || row.website || '',
+        amplifier_doc: primaryAmp,
+        amplifier_docs: ampUrls
+      };
+    }
+
+    async function syncLiveDirectoryFromSupabase() {
+      if (!isSupabaseConfigured()) return false;
+      const baseUrl = getSupabaseUrl();
+      try {
+        const allRows = [];
+        let offset = 0;
+        const pageSize = 1000;
+        let keepGoing = true;
+        while (keepGoing) {
+          const endpoint = baseUrl + '/rest/v1/organizations?select=*,staff_contacts(id,name,role,email,phone),amplifier_docs(id,title,storage_path,public_url,mime_type)&status=eq.approved&order=name.asc';
+          const res = await fetch(endpoint, {
+            method: 'GET',
+            headers: buildSupabaseHeaders(null, { 'Range': offset + '-' + (offset + pageSize - 1) })
+          });
+          if (!res.ok) return false;
+          const rows = await res.json();
+          if (!Array.isArray(rows) || rows.length === 0) {
+            keepGoing = false;
+          } else {
+            rows.forEach(function(r) { allRows.push(r); });
+            if (rows.length < pageSize) keepGoing = false;
+            else offset += pageSize;
+          }
+          if (offset >= 5000) keepGoing = false;
+        }
+        if (allRows.length > 0) {
+          ORGANIZATIONS = allRows.map(mapSupabaseOrgRow);
+          updateStateDirectoryStats();
+          renderRegionPhotoCards();
+          populateOrgDropdown();
+          renderDirectory();
+          return true;
+        }
+      } catch (err) {
+        console.warn('Live Supabase directory sync fell back to static baseline:', err);
+      }
+      return false;
+    }
+
+    async function fetchFreshOrgFromSupabase(orgId) {
+      if (!isSupabaseConfigured() || !orgId) return null;
+      try {
+        const endpoint = getSupabaseUrl() + '/rest/v1/organizations?id=eq.' + encodeURIComponent(orgId) + '&select=*,staff_contacts(id,name,role,email,phone),amplifier_docs(id,title,storage_path,public_url,mime_type)&limit=1';
+        const token = state.modSession ? state.modSession.access_token : null;
+        const res = await fetch(endpoint, { method: 'GET', headers: buildSupabaseHeaders(token) });
+        if (!res.ok) return null;
+        const rows = await res.json();
+        if (Array.isArray(rows) && rows.length > 0) {
+          return mapSupabaseOrgRow(rows[0]);
+        }
+      } catch (err) {
+        console.warn('Could not fetch fresh org record:', err);
+      }
+      return null;
+    }
+
+    async function uploadFlyerToSupabaseStorage(fileObj) {
+      if (!fileObj || !isSupabaseConfigured()) return null;
+      const maxSize = 10 * 1024 * 1024;
+      if (fileObj.size && fileObj.size > maxSize) {
+        throw new Error('Flyer file is larger than the 10 MB limit. Please upload a smaller PDF or image.');
+      }
+      const origName = String(fileObj.name || 'flyer.pdf');
+      const safeBase = origName.replace(/[^A-Za-z0-9._-]/g, '_').slice(-80) || 'flyer.pdf';
+      const storagePath = 'submissions/' + Date.now() + '-' + Math.random().toString(36).substring(2, 8) + '-' + safeBase;
+      const mimeType = fileObj.type || (safeBase.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'image/png');
+      const token = isModeratorLoggedIn() ? (await getValidModeratorAccessToken()) : null;
+      const uploadUrl = getSupabaseUrl() + '/storage/v1/object/vso-flyers/' + storagePath;
+      const res = await fetch(uploadUrl, {
+        method: 'POST',
+        headers: buildSupabaseHeaders(token, {
+          'Content-Type': mimeType,
+          'x-upsert': 'false'
+        }),
+        body: fileObj
+      });
+      if (!res.ok) {
+        throw new Error('Could not upload flyer file (HTTP ' + res.status + ').');
+      }
+      return {
+        url: getSupabaseUrl() + '/storage/v1/object/public/vso-flyers/' + storagePath,
+        storagePath: storagePath,
+        fileName: origName,
+        mimeType: mimeType
+      };
+    }
+
+    async function fetchModeratorProfile(accessToken, userId) {
+      const endpoint = getSupabaseUrl() + '/rest/v1/moderators?user_id=eq.' + encodeURIComponent(userId) + '&select=user_id,email,display_name,role&limit=1';
+      const res = await fetch(endpoint, {
+        method: 'GET',
+        headers: buildSupabaseHeaders(accessToken)
+      });
+      if (!res.ok) return null;
+      const rows = await res.json();
+      return (Array.isArray(rows) && rows.length > 0) ? rows[0] : null;
+    }
+
+    function persistModSession(sessionObj, profileObj) {
+      state.modSession = sessionObj;
+      state.modProfile = profileObj;
+      if (sessionObj && profileObj) {
+        safeSessionSet(SS_MOD_SESSION_KEY, JSON.stringify({ session: sessionObj, profile: profileObj }));
+      } else {
+        safeSessionRemove(SS_MOD_SESSION_KEY);
+      }
+    }
+
+    async function getValidModeratorAccessToken() {
+      if (!state.modSession || !state.modSession.access_token) return null;
+      const nowSec = Math.floor(Date.now() / 1000);
+      const expSec = Number(state.modSession.expires_at || 0);
+      if (expSec && expSec - nowSec > 90) {
+        return state.modSession.access_token;
+      }
+      if (!state.modSession.refresh_token || !isSupabaseConfigured()) {
+        return state.modSession.access_token;
+      }
+      try {
+        const res = await fetch(getSupabaseUrl() + '/auth/v1/token?grant_type=refresh_token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': getSupabaseAnonKey() },
+          body: JSON.stringify({ refresh_token: state.modSession.refresh_token })
+        });
+        if (!res.ok) {
+          await signOutModerator(true);
+          return null;
+        }
+        const data = await res.json();
+        const refreshed = {
+          access_token: data.access_token,
+          refresh_token: data.refresh_token || state.modSession.refresh_token,
+          expires_at: data.expires_at || (nowSec + Number(data.expires_in || 3600)),
+          user: data.user || state.modSession.user
+        };
+        const profile = await fetchModeratorProfile(refreshed.access_token, refreshed.user && refreshed.user.id);
+        if (!profile) {
+          await signOutModerator(true);
+          return null;
+        }
+        persistModSession(refreshed, profile);
+        return refreshed.access_token;
+      } catch (err) {
+        return state.modSession.access_token;
+      }
+    }
+
+    function updateBellNotificationUi(count, pulseNew) {
+      const safeCount = Math.max(0, Number(count) || 0);
+      const countEl = document.getElementById('review-queue-count');
+      const dotEl = document.getElementById('mod-bell-dot');
+      if (countEl) countEl.textContent = safeCount;
+      if (dotEl) {
+        dotEl.classList.toggle('hidden', safeCount === 0);
+        if (pulseNew && safeCount > 0) {
+          dotEl.classList.add('mod-bell-dot-pulse');
+        } else if (safeCount === 0) {
+          dotEl.classList.remove('mod-bell-dot-pulse');
+        }
+      }
+      const tabPendingCount = document.getElementById('rq-pending-tab-count');
+      if (tabPendingCount) tabPendingCount.textContent = safeCount;
+    }
+
+    function updateModeratorUi() {
+      const isMod = isModeratorLoggedIn();
+      const loginBtn = document.getElementById('mod-login-btn');
+      const reviewBtn = document.getElementById('mod-review-btn');
+      const accountBtn = document.getElementById('mod-account-btn');
+      const accountLabel = document.getElementById('mod-account-label');
+      const wfBar = document.getElementById('workflow-switch-bar');
+      const submitterRow = document.getElementById('submitter-info-row');
+
+      if (loginBtn) loginBtn.classList.toggle('hidden', isMod);
+      if (reviewBtn) reviewBtn.classList.toggle('hidden', !isMod);
+      if (accountBtn) accountBtn.classList.toggle('hidden', !isMod);
+      if (accountLabel && isMod) {
+        const displayName = (state.modProfile.display_name || state.modProfile.email || 'Moderator').trim();
+        accountLabel.textContent = displayName.split(' ')[0];
+      }
+      if (wfBar) wfBar.classList.toggle('hidden', !isMod);
+      if (submitterRow) submitterRow.classList.toggle('hidden', isMod);
+
+      if (!isMod) {
+        state.submissionWorkflow = 'queue';
+        updateBellNotificationUi(0, false);
+      } else if (state.submissionWorkflow !== 'live' && state.submissionWorkflow !== 'queue') {
+        state.submissionWorkflow = 'live';
+      }
+      setSubmissionWorkflow(isMod ? state.submissionWorkflow : 'queue');
+    }
+
+    function stopModeratorPolling() {
+      if (state.modPollTimer) {
+        clearInterval(state.modPollTimer);
+        state.modPollTimer = null;
+      }
+    }
+
+    function startModeratorPolling() {
+      stopModeratorPolling();
+      if (!isModeratorLoggedIn() || !isSupabaseConfigured()) return;
+      pollModeratorPendingCount(false);
+      state.modPollTimer = setInterval(function() {
+        if (typeof document !== 'undefined' && document.hidden) return;
+        pollModeratorPendingCount(true);
+      }, 45000);
+    }
+
+    async function pollModeratorPendingCount(isBackgroundPoll) {
+      if (!isModeratorLoggedIn() || !isSupabaseConfigured()) return 0;
+      const token = await getValidModeratorAccessToken();
+      if (!token) return 0;
+      try {
+        const endpoint = getSupabaseUrl() + '/rest/v1/pending_submissions?select=id&review_status=eq.pending&limit=200';
+        const res = await fetch(endpoint, {
+          method: 'GET',
+          headers: buildSupabaseHeaders(token)
+        });
+        if (res.status === 401 || res.status === 403) {
+          await signOutModerator(true);
+          return 0;
+        }
+        if (!res.ok) return state.modLastKnownPendingCount;
+        const rows = await res.json();
+        const count = Array.isArray(rows) ? rows.length : 0;
+        const prevCount = state.modLastKnownPendingCount || 0;
+        const hasNewArrival = isBackgroundPoll && count > prevCount;
+        state.modLastKnownPendingCount = count;
+
+        // NEVER interrupt an active approval modal with a pop-up!
+        // Only update the small bell icon red dot + quiet refresh pill if modal is open.
+        updateBellNotificationUi(count, hasNewArrival || count > 0);
+
+        const rqModal = document.getElementById('review-queue-modal');
+        const isQueueOpen = rqModal && !rqModal.classList.contains('hidden');
+        if (isQueueOpen && isBackgroundPoll) {
+          const loadedIds = {};
+          (state.modPendingItems || []).forEach(function(it) { loadedIds[it.id] = true; });
+          const unseenCount = (rows || []).filter(function(r) { return !loadedIds[r.id]; }).length;
+          state.modNewArrivalsCount = unseenCount;
+          const badgeEl = document.getElementById('rq-new-badge');
+          if (badgeEl) {
+            if (unseenCount > 0) {
+              badgeEl.textContent = '+' + unseenCount + ' new';
+              badgeEl.classList.remove('hidden');
+            } else {
+              badgeEl.classList.add('hidden');
+            }
+          }
+        }
+        return count;
+      } catch (err) {
+        return state.modLastKnownPendingCount;
+      }
+    }
+
+    function toggleModAuthModal(show, mode) {
+      const modal = document.getElementById('mod-auth-modal');
+      if (!modal) return;
+      modal.classList.toggle('hidden', !show);
+      if (show) {
+        setModAuthView(mode || (isModeratorLoggedIn() ? 'account' : 'login'));
+      }
+    }
+
+    function setModAuthView(mode) {
+      state.modAuthMode = mode;
+      const views = ['login', 'forgot', 'recovery', 'account'];
+      views.forEach(function(v) {
+        const el = document.getElementById('mod-auth-view-' + v);
+        if (el) el.classList.toggle('hidden', v !== mode);
+      });
+      const msgEl = document.getElementById('mod-auth-feedback');
+      if (msgEl) {
+        msgEl.classList.add('hidden');
+        msgEl.textContent = '';
+      }
+      if (mode === 'account' && state.modProfile) {
+        const nameEl = document.getElementById('mod-profile-name');
+        const emailEl = document.getElementById('mod-profile-email');
+        const roleEl = document.getElementById('mod-profile-role');
+        if (nameEl) nameEl.textContent = state.modProfile.display_name || 'NHVet411 Moderator';
+        if (emailEl) emailEl.textContent = state.modProfile.email || '';
+        if (roleEl) roleEl.textContent = (state.modProfile.role || 'moderator').toUpperCase();
+        updatePasswordChecklistUi('mod-change-pw-new', 'mod-change-pw-checklist');
+      }
+      if (mode === 'recovery') {
+        updatePasswordChecklistUi('mod-recovery-pw-new', 'mod-recovery-pw-checklist');
+      }
+    }
+
+    function showModAuthFeedback(message, isError) {
+      const el = document.getElementById('mod-auth-feedback');
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.className = isError
+        ? 'mt-3 p-3 rounded-xl text-xs font-bold border'
+        : 'mt-3 p-3 rounded-xl text-xs font-bold bg-emerald-50 border text-emerald-950';
+      if (isError) {
+        el.style.backgroundColor = '#FEF2F2';
+        el.style.borderColor = '#FCA5A5';
+        el.style.color = '#991B1B';
+      } else {
+        el.style.backgroundColor = '';
+        el.style.borderColor = '';
+        el.style.color = '';
+      }
+      el.textContent = message;
+    }
+
+    async function handleModeratorLoginSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (!isSupabaseConfigured()) {
+        showModAuthFeedback('Supabase backend is not configured in this offline preview.', true);
+        return false;
+      }
+      const email = String((document.getElementById('mod-login-email') && document.getElementById('mod-login-email').value) || '').trim();
+      const password = String((document.getElementById('mod-login-password') && document.getElementById('mod-login-password').value) || '');
+      if (!email || !password) {
+        showModAuthFeedback('Please enter both your moderator email and password.', true);
+        return false;
+      }
+      const btn = document.getElementById('mod-login-submit-btn');
+      if (btn) { btn.disabled = true; btn.textContent = '⏳ Signing in...'; }
+      try {
+        const res = await fetch(getSupabaseUrl() + '/auth/v1/token?grant_type=password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': getSupabaseAnonKey() },
+          body: JSON.stringify({ email: email, password: password })
+        });
+        const data = await res.json().catch(function() { return {}; });
+        if (!res.ok || !data.access_token || !data.user) {
+          showModAuthFeedback(data.error_description || data.msg || 'Invalid email or password. Please try again.', true);
+          return false;
+        }
+        const profile = await fetchModeratorProfile(data.access_token, data.user.id);
+        if (!profile) {
+          try {
+            await fetch(getSupabaseUrl() + '/auth/v1/logout', {
+              method: 'POST',
+              headers: buildSupabaseHeaders(data.access_token)
+            });
+          } catch (ignoreErr) {}
+          showModAuthFeedback('Access denied: This account is not registered in the NHVet411 moderators allowlist.', true);
+          return false;
+        }
+        const nowSec = Math.floor(Date.now() / 1000);
+        persistModSession({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token || '',
+          expires_at: data.expires_at || (nowSec + Number(data.expires_in || 3600)),
+          user: data.user
+        }, profile);
+        state.submissionWorkflow = 'live';
+        if (document.getElementById('mod-login-password')) document.getElementById('mod-login-password').value = '';
+        updateModeratorUi();
+        startModeratorPolling();
+        toggleModAuthModal(false);
+        showToast('🛡️ Signed in as Moderator: ' + (profile.display_name || profile.email));
+        return true;
+      } catch (err) {
+        showModAuthFeedback('Network error signing in. Please check your connection and try again.', true);
+        return false;
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = '🔐 Sign In as Moderator'; }
+      }
+    }
+
+    async function handleForgotPasswordSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (!isSupabaseConfigured()) {
+        showModAuthFeedback('Supabase backend is not configured in this offline preview.', true);
+        return false;
+      }
+      const email = String((document.getElementById('mod-forgot-email') && document.getElementById('mod-forgot-email').value) || '').trim();
+      if (!email || email.indexOf('@') === -1) {
+        showModAuthFeedback('Please enter a valid moderator email address.', true);
+        return false;
+      }
+      const btn = document.getElementById('mod-forgot-submit-btn');
+      if (btn) { btn.disabled = true; btn.textContent = '⏳ Sending Reset Link...'; }
+      try {
+        const originRedirect = (typeof window !== 'undefined' && window.location && window.location.origin && /^https?:/i.test(window.location.origin))
+          ? (window.location.origin + (window.location.pathname || '/'))
+          : 'https://nhvet411.org/';
+        const res = await fetch(getSupabaseUrl() + '/auth/v1/recover?redirect_to=' + encodeURIComponent(originRedirect), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': getSupabaseAnonKey() },
+          body: JSON.stringify({ email: email })
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(function() { return {}; });
+          showModAuthFeedback(errData.msg || errData.error_description || 'Unable to send reset email right now. Please try again shortly.', true);
+          return false;
+        }
+        showModAuthFeedback('✉️ If that email belongs to an active moderator account, a password reset link has been sent. Open the link from your inbox to set a new strong password.', false);
+        return true;
+      } catch (err) {
+        showModAuthFeedback('Network error requesting password reset.', true);
+        return false;
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = '✉️ Send Password Reset Email'; }
+      }
+    }
+
+    async function handleSetNewPasswordSubmit(e, isRecoveryMode) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (!isSupabaseConfigured()) {
+        showModAuthFeedback('Supabase backend is not configured.', true);
+        return false;
+      }
+      const newPwEl = document.getElementById(isRecoveryMode ? 'mod-recovery-pw-new' : 'mod-change-pw-new');
+      const confirmPwEl = document.getElementById(isRecoveryMode ? 'mod-recovery-pw-confirm' : 'mod-change-pw-confirm');
+      const newPw = String((newPwEl && newPwEl.value) || '');
+      const confirmPw = String((confirmPwEl && confirmPwEl.value) || '');
+
+      const check = validateStrongPassword(newPw);
+      if (!check.valid) {
+        showModAuthFeedback('Password must include: ' + check.missing.join(', ') + '.', true);
+        return false;
+      }
+      if (newPw !== confirmPw) {
+        showModAuthFeedback('Passwords do not match. Please re-enter to confirm.', true);
+        return false;
+      }
+
+      const token = isRecoveryMode ? state.modRecoveryToken : (await getValidModeratorAccessToken());
+      if (!token) {
+        showModAuthFeedback('Your reset or login session expired. Please request a new password reset link.', true);
+        return false;
+      }
+
+      const btn = document.getElementById(isRecoveryMode ? 'mod-recovery-submit-btn' : 'mod-change-pw-submit-btn');
+      if (btn) { btn.disabled = true; btn.textContent = '⏳ Updating Password...'; }
+      try {
+        const res = await fetch(getSupabaseUrl() + '/auth/v1/user', {
+          method: 'PUT',
+          headers: buildSupabaseHeaders(token, { 'Content-Type': 'application/json' }),
+          body: JSON.stringify({ password: newPw })
+        });
+        const data = await res.json().catch(function() { return {}; });
+        if (!res.ok) {
+          showModAuthFeedback(data.msg || data.error_description || 'Could not update password. Ensure it meets all strength criteria.', true);
+          return false;
+        }
+        if (newPwEl) newPwEl.value = '';
+        if (confirmPwEl) confirmPwEl.value = '';
+        state.modRecoveryToken = null;
+        if (isRecoveryMode) {
+          showModAuthFeedback('✅ Strong password saved! You can now sign in with your new password.', false);
+          setTimeout(function() { setModAuthView('login'); }, 1500);
+        } else {
+          showModAuthFeedback('✅ Your moderator password has been updated.', false);
+        }
+        showToast('✅ Strong password updated successfully.');
+        return true;
+      } catch (err) {
+        showModAuthFeedback('Network error updating password. Please try again.', true);
+        return false;
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = isRecoveryMode ? '✅ Save New Strong Password' : '🔒 Update Password'; }
+      }
+    }
+
+    async function signOutModerator(silentExpired) {
+      const token = state.modSession && state.modSession.access_token;
+      stopModeratorPolling();
+      persistModSession(null, null);
+      state.modPendingItems = [];
+      state.modHistoryItems = [];
+      state.modPendingIndex = 0;
+      state.modRejectOpenForId = null;
+      state.modLastKnownPendingCount = 0;
+      state.modNewArrivalsCount = 0;
+      state.modLastNoticeHtml = '';
+      state.submissionWorkflow = 'queue';
+      toggleModAuthModal(false);
+      toggleReviewQueueModal(false);
+      updateModeratorUi();
+      if (token && isSupabaseConfigured()) {
+        try {
+          await fetch(getSupabaseUrl() + '/auth/v1/logout', {
+            method: 'POST',
+            headers: buildSupabaseHeaders(token)
+          });
+        } catch (ignoreErr) {}
+      }
+      showToast(silentExpired ? '🔐 Moderator session expired — please sign in again.' : '🔐 Signed out of Moderator Mode.');
+    }
+
+    async function checkUrlForPasswordRecovery() {
+      if (typeof window === 'undefined' || !window.location) return false;
+      const hashStr = String(window.location.hash || '').replace(/^#/, '');
+      const searchStr = String(window.location.search || '').replace(/^\\?/, '');
+      const hashParams = new URLSearchParams(hashStr);
+      const queryParams = new URLSearchParams(searchStr);
+
+      const errDesc = hashParams.get('error_description') || queryParams.get('error_description');
+      if (errDesc && (hashParams.get('error') || queryParams.get('error'))) {
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', window.location.pathname || '/');
+        }
+        toggleModAuthModal(true, 'forgot');
+        showModAuthFeedback('That password reset link expired or was already used (' + errDesc + '). Request a fresh link below.', true);
+        return true;
+      }
+
+      const hashType = hashParams.get('type');
+      const accessToken = hashParams.get('access_token');
+      if (hashType === 'recovery' && accessToken) {
+        state.modRecoveryToken = accessToken;
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', window.location.pathname || '/');
+        }
+        toggleModAuthModal(true, 'recovery');
+        showModAuthFeedback('Verified recovery link. Please create a new strong password below.', false);
+        return true;
+      }
+
+      const queryType = queryParams.get('type');
+      const tokenHash = queryParams.get('token_hash');
+      if (queryType === 'recovery' && tokenHash && isSupabaseConfigured()) {
+        try {
+          const res = await fetch(getSupabaseUrl() + '/auth/v1/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': getSupabaseAnonKey() },
+            body: JSON.stringify({ type: 'recovery', token_hash: tokenHash })
+          });
+          const data = await res.json().catch(function() { return {}; });
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname || '/');
+          }
+          if (res.ok && data.access_token) {
+            state.modRecoveryToken = data.access_token;
+            toggleModAuthModal(true, 'recovery');
+            showModAuthFeedback('Verified recovery link. Please create a new strong password below.', false);
+            return true;
+          }
+          toggleModAuthModal(true, 'forgot');
+          showModAuthFeedback('That password reset link expired. Please request a new reset email below.', true);
+          return true;
+        } catch (err) {
+          return false;
+        }
+      }
+      return false;
+    }
+
+    async function restoreModeratorSession() {
+      if (!isSupabaseConfigured()) return false;
+      const raw = safeSessionGet(SS_MOD_SESSION_KEY);
+      if (!raw) return false;
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.session || !parsed.session.access_token) return false;
+        state.modSession = parsed.session;
+        state.modProfile = parsed.profile || null;
+        const token = await getValidModeratorAccessToken();
+        if (!token) return false;
+        const userId = state.modSession.user && state.modSession.user.id;
+        const profile = userId ? await fetchModeratorProfile(token, userId) : null;
+        if (!profile) {
+          persistModSession(null, null);
+          updateModeratorUi();
+          return false;
+        }
+        persistModSession(state.modSession, profile);
+        state.submissionWorkflow = 'live';
+        updateModeratorUi();
+        startModeratorPolling();
+        return true;
+      } catch (err) {
+        persistModSession(null, null);
+        updateModeratorUi();
+        return false;
+      }
+    }
+
+    async function bootstrapSupabaseAndModeration() {
+      await checkUrlForPasswordRecovery();
+      await restoreModeratorSession();
+      await syncLiveDirectoryFromSupabase();
+    }
+
+    // =========================================================================
+    // VSO SUBMISSION HANDLER (PUBLIC -> PENDING QUEUE, MODERATOR -> LIVE OR QUEUE)
+    // =========================================================================
+    async function handleVsoSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
       const name = document.getElementById('sub-name').value.trim();
       const address = document.getElementById('sub-address').value.trim();
       const rawCityInput = document.getElementById('sub-city').value.trim();
@@ -4757,6 +5948,8 @@ const htmlContent = `<!DOCTYPE html>
       const staffName = document.getElementById('sub-staff').value.trim();
       const website = document.getElementById('sub-website').value.trim();
       const desc = document.getElementById('sub-desc').value.trim();
+      const submitterName = String((document.getElementById('sub-submitter-name') && document.getElementById('sub-submitter-name').value) || '').trim();
+      const submitterEmail = String((document.getElementById('sub-submitter-email') && document.getElementById('sub-submitter-email').value) || '').trim();
 
       const existingId = document.getElementById('amp-org-select').value;
       let targetOrg = null;
@@ -4782,10 +5975,6 @@ const htmlContent = `<!DOCTYPE html>
 
       const effectiveOrgName = targetOrg ? targetOrg.name : name;
       const isSwam = effectiveOrgName.toLowerCase().includes('swim with a mission') || effectiveOrgName.toLowerCase().includes('swam') || (targetOrg && targetOrg.id === 'swim-with-a-mission-bedford');
-      const ampSource = (state.uploadedFileName && state.uploadedFileName.toLowerCase().includes('tiger'))
-        ? 'walkwithtiger.pdf'
-        : (state.uploadedFileDataUrl || (isSwam && state.uploadedFileName ? 'Swim_With_A_Mission_Flyer.svg' : null));
-
       const incomingContacts = getEffectiveIncomingContacts(isSwam, staffName, email, effectiveOrgName);
 
       if (state.uploadMode === 'add-contact' && incomingContacts.length === 0) {
@@ -4793,188 +5982,818 @@ const htmlContent = `<!DOCTYPE html>
         return;
       }
 
-      const submissionPayload = {
-        queueId: 'queue-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6),
-        submittedAt: new Date().toISOString(),
-        uploadMode: state.uploadMode,
-        isMergeMode: isMergeMode,
-        targetOrgId: targetOrg ? targetOrg.id : null,
-        targetOrgName: targetOrg ? targetOrg.name : null,
-        matchReasons: matchReasons,
-        name: name || (targetOrg ? targetOrg.name : ''),
-        address: address,
-        city: rawCityInput,
-        zip: zipInput,
-        phone: phone,
-        email: email,
-        website: website,
-        description: desc,
-        incomingContacts: incomingContacts,
-        conflictChoices: Object.assign({}, state.conflictChoices || {}),
-        conflictsSnapshot: targetOrg ? computeFieldConflicts(targetOrg, getFormCandidateValues()) : [],
-        ampSource: (ampSource && ampSource.length <= 180000) ? ampSource : null,
-        isSwam: isSwam
-      };
+      const submitBtn = document.getElementById('sub-submit-btn');
+      const prevBtnLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Saving...';
+      }
 
       const suc = document.getElementById('sub-success');
-      suc.classList.remove('hidden');
+      try {
+        let flyerMeta = null;
+        let ampSource = (state.uploadedFileName && state.uploadedFileName.toLowerCase().includes('tiger'))
+          ? 'walkwithtiger.pdf'
+          : (state.uploadedFileDataUrl || (isSwam && state.uploadedFileName ? 'Swim_With_A_Mission_Flyer.svg' : null));
 
-      // PUBLIC REVIEW QUEUE WORKFLOW (ITEM 8)
-      if (state.submissionWorkflow === 'queue') {
-        const qList = getPendingQueue();
-        qList.unshift(submissionPayload);
-        savePendingQueue(qList);
-        const openQueueBtn = '<div class="mt-2.5"><button type="button" onclick="toggleSubmitModal(false); toggleReviewQueueModal(true);" class="inline-flex items-center gap-1.5 bg-amber-500 text-slate-900 text-xs font-extrabold px-3.5 py-1.5 rounded-lg shadow-sm cursor-pointer">📋 Open Review Queue (' + qList.length + ' Pending)</button></div>';
-        const targetLabel = targetOrg ? ('merge into <strong>' + escapeHtml(targetOrg.name) + '</strong>') : ('new VSO <strong>' + escapeHtml(submissionPayload.name) + '</strong>');
-        suc.innerHTML = '📋 Staged submission in the <strong>Pending Review Queue</strong> (' + targetLabel + ' with <strong>' + incomingContacts.length + ' contact(s)</strong>).' + openQueueBtn;
-        showToast('📋 Sent submission for ' + (targetOrg ? targetOrg.name : submissionPayload.name) + ' to Review Queue (' + qList.length + ' pending).');
-        return;
-      }
-
-      // INSTANT LIVE ADMIN WORKFLOW
-      const result = applySubmissionPayloadLive(submissionPayload);
-      const finalOrg = result.org;
-      const mergeResult = result.mergeResult;
-      const updatedFields = result.updatedFields;
-
-      if (state.uploadMode === 'add-contact' && targetOrg) {
-        renderAddContactTargetBanner(targetOrg);
-        document.getElementById('sub-staff').value = '';
-        document.getElementById('sub-email').value = '';
-        document.getElementById('sub-phone').value = '';
-        state.parsedContacts = [];
-        renderParsedContactsList();
-      } else {
-        renderConflictDiffPanel(null, null);
-      }
-
-      const jumpBtnHtml = '<div class="mt-2.5"><button type="button" onclick="jumpToVsoCard(\\'' + finalOrg.id + '\\')" class="inline-flex items-center gap-1.5 bg-olive text-white text-xs font-extrabold px-3.5 py-1.5 rounded-lg shadow-sm cursor-pointer">🔍 Jump to Card</button></div>';
-
-      if (result.mode === 'existing') {
-        const totalContactsNow = (finalOrg.staff_contacts || []).length;
-        if (mergeResult.addedCount > 0 && updatedFields.length === 0) {
-          const msgHtml = '✅ Added <strong>' + mergeResult.addedCount + ' new contact(s)</strong> (<strong>' + escapeHtml(mergeResult.addedNames.join(', ')) + '</strong>) to <strong>' + escapeHtml(finalOrg.name) + '</strong>. Total contacts on card: <strong>' + totalContactsNow + '</strong>.';
-          suc.innerHTML = msgHtml + jumpBtnHtml;
-          showToast('✅ Added ' + mergeResult.addedCount + ' new contact(s) (' + mergeResult.addedNames.join(', ') + ') to ' + finalOrg.name + '. Total contacts on card: ' + totalContactsNow + '.');
-        } else if (updatedFields.length > 0 || mergeResult.updatedCount > 0) {
-          const fieldsList = updatedFields.length > 0 ? updatedFields.join(', ') : 'contact details';
-          const contactSuffixHtml = mergeResult.addedCount > 0
-            ? ' and added <strong>' + mergeResult.addedCount + ' new contact(s)</strong> (<strong>' + escapeHtml(mergeResult.addedNames.join(', ')) + '</strong>).'
-            : '.';
-          const contactSuffixText = mergeResult.addedCount > 0
-            ? ' and added ' + mergeResult.addedCount + ' new contact(s).'
-            : '.';
-          suc.innerHTML = '🔄 Updated <strong>' + escapeHtml(finalOrg.name) + '</strong> — filled <strong>' + escapeHtml(fieldsList) + '</strong>' + contactSuffixHtml + jumpBtnHtml;
-          showToast('🔄 Updated ' + finalOrg.name + ' — filled ' + fieldsList + contactSuffixText);
-        } else {
-          const dupLabel = mergeResult.alreadyListedNames.length > 0
-            ? mergeResult.alreadyListedNames.join(', ')
-            : (staffName || email || 'This information');
-          suc.innerHTML = 'ℹ️ No changes needed — <strong>' + escapeHtml(dupLabel) + '</strong> is already listed on <strong>' + escapeHtml(finalOrg.name) + '</strong>\\x27s card.' + jumpBtnHtml;
-          showToast('ℹ️ No changes needed — ' + dupLabel + ' is already listed on ' + finalOrg.name + '\\x27s card.');
+        if (state.uploadedFileObj && isSupabaseConfigured()) {
+          try {
+            flyerMeta = await uploadFlyerToSupabaseStorage(state.uploadedFileObj);
+            if (flyerMeta && flyerMeta.url) {
+              ampSource = flyerMeta.url;
+            }
+          } catch (uploadErr) {
+            showToast('⚠️ ' + (uploadErr.message || 'Flyer upload failed; submitting text details.'));
+          }
+        } else if (ampSource && state.uploadedFileName) {
+          flyerMeta = {
+            url: ampSource.length <= 180000 ? ampSource : null,
+            storagePath: state.uploadedFileName,
+            fileName: state.uploadedFileName,
+            mimeType: state.uploadedFileMime || (state.uploadedFileName.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'image/png')
+          };
         }
-      } else {
-        suc.innerHTML = '🆕 Created new VSO card for <strong>' + escapeHtml(finalOrg.name) + '</strong> (' + escapeHtml(finalOrg.city) + ') with <strong>' + finalOrg.staff_contacts.length + ' contact(s)</strong>.' + jumpBtnHtml;
-        showToast('🆕 Created new VSO card for ' + finalOrg.name + ' (' + finalOrg.city + ') with ' + finalOrg.staff_contacts.length + ' contact(s).');
+
+        const safeAmpSource = (ampSource && (ampSource.indexOf('https://') === 0 || ampSource.indexOf('http://') === 0 || ampSource.length <= 180000)) ? ampSource : null;
+        const replaceContacts = (state.uploadMode === 'edit' && !!targetOrg);
+
+        const submissionPayload = {
+          queueId: 'queue-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6),
+          submittedAt: new Date().toISOString(),
+          uploadMode: state.uploadMode,
+          isMergeMode: isMergeMode,
+          replaceContacts: replaceContacts,
+          targetOrgId: targetOrg ? targetOrg.id : null,
+          targetOrgName: targetOrg ? targetOrg.name : null,
+          matchReasons: matchReasons,
+          name: name || (targetOrg ? targetOrg.name : ''),
+          address: address,
+          city: rawCityInput,
+          zip: zipInput,
+          phone: phone,
+          email: email,
+          website: website,
+          description: desc,
+          incomingContacts: incomingContacts,
+          previousContacts: targetOrg ? (targetOrg.staff_contacts || []) : [],
+          conflictChoices: Object.assign({}, state.conflictChoices || {}),
+          conflictsSnapshot: targetOrg ? computeFieldConflicts(targetOrg, getFormCandidateValues()) : [],
+          changesDiff: computeOrgFieldDiffs(targetOrg, {
+            uploadMode: state.uploadMode,
+            name: name,
+            address: address,
+            city: rawCityInput,
+            zip: zipInput,
+            phone: phone,
+            email: email,
+            website: website,
+            description: desc
+          }),
+          ampSource: safeAmpSource,
+          flyerMeta: flyerMeta,
+          isSwam: isSwam
+        };
+
+        // Enforce: Only authenticated allowlisted moderators can execute Instant Live Updates
+        const effectiveWorkflow = isModeratorLoggedIn() ? state.submissionWorkflow : 'queue';
+
+        if (suc) suc.classList.remove('hidden');
+
+        // PATH A: PUBLIC / PENDING REVIEW QUEUE SUBMISSION
+        if (effectiveWorkflow === 'queue') {
+          if (isSupabaseConfigured()) {
+            const dbPayload = {
+              submission_type: targetOrg ? 'update' : 'new',
+              target_org_id: targetOrg ? targetOrg.id : null,
+              payload: submissionPayload,
+              submitter_name: submitterName || (isModeratorLoggedIn() ? (state.modProfile.display_name || state.modProfile.email) : 'Community Contributor'),
+              submitter_email: submitterEmail || (isModeratorLoggedIn() ? (state.modProfile.email || '') : ''),
+              review_status: 'pending'
+            };
+            const res = await fetch(getSupabaseUrl() + '/rest/v1/pending_submissions', {
+              method: 'POST',
+              headers: buildSupabaseHeaders(null, {
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+              }),
+              body: JSON.stringify(dbPayload)
+            });
+            if (!res.ok) {
+              throw new Error('Could not submit update to moderation queue (HTTP ' + res.status + ').');
+            }
+            const targetLabel = targetOrg ? ('update for <strong>' + escapeHtml(targetOrg.name) + '</strong>') : ('new VSO listing <strong>' + escapeHtml(submissionPayload.name) + '</strong>');
+            const modQueueBtn = isModeratorLoggedIn()
+              ? '<div class="mt-2.5"><button type="button" onclick="toggleSubmitModal(false); toggleReviewQueueModal(true);" class="inline-flex items-center gap-1.5 bg-amber-500 text-slate-900 text-xs font-extrabold px-3.5 py-1.5 rounded-lg shadow-sm cursor-pointer">🔔 Open Review Queue</button></div>'
+              : '';
+            if (suc) {
+              suc.innerHTML = '✅ Thank you! Your ' + targetLabel + ' has been sent to the <strong>NHVet411 Moderation Queue</strong> for verification. Once approved by a moderator, it will publish live statewide.' + modQueueBtn;
+            }
+            showToast('✅ Submitted ' + (targetOrg ? targetOrg.name : submissionPayload.name) + ' for moderator approval.');
+            clearUploadedFileState();
+            if (isModeratorLoggedIn()) pollModeratorPendingCount(false);
+            return;
+          } else {
+            const qList = getPendingQueue();
+            qList.unshift(submissionPayload);
+            savePendingQueue(qList);
+            const targetLabel = targetOrg ? ('merge into <strong>' + escapeHtml(targetOrg.name) + '</strong>') : ('new VSO <strong>' + escapeHtml(submissionPayload.name) + '</strong>');
+            if (suc) {
+              suc.innerHTML = '📋 Staged submission locally (' + targetLabel + ' with <strong>' + incomingContacts.length + ' contact(s)</strong>). Connect Supabase to submit to the live statewide moderation queue.';
+            }
+            showToast('📋 Staged submission locally for ' + (targetOrg ? targetOrg.name : submissionPayload.name) + '.');
+            clearUploadedFileState();
+            return;
+          }
+        }
+
+        // PATH B: VERIFIED MODERATOR INSTANT LIVE UPDATE
+        let resolved;
+        if (isSupabaseConfigured()) {
+          const token = await getValidModeratorAccessToken();
+          if (!token) {
+            throw new Error('Your moderator session expired. Please sign in again.');
+          }
+          const freshBase = targetOrg ? ((await fetchFreshOrgFromSupabase(targetOrg.id)) || targetOrg) : null;
+          resolved = buildResolvedOrgFromPayload(freshBase, submissionPayload);
+          const rpcRes = await fetch(getSupabaseUrl() + '/rest/v1/rpc/moderator_save_organization', {
+            method: 'POST',
+            headers: buildSupabaseHeaders(token, { 'Content-Type': 'application/json' }),
+            body: JSON.stringify({
+              p_org: resolved.org,
+              p_staff_contacts: resolved.contactsForRpc,
+              p_amplifier_docs: resolved.ampDocsForRpc,
+              p_replace_contacts: resolved.replaceContacts,
+              p_action: resolved.mode === 'new' ? 'moderator_live_create' : 'moderator_live_edit'
+            })
+          });
+          if (rpcRes.status === 401 || rpcRes.status === 403) {
+            await signOutModerator(true);
+            throw new Error('Moderator authorization required. Please sign in again.');
+          }
+          if (!rpcRes.ok) {
+            const errBody = await rpcRes.json().catch(function() { return {}; });
+            throw new Error(errBody.message || 'Live save failed (HTTP ' + rpcRes.status + ').');
+          }
+          applyResolvedOrgInMemory(resolved, false);
+          syncLiveDirectoryFromSupabase();
+        } else {
+          resolved = applySubmissionPayloadLive(submissionPayload);
+        }
+
+        const finalOrg = resolved.org;
+        const mergeResult = resolved.mergeResult;
+        const updatedFields = resolved.updatedFields;
+        clearUploadedFileState();
+
+        if (state.uploadMode === 'add-contact' && targetOrg) {
+          renderAddContactTargetBanner(finalOrg);
+          document.getElementById('sub-staff').value = '';
+          document.getElementById('sub-email').value = '';
+          document.getElementById('sub-phone').value = '';
+          state.parsedContacts = [];
+          renderParsedContactsList();
+        } else {
+          renderConflictDiffPanel(null, null);
+        }
+
+        const jumpBtnHtml = '<div class="mt-2.5"><button type="button" onclick="jumpToVsoCard(\\'' + escapeHtml(finalOrg.id) + '\\')" class="inline-flex items-center gap-1.5 bg-olive text-white text-xs font-extrabold px-3.5 py-1.5 rounded-lg shadow-sm cursor-pointer">🔍 Jump to Card</button></div>';
+
+        if (resolved.mode === 'existing') {
+          const totalContactsNow = (finalOrg.staff_contacts || []).length;
+          if (mergeResult.addedCount > 0 && updatedFields.length === 0) {
+            const msgHtml = '✅ Published live: Added <strong>' + mergeResult.addedCount + ' new contact(s)</strong> (<strong>' + escapeHtml(mergeResult.addedNames.join(', ')) + '</strong>) to <strong>' + escapeHtml(finalOrg.name) + '</strong>. Total contacts on card: <strong>' + totalContactsNow + '</strong>.';
+            if (suc) suc.innerHTML = msgHtml + jumpBtnHtml;
+            showToast('✅ Published live: Added ' + mergeResult.addedCount + ' contact(s) to ' + finalOrg.name + '.');
+          } else if (updatedFields.length > 0 || mergeResult.updatedCount > 0) {
+            const fieldsList = updatedFields.length > 0 ? updatedFields.join(', ') : 'contact details';
+            const contactSuffixHtml = mergeResult.addedCount > 0
+              ? ' and added <strong>' + mergeResult.addedCount + ' new contact(s)</strong> (<strong>' + escapeHtml(mergeResult.addedNames.join(', ')) + '</strong>).'
+              : '.';
+            if (suc) suc.innerHTML = '✅ Published live: Updated <strong>' + escapeHtml(finalOrg.name) + '</strong> — ' + escapeHtml(fieldsList) + contactSuffixHtml + jumpBtnHtml;
+            showToast('✅ Published live update for ' + finalOrg.name + '.');
+          } else {
+            const dupLabel = mergeResult.alreadyListedNames.length > 0
+              ? mergeResult.alreadyListedNames.join(', ')
+              : (staffName || email || 'This information');
+            if (suc) suc.innerHTML = 'ℹ️ Saved — <strong>' + escapeHtml(dupLabel) + '</strong> is already listed on <strong>' + escapeHtml(finalOrg.name) + '</strong>\\x27s card.' + jumpBtnHtml;
+            showToast('ℹ️ No new field changes for ' + finalOrg.name + '.');
+          }
+        } else {
+          if (suc) suc.innerHTML = '🆕 Published live: Created new VSO card for <strong>' + escapeHtml(finalOrg.name) + '</strong> (' + escapeHtml(finalOrg.city) + ') with <strong>' + finalOrg.staff_contacts.length + ' contact(s)</strong>.' + jumpBtnHtml;
+          showToast('🆕 Published new VSO card for ' + finalOrg.name + '.');
+        }
+      } catch (submitErr) {
+        if (suc) {
+          suc.classList.remove('hidden');
+          suc.innerHTML = '⚠️ <strong>Could not complete submission:</strong> ' + escapeHtml(submitErr.message || 'Please try again.');
+        }
+        showToast('⚠️ ' + (submitErr.message || 'Submission failed.'));
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          updateSubmitButtonLabel();
+          if (!submitBtn.textContent && prevBtnLabel) submitBtn.textContent = prevBtnLabel;
+        }
       }
     }
 
+    function clearUploadedFileState() {
+      state.uploadedFileObj = null;
+      state.uploadedFileMime = null;
+      state.uploadedFileDataUrl = null;
+      state.uploadedFileName = null;
+      const fileEl = document.getElementById('sub-file');
+      if (fileEl) fileEl.value = '';
+    }
+
     // =========================================================================
-    // PHASE 3: REVIEW QUEUE MODAL & SUPABASE JSON EXPORT (ITEM 8)
+    // PHASE 4: CLEAN MODERATOR REVIEW QUEUE MODAL (PENDING / HISTORY / SIDE-BY-SIDE FLYER)
     // =========================================================================
     function toggleReviewQueueModal(show) {
       const modal = document.getElementById('review-queue-modal');
       if (!modal) return;
+      if (show && !isModeratorLoggedIn()) {
+        toggleModAuthModal(true, 'login');
+        showModAuthFeedback('Please sign in with your moderator credentials to access the Review Queue.', false);
+        return;
+      }
       modal.classList.toggle('hidden', !show);
       if (show) {
+        state.modRejectOpenForId = null;
+        state.modNewArrivalsCount = 0;
+        const badgeEl = document.getElementById('rq-new-badge');
+        if (badgeEl) badgeEl.classList.add('hidden');
+        const dotEl = document.getElementById('mod-bell-dot');
+        if (dotEl) dotEl.classList.remove('mod-bell-dot-pulse');
+        refreshReviewQueueData(false);
+      }
+    }
+
+    function setReviewQueueTab(tab) {
+      state.modReviewTab = (tab === 'history') ? 'history' : 'pending';
+      state.modRejectOpenForId = null;
+      updateReviewQueueTabButtons();
+      if (state.modReviewTab === 'history' && isSupabaseConfigured() && state.modHistoryItems.length === 0) {
+        loadReviewHistoryFromSupabase().then(renderReviewQueueModal);
+      } else {
         renderReviewQueueModal();
       }
+    }
+
+    function setReviewHistoryFilter(filterVal) {
+      state.modHistoryFilter = filterVal || 'all';
+      renderReviewQueueModal();
+    }
+
+    function updateReviewQueueTabButtons() {
+      const pBtn = document.getElementById('rq-tab-pending');
+      const hBtn = document.getElementById('rq-tab-history');
+      if (pBtn && hBtn) {
+        pBtn.className = state.modReviewTab === 'pending'
+          ? 'px-3 py-1.5 rounded-lg text-xs font-extrabold bg-olive text-white cursor-pointer'
+          : 'px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 bg-white border cursor-pointer';
+        hBtn.className = state.modReviewTab === 'history'
+          ? 'px-3 py-1.5 rounded-lg text-xs font-extrabold bg-navy text-white cursor-pointer'
+          : 'px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 bg-white border cursor-pointer';
+      }
+    }
+
+    function setReviewQueueNotice(htmlContent) {
+      state.modLastNoticeHtml = htmlContent || '';
+      const el = document.getElementById('review-queue-notice');
+      if (!el) return;
+      if (!state.modLastNoticeHtml) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+      } else {
+        el.classList.remove('hidden');
+        el.innerHTML = state.modLastNoticeHtml;
+      }
+    }
+
+    function dismissReviewQueueNotice() {
+      setReviewQueueNotice('');
+    }
+
+    async function loadPendingSubmissionsFromSupabase() {
+      if (!isModeratorLoggedIn() || !isSupabaseConfigured()) return [];
+      const token = await getValidModeratorAccessToken();
+      if (!token) return [];
+      const endpoint = getSupabaseUrl() + '/rest/v1/pending_submissions?select=*&review_status=eq.pending&order=created_at.asc&limit=200';
+      const res = await fetch(endpoint, { method: 'GET', headers: buildSupabaseHeaders(token) });
+      if (res.status === 401 || res.status === 403) {
+        await signOutModerator(true);
+        return [];
+      }
+      if (!res.ok) throw new Error('Could not load pending submissions (HTTP ' + res.status + ').');
+      const rows = await res.json();
+      state.modPendingItems = Array.isArray(rows) ? rows : [];
+      state.modLastKnownPendingCount = state.modPendingItems.length;
+      state.modNewArrivalsCount = 0;
+      const badgeEl = document.getElementById('rq-new-badge');
+      if (badgeEl) badgeEl.classList.add('hidden');
+      updateBellNotificationUi(state.modPendingItems.length, false);
+      if (state.modPendingIndex >= state.modPendingItems.length) {
+        state.modPendingIndex = Math.max(0, state.modPendingItems.length - 1);
+      }
+      return state.modPendingItems;
+    }
+
+    async function loadReviewHistoryFromSupabase() {
+      if (!isModeratorLoggedIn() || !isSupabaseConfigured()) return [];
+      const token = await getValidModeratorAccessToken();
+      if (!token) return [];
+      const endpoint = getSupabaseUrl() + '/rest/v1/pending_submissions?select=*&review_status=in.(approved,rejected)&order=reviewed_at.desc&limit=50';
+      const res = await fetch(endpoint, { method: 'GET', headers: buildSupabaseHeaders(token) });
+      if (!res.ok) return state.modHistoryItems || [];
+      const rows = await res.json();
+      state.modHistoryItems = Array.isArray(rows) ? rows : [];
+      const hCount = document.getElementById('rq-history-tab-count');
+      if (hCount) hCount.textContent = state.modHistoryItems.length;
+      return state.modHistoryItems;
+    }
+
+    async function refreshReviewQueueData(preserveNotice) {
+      if (!preserveNotice) setReviewQueueNotice('');
+      const body = document.getElementById('review-queue-body');
+      if (body && state.modPendingItems.length === 0 && state.modReviewTab === 'pending') {
+        body.innerHTML = '<div class="bg-white rounded-xl p-6 text-center border text-xs font-semibold text-slate-600">⏳ Loading moderation queue...</div>';
+      }
+      try {
+        await Promise.all([
+          loadPendingSubmissionsFromSupabase(),
+          loadReviewHistoryFromSupabase()
+        ]);
+      } catch (err) {
+        setReviewQueueNotice('<div class="flex items-center justify-between gap-2 p-3 rounded-xl border text-xs font-bold" style="background-color:#FEF2F2; border-color:#FCA5A5; color:#991B1B;"><span>⚠️ ' + escapeHtml(err.message || 'Unable to refresh queue.') + '</span><button type="button" onclick="dismissReviewQueueNotice()" class="px-2 py-0.5 rounded bg-white border text-slate-700 cursor-pointer">✕</button></div>');
+      }
+      updateReviewQueueTabButtons();
+      renderReviewQueueModal();
+    }
+
+    function navigatePendingSubmission(delta) {
+      const total = (state.modPendingItems || []).length;
+      if (total <= 1) return;
+      state.modPendingIndex = (state.modPendingIndex + delta + total) % total;
+      state.modRejectOpenForId = null;
+      renderReviewQueueModal();
+    }
+
+    function jumpToPendingIndex(idx) {
+      const n = Number(idx);
+      const total = (state.modPendingItems || []).length;
+      if (isNaN(n) || n < 0 || n >= total) return;
+      state.modPendingIndex = n;
+      state.modRejectOpenForId = null;
+      renderReviewQueueModal();
+    }
+
+    function setPendingConflictChoice(subId, fieldKey, choice) {
+      const item = (state.modPendingItems || []).find(function(x) { return x.id === subId; });
+      if (!item || !item.payload) return;
+      if (!item.payload.conflictChoices) item.payload.conflictChoices = {};
+      item.payload.conflictChoices[fieldKey] = choice;
+    }
+
+    function toggleRejectBoxForItem(subId) {
+      state.modRejectOpenForId = (state.modRejectOpenForId === subId) ? null : subId;
+      renderReviewQueueModal();
+      if (state.modRejectOpenForId) {
+        setTimeout(function() {
+          const ta = document.getElementById('rq-reject-reason-input');
+          if (ta) ta.focus();
+        }, 40);
+      }
+    }
+
+    function renderFlyerPreviewColumn(payload, orgTitle) {
+      const rawUrl = (payload && payload.flyerMeta && payload.flyerMeta.url) || (payload && payload.ampSource) || '';
+      const safeUrl = sanitizeSafeMediaUrl(rawUrl);
+      if (!safeUrl) return '';
+      const mimeType = (payload && payload.flyerMeta && payload.flyerMeta.mimeType) || '';
+      const fileName = (payload && payload.flyerMeta && payload.flyerMeta.fileName) || 'Submitted VSO Flyer';
+      const isImg = isImageFlyerUrl(safeUrl, mimeType);
+      const mediaHtml = isImg
+        ? '<img src="' + escapeHtml(safeUrl) + '" alt="' + escapeHtml(fileName) + '" class="review-flyer-img" />'
+        : '<iframe src="' + escapeHtml(safeUrl) + '" title="' + escapeHtml(fileName) + '" class="review-flyer-pdf"></iframe>';
+
+      return '<div class="review-flyer-box">' +
+        '<div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b">' +
+          '<span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-800">📄 Uploaded Flyer / Business Card</span>' +
+          '<button type="button" data-flyer-url="' + escapeHtml(safeUrl) + '" data-flyer-title="' + escapeHtml(orgTitle || fileName) + '" onclick="openFlyerLightboxFromEl(this)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white border text-slate-800 cursor-pointer">🔍 Full Size ↗</button>' +
+        '</div>' +
+        '<div class="review-flyer-media">' + mediaHtml + '</div>' +
+        '<div class="text-[11px] text-slate-600 mt-2 break-all"><strong>File:</strong> ' + escapeHtml(fileName) + '</div>' +
+      '</div>';
     }
 
     function renderReviewQueueModal() {
       const body = document.getElementById('review-queue-body');
       if (!body) return;
-      const queue = getPendingQueue();
-      const deltas = getDirectoryDeltas();
-      const overrideCount = deltas.addedOrgs.length + Object.keys(deltas.updatedOrgs || {}).length;
+      updateReviewQueueTabButtons();
+      const pending = state.modPendingItems || [];
+      const history = state.modHistoryItems || [];
 
-      let statusBanner = '<div class="flex flex-wrap items-center justify-between gap-2 bg-slate-100 px-3.5 py-2 rounded-xl border text-xs">' +
-        '<div><strong>Pending Queue:</strong> ' + queue.length + ' item' + (queue.length === 1 ? '' : 's') + ' awaiting review</div>' +
-        '<div><strong>Active Local Overrides Persisted:</strong> ' + overrideCount + ' VSO record' + (overrideCount === 1 ? '' : 's') + '</div>' +
-      '</div>';
+      const pCount = document.getElementById('rq-pending-tab-count');
+      const hCount = document.getElementById('rq-history-tab-count');
+      if (pCount) pCount.textContent = pending.length;
+      if (hCount) hCount.textContent = history.length;
 
-      if (queue.length === 0) {
-        body.innerHTML = statusBanner +
-          '<div class="bg-white rounded-xl p-6 text-center border">' +
-            '<div class="text-sm font-extrabold text-slate-800">No Pending VSO Submissions in Queue</div>' +
-            '<p class="text-xs text-slate-600 mt-1" style="margin-bottom:0;">Switch <strong>🛡️ Submission Mode</strong> to <em>"📋 Send to Review Queue (Public)"</em> inside the Upload/Edit modal to stage flyers, new contacts, or edits here before publishing.</p>' +
+      // HISTORY TAB
+      if (state.modReviewTab === 'history') {
+        const filtered = history.filter(function(item) {
+          if (state.modHistoryFilter === 'approved') return item.review_status === 'approved';
+          if (state.modHistoryFilter === 'rejected') return item.review_status === 'rejected';
+          return true;
+        });
+
+        const filterBar = '<div class="flex flex-wrap items-center justify-between gap-2 bg-slate-100 px-3.5 py-2.5 rounded-xl border text-xs">' +
+          '<div class="flex flex-wrap items-center gap-1.5">' +
+            '<span class="font-extrabold text-slate-800">Filter History:</span>' +
+            '<button type="button" onclick="setReviewHistoryFilter(\\'all\\')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer ' + (state.modHistoryFilter === 'all' ? 'bg-navy text-white' : 'bg-white text-slate-700 border') + '">All (' + history.length + ')</button>' +
+            '<button type="button" onclick="setReviewHistoryFilter(\\'approved\\')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer ' + (state.modHistoryFilter === 'approved' ? 'bg-olive text-white' : 'bg-white text-slate-700 border') + '">✅ Approved</button>' +
+            '<button type="button" onclick="setReviewHistoryFilter(\\'rejected\\')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer ' + (state.modHistoryFilter === 'rejected' ? 'bg-red-600 text-white' : 'bg-white text-slate-700 border') + '">✕ Rejected</button>' +
+          '</div>' +
+          '<button type="button" onclick="setReviewQueueTab(\\'pending\\')" class="text-[11px] font-extrabold text-slate-800 bg-white px-3 py-1 rounded-lg border cursor-pointer">← Back to Pending (' + pending.length + ')</button>' +
+        '</div>';
+
+        if (filtered.length === 0) {
+          body.innerHTML = filterBar + '<div class="bg-white rounded-xl p-6 text-center border text-xs text-slate-600 mt-3">No reviewed submissions found for this filter yet.</div>';
+          return;
+        }
+
+        const historyCards = filtered.map(function(item) {
+          const payload = item.payload || {};
+          const vsoName = payload.targetOrgName || payload.name || 'Unnamed VSO';
+          const isApproved = item.review_status === 'approved';
+          const statusPill = isApproved
+            ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-950 border">✅ Approved</span>'
+            : '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase border" style="background-color:#FEF2F2; border-color:#FCA5A5; color:#991B1B;">✕ Rejected</span>';
+          const reviewer = item.reviewed_by_name || 'Moderator';
+          const reviewedTime = formatShortTimestamp(item.reviewed_at || item.created_at);
+          const flyerUrl = sanitizeSafeMediaUrl((payload.flyerMeta && payload.flyerMeta.url) || payload.ampSource || '');
+          const mailtoHref = (!isApproved && item.submitter_email)
+            ? buildSubmitterMailto(item.submitter_email, vsoName, 'rejected', item.rejection_reason || '')
+            : '';
+
+          return '<div class="bg-white rounded-xl p-4 border shadow-sm space-y-2">' +
+            '<div class="flex flex-wrap items-center justify-between gap-2">' +
+              '<div class="flex flex-wrap items-center gap-2">' +
+                statusPill +
+                '<span class="text-xs font-extrabold text-slate-900">' + escapeHtml(vsoName) + '</span>' +
+                '<span class="text-[11px] text-slate-500">(' + escapeHtml(payload.uploadMode || item.submission_type || 'update') + ')</span>' +
+              '</div>' +
+              '<span class="text-[11px] text-slate-600">Reviewed by <strong>' + escapeHtml(reviewer) + '</strong>' + (reviewedTime ? ' • ' + escapeHtml(reviewedTime) : '') + '</span>' +
+            '</div>' +
+            '<div class="text-[11px] text-slate-600"><strong>Submitted by:</strong> ' + escapeHtml(item.submitter_name || 'Community Contributor') + (item.submitter_email ? ' (' + escapeHtml(item.submitter_email) + ')' : '') + '</div>' +
+            (!isApproved && item.rejection_reason
+              ? '<div class="p-2.5 rounded-lg border text-xs" style="background-color:#FFF7ED; border-color:#FDBA74; color:#7C2D12;"><strong>Rejection Reason:</strong> ' + escapeHtml(item.rejection_reason) + '</div>'
+              : '') +
+            '<div class="flex flex-wrap items-center gap-2 pt-1">' +
+              (mailtoHref ? '<a href="' + escapeHtml(mailtoHref) + '" class="text-[11px] font-extrabold px-2.5 py-1 rounded-lg bg-gold-btn">✉️ Email Submitter</a>' : '') +
+              (flyerUrl ? '<button type="button" data-flyer-url="' + escapeHtml(flyerUrl) + '" data-flyer-title="' + escapeHtml(vsoName) + '" onclick="openFlyerLightboxFromEl(this)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 border cursor-pointer">📄 View Attached Flyer</button>' : '') +
+            '</div>' +
           '</div>';
+        }).join('');
+
+        body.innerHTML = filterBar + '<div class="space-y-2.5 mt-3">' + historyCards + '</div>';
         return;
       }
 
-      const cardsHtml = queue.map(function(item) {
-        const isExisting = !!item.targetOrgId;
-        const typeBadge = isExisting
-          ? '<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full border border-amber-300">➕ Merge into Existing VSO</span>'
-          : '<span class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full border border-emerald-300">🆕 New VSO Card Proposal</span>';
-        const contactsText = (item.incomingContacts && item.incomingContacts.length > 0)
-          ? item.incomingContacts.map(function(c) { return escapeHtml(c.name) + (c.email ? ' (' + escapeHtml(c.email) + ')' : ''); }).join(', ')
-          : 'None specified';
-        const conflictsText = (item.conflictsSnapshot && item.conflictsSnapshot.length > 0)
-          ? item.conflictsSnapshot.map(function(cf) {
-              const choice = (item.conflictChoices && item.conflictChoices[cf.key]) === 'uploaded' ? 'Use Uploaded (' + escapeHtml(cf.uploadedVal) + ')' : 'Keep Current (' + escapeHtml(cf.currentVal) + ')';
-              return escapeHtml(cf.label) + ': ' + choice;
-            }).join(' • ')
-          : '';
-
-        return '<div class="bg-white rounded-xl p-4 border shadow-sm space-y-2">' +
-          '<div class="flex flex-wrap items-center justify-between gap-2">' +
-            '<div class="flex flex-wrap items-center gap-2">' +
-              typeBadge +
-              '<span class="text-xs font-extrabold text-slate-900">' + escapeHtml(item.targetOrgName || item.name || 'Unnamed VSO') + '</span>' +
-              (item.city ? '<span class="text-[11px] text-slate-600">(' + escapeHtml(item.city) + (item.zip ? ' ' + escapeHtml(item.zip) : '') + ')</span>' : '') +
-            '</div>' +
-            '<div class="flex items-center gap-1.5">' +
-              '<button type="button" onclick="approveQueueItem(\\'' + item.queueId + '\\')" class="bg-olive text-white text-[11px] font-extrabold px-3 py-1.5 rounded-lg shadow-sm cursor-pointer">✅ Approve &amp; Merge</button>' +
-              '<button type="button" onclick="rejectQueueItem(\\'' + item.queueId + '\\')" class="bg-crimson text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm cursor-pointer">✕ Reject</button>' +
-            '</div>' +
-          '</div>' +
-          (item.matchReasons && item.matchReasons.length > 0 ? '<div class="text-[11px] text-slate-600"><strong>Matched Signals:</strong> ' + escapeHtml(item.matchReasons.join(' + ')) + '</div>' : '') +
-          '<div class="text-[11px] text-slate-800"><strong>Contacts to Add (' + (item.incomingContacts ? item.incomingContacts.length : 0) + '):</strong> ' + contactsText + '</div>' +
-          (conflictsText ? '<div class="text-[11px] text-slate-700"><strong>Field Conflict Resolutions:</strong> ' + conflictsText + '</div>' : '') +
+      // PENDING TAB (CLEAN SINGLE-ITEM WORKSPACE WITH PREV/NEXT + SIDE-BY-SIDE FLYER)
+      if (pending.length === 0) {
+        body.innerHTML = '<div class="bg-white rounded-xl p-8 text-center border space-y-2">' +
+          '<div class="text-base font-extrabold text-slate-900">✅ All Caught Up — No Pending Submissions</div>' +
+          '<p class="text-xs text-slate-600" style="margin:0;">When a VSO or community member submits an edit, new contact, or flyer on NHVet411.org, the bell icon will show a red dot and the item will appear right here.</p>' +
+          (history.length > 0 ? '<div class="pt-2"><button type="button" onclick="setReviewQueueTab(\\'history\\')" class="bg-slate-100 text-slate-800 text-xs font-bold px-3.5 py-2 rounded-lg border cursor-pointer">📜 View Review History (' + history.length + ')</button></div>' : '') +
         '</div>';
+        return;
+      }
+
+      if (state.modPendingIndex >= pending.length) state.modPendingIndex = pending.length - 1;
+      if (state.modPendingIndex < 0) state.modPendingIndex = 0;
+
+      const item = pending[state.modPendingIndex];
+      const payload = item.payload || {};
+      const effectiveTargetId = item.target_org_id || payload.targetOrgId || null;
+      const baseOrg = effectiveTargetId
+        ? ORGANIZATIONS.find(function(o) { return o.id === effectiveTargetId; })
+        : null;
+      const vsoName = payload.targetOrgName || payload.name || (baseOrg && baseOrg.name) || 'Unnamed VSO';
+      const flyerColHtml = renderFlyerPreviewColumn(payload, vsoName);
+      const hasFlyer = !!flyerColHtml;
+
+      const modeBadges = {
+        'new': '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-950 border">🆕 New VSO Proposal</span>',
+        'edit': '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-indigo-50 text-indigo-800 border">✏️ Full VSO Edit</span>',
+        'add-contact': '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-indigo-50 text-indigo-800 border">👤 Add VSO Contact</span>',
+        'amplifier': '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-blue-50 text-blue-900 border">📎 Attach Flyer</span>'
+      };
+      const badgeHtml = modeBadges[payload.uploadMode] || (baseOrg ? modeBadges['edit'] : modeBadges['new']);
+
+      // Compact Prev / Jump / Next Navigation Bar
+      const jumpOptions = pending.map(function(p, idx) {
+        const pName = (p.payload && (p.payload.targetOrgName || p.payload.name)) || 'Submission';
+        return '<option value="' + idx + '"' + (idx === state.modPendingIndex ? ' selected' : '') + '>#' + (idx + 1) + ' — ' + escapeHtml(pName) + '</option>';
       }).join('');
 
-      body.innerHTML = statusBanner + '<div class="space-y-2.5">' + cardsHtml + '</div>';
+      const navBarHtml = '<div class="flex flex-wrap items-center justify-between gap-2 bg-slate-100 px-3.5 py-2.5 rounded-xl border">' +
+        '<div class="flex items-center gap-2">' +
+          '<button type="button" onclick="navigatePendingSubmission(-1)" ' + (pending.length <= 1 ? 'disabled ' : '') + 'class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-800 border cursor-pointer">← Prev</button>' +
+          '<span class="text-xs font-extrabold text-slate-900">Submission ' + (state.modPendingIndex + 1) + ' of ' + pending.length + '</span>' +
+          '<button type="button" onclick="navigatePendingSubmission(1)" ' + (pending.length <= 1 ? 'disabled ' : '') + 'class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-800 border cursor-pointer">Next →</button>' +
+        '</div>' +
+        '<select onchange="jumpToPendingIndex(this.value)" aria-label="Jump to pending submission" class="rounded-lg border px-2.5 py-1.5 text-xs font-semibold bg-white text-slate-800" style="max-width:260px;">' + jumpOptions + '</select>' +
+      '</div>';
+
+      // Field Changes Diff Section
+      const liveDiffs = computeOrgFieldDiffs(baseOrg, payload);
+      let fieldsHtml = '';
+      if (liveDiffs.length > 0) {
+        fieldsHtml = '<div class="space-y-1.5">' +
+          '<div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700">' + (baseOrg ? 'Proposed Field Changes' : 'Submitted Organization Details') + '</div>' +
+          liveDiffs.map(function(d) {
+            return '<div class="review-diff-row">' +
+              '<div class="text-[11px] font-extrabold text-slate-800">' + escapeHtml(d.label) + '</div>' +
+              (d.before ? '<div class="text-[11px] text-slate-500"><strong>Current:</strong> ' + escapeHtml(d.before) + '</div>' : '') +
+              '<div class="text-xs font-semibold text-slate-900"><strong>' + (d.before ? 'Proposed:' : 'Value:') + '</strong> ' + escapeHtml(d.after) + '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+      } else {
+        fieldsHtml = '<div class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border">No core organization text fields changed (contact or flyer update only).</div>';
+      }
+
+      // Contacts Diff Section
+      const replaceContacts = !!payload.replaceContacts || (payload.uploadMode === 'edit' && !!baseOrg);
+      const prevContacts = baseOrg ? (baseOrg.staff_contacts || []) : (payload.previousContacts || []);
+      const incContacts = Array.isArray(payload.incomingContacts) ? payload.incomingContacts : [];
+      const cDiff = computeContactsDiff(prevContacts, incContacts, replaceContacts);
+
+      let contactsHtml = '';
+      if (cDiff.added.length > 0 || cDiff.updated.length > 0 || cDiff.removed.length > 0) {
+        contactsHtml = '<div class="space-y-1.5 pt-2 border-t">' +
+          '<div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700">👥 Staff / POC Contact Changes</div>' +
+          cDiff.added.map(function(c) {
+            return '<div class="text-xs p-2 rounded-lg bg-emerald-50 border text-emerald-950"><strong>+ Add:</strong> ' + escapeHtml(c.name || 'Contact') + (c.email ? ' • ' + escapeHtml(c.email) : '') + (c.phone ? ' • ' + escapeHtml(c.phone) : '') + '</div>';
+          }).join('') +
+          cDiff.updated.map(function(u) {
+            return '<div class="text-xs p-2 rounded-lg bg-indigo-50 border text-slate-900"><strong>~ Update:</strong> ' + escapeHtml(u.after.name || '') + (u.after.email ? ' • ' + escapeHtml(u.after.email) : '') + ' <span class="text-[11px] text-slate-500">(was: ' + escapeHtml(u.before.name || '') + (u.before.email ? ', ' + escapeHtml(u.before.email) : '') + ')</span></div>';
+          }).join('') +
+          cDiff.removed.map(function(r) {
+            return '<div class="text-xs p-2 rounded-lg border" style="background-color:#FEF2F2; border-color:#FCA5A5; color:#991B1B;"><strong>− Remove:</strong> ' + escapeHtml(r.name || '') + (r.email ? ' • ' + escapeHtml(r.email) : '') + '</div>';
+          }).join('') +
+        '</div>';
+      } else if (incContacts.length > 0) {
+        contactsHtml = '<div class="text-xs text-slate-600 pt-2 border-t"><strong>Listed Contacts (' + incContacts.length + '):</strong> ' + incContacts.map(function(c) { return escapeHtml(c.name || '') + (c.email ? ' (' + escapeHtml(c.email) + ')' : ''); }).join(', ') + '</div>';
+      }
+
+      // Merge Conflict Choices (if applicable)
+      let conflictsHtml = '';
+      if (payload.isMergeMode && Array.isArray(payload.conflictsSnapshot) && payload.conflictsSnapshot.length > 0) {
+        conflictsHtml = '<div class="space-y-1.5 pt-2 border-t">' +
+          '<div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700">⚖️ Merge Conflict Decisions</div>' +
+          payload.conflictsSnapshot.map(function(cf) {
+            const curChoice = (payload.conflictChoices && payload.conflictChoices[cf.key]) === 'uploaded' ? 'uploaded' : 'current';
+            return '<div class="p-2 rounded-lg bg-slate-50 border text-[11px] space-y-1">' +
+              '<div class="font-bold text-slate-800">' + escapeHtml(cf.label) + '</div>' +
+              '<div class="flex flex-wrap gap-3">' +
+                '<label class="inline-flex items-center gap-1 cursor-pointer"><input type="radio" name="rq-cf-' + escapeHtml(item.id) + '-' + escapeHtml(cf.key) + '" ' + (curChoice === 'current' ? 'checked' : '') + ' onchange="setPendingConflictChoice(\\'' + escapeHtml(item.id) + '\\', \\'' + escapeHtml(cf.key) + '\\', \\'current\\')" /> Keep Current: <strong>' + escapeHtml(cf.currentVal) + '</strong></label>' +
+                '<label class="inline-flex items-center gap-1 cursor-pointer"><input type="radio" name="rq-cf-' + escapeHtml(item.id) + '-' + escapeHtml(cf.key) + '" ' + (curChoice === 'uploaded' ? 'checked' : '') + ' onchange="setPendingConflictChoice(\\'' + escapeHtml(item.id) + '\\', \\'' + escapeHtml(cf.key) + '\\', \\'uploaded\\')" /> Use Submitted: <strong>' + escapeHtml(cf.uploadedVal) + '</strong></label>' +
+              '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+      }
+
+      // Required Customer-Service Rejection Reason Box
+      const isRejectOpen = state.modRejectOpenForId === item.id;
+      const rejectBoxHtml = isRejectOpen
+        ? '<div class="mt-3 p-3.5 rounded-xl border space-y-2" style="background-color:#FFF7ED; border-color:#FDBA74;">' +
+            '<label for="rq-reject-reason-input" class="text-xs font-extrabold" style="display:block; color:#7C2D12;">Rejection Comment (Required — explain clearly why so we provide great customer service):</label>' +
+            '<textarea id="rq-reject-reason-input" rows="3" class="w-full rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Example: Please verify the 603 phone number or include an official VSO flyer/link so we can publish this quickly."></textarea>' +
+            '<div id="rq-reject-error" class="hidden text-[11px] font-bold" style="color:#991B1B;"></div>' +
+            '<div class="flex flex-wrap justify-end gap-2">' +
+              '<button type="button" onclick="toggleRejectBoxForItem(\\'' + escapeHtml(item.id) + '\\')" class="px-3 py-1.5 rounded-lg bg-white border text-xs font-bold text-slate-700 cursor-pointer">Cancel</button>' +
+              '<button type="button" id="rq-confirm-reject-btn" onclick="confirmRejectQueueItem(\\'' + escapeHtml(item.id) + '\\')" ' + (state.modActionBusy ? 'disabled ' : '') + 'class="px-4 py-1.5 rounded-lg bg-red-600 text-white text-xs font-extrabold cursor-pointer">✕ Confirm Rejection</button>' +
+            '</div>' +
+          '</div>'
+        : '';
+
+      const submitterEmailSafe = String(item.submitter_email || '').trim().replace(/[\\r\\n<>]/g, '');
+      const cardHtml = '<div class="bg-white rounded-xl p-4 border shadow-sm space-y-3 mt-3">' +
+        '<div class="flex flex-wrap items-start justify-between gap-2 pb-2.5 border-b">' +
+          '<div class="space-y-1">' +
+            '<div class="flex flex-wrap items-center gap-2">' +
+              badgeHtml +
+              '<h4 class="text-base font-extrabold text-slate-900" style="margin:0;">' + escapeHtml(vsoName) + '</h4>' +
+            '</div>' +
+            '<div class="text-[11px] text-slate-600">' +
+              '<strong>Submitted by:</strong> ' + escapeHtml(item.submitter_name || 'Community Contributor') +
+              (submitterEmailSafe ? ' (<a href="mailto:' + escapeHtml(submitterEmailSafe) + '" class="text-blue-700 font-semibold hover:underline">' + escapeHtml(submitterEmailSafe) + '</a>)' : '') +
+              (item.created_at ? ' • ' + escapeHtml(formatShortTimestamp(item.created_at)) : '') +
+            '</div>' +
+          '</div>' +
+          (baseOrg ? '<button type="button" onclick="jumpToVsoCard(\\'' + escapeHtml(baseOrg.id) + '\\')" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 border cursor-pointer">👁️ View Current Card</button>' : '') +
+        '</div>' +
+        '<div class="' + (hasFlyer ? 'review-split-grid' : 'space-y-3') + '">' +
+          '<div class="space-y-3">' +
+            fieldsHtml +
+            contactsHtml +
+            conflictsHtml +
+          '</div>' +
+          flyerColHtml +
+        '</div>' +
+        '<div class="pt-3 border-t flex flex-wrap items-center justify-between gap-2">' +
+          '<div class="flex flex-wrap items-center gap-2">' +
+            '<button type="button" id="rq-approve-btn" onclick="approveQueueItem(\\'' + escapeHtml(item.id) + '\\')" ' + (state.modActionBusy ? 'disabled ' : '') + 'class="bg-olive text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow-sm cursor-pointer">✅ Approve &amp; Publish Live</button>' +
+            '<button type="button" onclick="toggleRejectBoxForItem(\\'' + escapeHtml(item.id) + '\\')" ' + (state.modActionBusy ? 'disabled ' : '') + 'class="bg-red-600 text-white text-xs font-extrabold px-4 py-2 rounded-xl shadow-sm cursor-pointer">✕ Reject with Comment</button>' +
+          '</div>' +
+          (pending.length > 1 ? '<button type="button" onclick="navigatePendingSubmission(1)" class="text-xs font-bold text-slate-700 bg-slate-100 px-3 py-2 rounded-xl border cursor-pointer">⏭️ Skip to Next →</button>' : '') +
+        '</div>' +
+        rejectBoxHtml +
+      '</div>';
+
+      body.innerHTML = navBarHtml + cardHtml;
     }
 
-    function approveQueueItem(queueId) {
-      const queue = getPendingQueue();
-      const idx = queue.findIndex(function(item) { return item.queueId === queueId; });
+    async function approveQueueItem(submissionId) {
+      if (state.modActionBusy) return;
+      const idx = (state.modPendingItems || []).findIndex(function(item) { return item.id === submissionId; });
       if (idx === -1) return;
-      const item = queue[idx];
-      queue.splice(idx, 1);
-      savePendingQueue(queue);
-      const res = applySubmissionPayloadLive(item);
+      const item = state.modPendingItems[idx];
+      const payload = item.payload || {};
+
+      if (!isSupabaseConfigured()) {
+        state.modPendingItems.splice(idx, 1);
+        const localRes = applySubmissionPayloadLive(payload);
+        renderReviewQueueModal();
+        showToast('✅ Approved & published ' + localRes.org.name + '.');
+        return;
+      }
+
+      const token = await getValidModeratorAccessToken();
+      if (!token) return;
+
+      state.modActionBusy = true;
       renderReviewQueueModal();
-      showToast('✅ Approved & merged ' + res.org.name + ' into the live directory!');
+
+      try {
+        // Fetch latest DB row right before merge so concurrent edits on the same VSO are never clobbered
+        const targetId = item.target_org_id || payload.targetOrgId || null;
+        const freshBase = targetId
+          ? ((await fetchFreshOrgFromSupabase(targetId)) || ORGANIZATIONS.find(function(o) { return o.id === targetId; }) || null)
+          : null;
+
+        const resolved = buildResolvedOrgFromPayload(freshBase, payload);
+
+        const rpcRes = await fetch(getSupabaseUrl() + '/rest/v1/rpc/approve_pending_submission', {
+          method: 'POST',
+          headers: buildSupabaseHeaders(token, { 'Content-Type': 'application/json' }),
+          body: JSON.stringify({
+            p_submission_id: item.id,
+            p_resolved_org: resolved.org,
+            p_staff_contacts: resolved.contactsForRpc,
+            p_amplifier_docs: resolved.ampDocsForRpc,
+            p_replace_contacts: resolved.replaceContacts
+          })
+        });
+
+        if (rpcRes.status === 401 || rpcRes.status === 403) {
+          await signOutModerator(true);
+          return;
+        }
+        const rpcData = await rpcRes.json().catch(function() { return {}; });
+        if (!rpcRes.ok) {
+          throw new Error(rpcData.message || 'Approval failed (HTTP ' + rpcRes.status + ').');
+        }
+
+        // Remove processed item & auto-advance cleanly
+        state.modPendingItems.splice(idx, 1);
+        state.modLastKnownPendingCount = state.modPendingItems.length;
+        updateBellNotificationUi(state.modPendingItems.length, false);
+        if (state.modPendingIndex >= state.modPendingItems.length) {
+          state.modPendingIndex = Math.max(0, state.modPendingItems.length - 1);
+        }
+
+        if (rpcData && rpcData.conflict) {
+          const who = rpcData.reviewed_by_name || 'another moderator';
+          const statusWord = rpcData.review_status || 'reviewed';
+          const conflictMsg = 'ℹ️ Already ' + statusWord + ' by ' + who + ' — moved to the next item.';
+          setReviewQueueNotice('<div class="flex items-center justify-between gap-2 p-3 rounded-xl bg-blue-50 border text-xs font-bold text-slate-900"><span>' + escapeHtml(conflictMsg) + '</span><button type="button" onclick="dismissReviewQueueNotice()" class="px-2 py-0.5 rounded bg-white border text-slate-700 cursor-pointer">✕</button></div>');
+          showToast(conflictMsg);
+          syncLiveDirectoryFromSupabase();
+          loadReviewHistoryFromSupabase();
+        } else {
+          applyResolvedOrgInMemory(resolved, false);
+          const approvedMailto = item.submitter_email
+            ? buildSubmitterMailto(item.submitter_email, resolved.org.name, 'approved', '')
+            : '';
+          setReviewQueueNotice('<div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-emerald-50 border text-xs font-bold text-emerald-950"><span>✅ Approved &amp; published <strong>' + escapeHtml(resolved.org.name) + '</strong> live!</span><div class="flex items-center gap-2">' + (approvedMailto ? '<a href="' + escapeHtml(approvedMailto) + '" class="px-2.5 py-1 rounded-lg bg-gold-btn text-[11px] font-extrabold">✉️ Notify Submitter</a>' : '') + '<button type="button" onclick="dismissReviewQueueNotice()" class="px-2 py-0.5 rounded bg-white border text-slate-700 cursor-pointer">✕</button></div></div>');
+          showToast('✅ Approved & published ' + resolved.org.name + ' live!');
+          syncLiveDirectoryFromSupabase();
+          loadReviewHistoryFromSupabase();
+        }
+      } catch (err) {
+        setReviewQueueNotice('<div class="flex items-center justify-between gap-2 p-3 rounded-xl border text-xs font-bold" style="background-color:#FEF2F2; border-color:#FCA5A5; color:#991B1B;"><span>⚠️ ' + escapeHtml(err.message || 'Could not approve submission.') + '</span><button type="button" onclick="dismissReviewQueueNotice()" class="px-2 py-0.5 rounded bg-white border text-slate-700 cursor-pointer">✕</button></div>');
+      } finally {
+        state.modActionBusy = false;
+        state.modRejectOpenForId = null;
+        renderReviewQueueModal();
+      }
     }
 
-    function rejectQueueItem(queueId) {
-      const queue = getPendingQueue();
-      const idx = queue.findIndex(function(item) { return item.queueId === queueId; });
+    async function confirmRejectQueueItem(submissionId) {
+      if (state.modActionBusy) return;
+      const idx = (state.modPendingItems || []).findIndex(function(item) { return item.id === submissionId; });
       if (idx === -1) return;
-      const removed = queue.splice(idx, 1)[0];
-      savePendingQueue(queue);
+      const item = state.modPendingItems[idx];
+      const payload = item.payload || {};
+      const vsoName = payload.targetOrgName || payload.name || 'VSO Submission';
+
+      const reasonInput = document.getElementById('rq-reject-reason-input');
+      const errEl = document.getElementById('rq-reject-error');
+      const reason = String((reasonInput && reasonInput.value) || '').trim();
+      if (reason.length < 3) {
+        if (errEl) {
+          errEl.textContent = 'Please enter a brief explanation (at least 3 characters) before rejecting so we maintain helpful customer service.';
+          errEl.classList.remove('hidden');
+        }
+        if (reasonInput) reasonInput.focus();
+        return false;
+      }
+
+      const token = await getValidModeratorAccessToken();
+      if (!token) return false;
+
+      state.modActionBusy = true;
       renderReviewQueueModal();
-      showToast('✕ Rejected pending submission for ' + (removed.targetOrgName || removed.name || 'VSO') + '.');
+
+      try {
+        const rpcRes = await fetch(getSupabaseUrl() + '/rest/v1/rpc/reject_pending_submission', {
+          method: 'POST',
+          headers: buildSupabaseHeaders(token, { 'Content-Type': 'application/json' }),
+          body: JSON.stringify({
+            p_submission_id: item.id,
+            p_rejection_reason: reason
+          })
+        });
+
+        if (rpcRes.status === 401 || rpcRes.status === 403) {
+          await signOutModerator(true);
+          return false;
+        }
+        const rpcData = await rpcRes.json().catch(function() { return {}; });
+        if (!rpcRes.ok) {
+          throw new Error(rpcData.message || 'Rejection failed (HTTP ' + rpcRes.status + ').');
+        }
+
+        state.modPendingItems.splice(idx, 1);
+        state.modLastKnownPendingCount = state.modPendingItems.length;
+        updateBellNotificationUi(state.modPendingItems.length, false);
+        if (state.modPendingIndex >= state.modPendingItems.length) {
+          state.modPendingIndex = Math.max(0, state.modPendingItems.length - 1);
+        }
+
+        if (rpcData && rpcData.conflict) {
+          const who = rpcData.reviewed_by_name || 'another moderator';
+          const statusWord = rpcData.review_status || 'reviewed';
+          const conflictMsg = 'ℹ️ Already ' + statusWord + ' by ' + who + ' — moved to the next item.';
+          setReviewQueueNotice('<div class="flex items-center justify-between gap-2 p-3 rounded-xl bg-blue-50 border text-xs font-bold text-slate-900"><span>' + escapeHtml(conflictMsg) + '</span><button type="button" onclick="dismissReviewQueueNotice()" class="px-2 py-0.5 rounded bg-white border text-slate-700 cursor-pointer">✕</button></div>');
+          showToast(conflictMsg);
+        } else {
+          const mailtoHref = item.submitter_email
+            ? buildSubmitterMailto(item.submitter_email, vsoName, 'rejected', reason)
+            : '';
+          setReviewQueueNotice(
+            '<div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl border text-xs" style="background-color:#FFF7ED; border-color:#FDBA74; color:#7C2D12;">' +
+              '<span>✕ Rejected <strong>' + escapeHtml(vsoName) + '</strong> — comment saved to history.</span>' +
+              '<div class="flex items-center gap-2">' +
+                (mailtoHref ? '<a href="' + escapeHtml(mailtoHref) + '" class="px-3 py-1 rounded-lg bg-gold-btn text-[11px] font-extrabold">✉️ Email Submitter Feedback</a>' : '') +
+                '<button type="button" onclick="dismissReviewQueueNotice()" class="px-2 py-0.5 rounded bg-white border text-slate-700 cursor-pointer">✕</button>' +
+              '</div>' +
+            '</div>'
+          );
+          showToast('✕ Rejected ' + vsoName + ' with comment saved.');
+        }
+        loadReviewHistoryFromSupabase();
+        return true;
+      } catch (err) {
+        setReviewQueueNotice('<div class="flex items-center justify-between gap-2 p-3 rounded-xl border text-xs font-bold" style="background-color:#FEF2F2; border-color:#FCA5A5; color:#991B1B;"><span>⚠️ ' + escapeHtml(err.message || 'Could not reject submission.') + '</span><button type="button" onclick="dismissReviewQueueNotice()" class="px-2 py-0.5 rounded bg-white border text-slate-700 cursor-pointer">✕</button></div>');
+        return false;
+      } finally {
+        state.modActionBusy = false;
+        state.modRejectOpenForId = null;
+        renderReviewQueueModal();
+      }
     }
 
     function exportDirectoryQueueJson() {
       const exportPayload = {
         exportedAt: new Date().toISOString(),
-        schemaVersion: 'nhvet411-supabase-handoff-v1',
-        pendingQueue: getPendingQueue(),
+        schemaVersion: 'nhvet411-supabase-handoff-v2',
+        pendingQueue: isSupabaseConfigured() ? (state.modPendingItems || []) : getPendingQueue(),
+        reviewHistory: state.modHistoryItems || [],
         approvedDirectoryDeltas: getDirectoryDeltas()
       };
       const jsonStr = JSON.stringify(exportPayload, null, 2);
@@ -4982,25 +6801,45 @@ const htmlContent = `<!DOCTYPE html>
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'nhvet411_supabase_staging_export.json';
+      a.download = 'nhvet411_moderation_export.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
-      showToast('📥 Exported nhvet411_supabase_staging_export.json for Supabase seeding!');
+      showToast('📥 Exported nhvet411_moderation_export.json!');
+    }
+
+    function openFlyerLightboxFromEl(el) {
+      if (!el || !el.getAttribute) return;
+      openFlyerLightbox(el.getAttribute('data-flyer-url') || '', el.getAttribute('data-flyer-title') || '');
+    }
+
+    function openFlyerLightbox(rawUrl, title) {
+      const safeUrl = sanitizeSafeMediaUrl(rawUrl);
+      if (!safeUrl) return;
+      document.getElementById('amp-modal-title').textContent = (title || 'VSO Flyer / Business Card');
+      document.getElementById('amplifier-modal').classList.remove('hidden');
+      const isImg = isImageFlyerUrl(safeUrl, '');
+      document.getElementById('amp-modal-body').innerHTML = '<div class="w-full space-y-3">' +
+        (isImg
+          ? '<img src="' + escapeHtml(safeUrl) + '" style="max-height:75vh; width:auto; margin:0 auto; display:block; border-radius:8px;" />'
+          : '<iframe src="' + escapeHtml(safeUrl) + '" style="width:100%; height:75vh; border-radius:8px; border:1px solid #CBD5E1; background:#FFFFFF;"></iframe>') +
+        (safeUrl.indexOf('http') === 0 ? '<div class="text-center"><a href="' + escapeHtml(safeUrl) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-1 bg-navy text-white text-xs font-bold px-3 py-1.5 rounded-lg">Open in New Tab ↗</a></div>' : '') +
+      '</div>';
     }
 
     function openAmplifierModal(id) {
       const org = ORGANIZATIONS.find(function(o) { return o.id === id; });
       if (!org || !org.amplifier_doc) return;
       const docs = (Array.isArray(org.amplifier_docs) && org.amplifier_docs.length > 0) ? org.amplifier_docs : [org.amplifier_doc];
-      document.getElementById('amp-modal-title').textContent = org.name + ' — Amplifier Flyer / Card (' + docs.length + ')';
+      const safeDocs = docs.map(sanitizeSafeMediaUrl).filter(Boolean);
+      if (safeDocs.length === 0) return;
+      document.getElementById('amp-modal-title').textContent = org.name + ' — Amplifier Flyer / Card (' + safeDocs.length + ')';
       document.getElementById('amplifier-modal').classList.remove('hidden');
-      document.getElementById('amp-modal-body').innerHTML = '<div class="w-full space-y-4">' + docs.map(function(doc) {
-        const ext = doc.split('.').pop().toLowerCase();
-        return (['png','jpg','jpeg','webp','svg'].includes(ext) || doc.indexOf('data:image') === 0)
-          ? '<img src="' + doc + '" style="max-height:75vh; width:auto; margin:0 auto; display:block; border-radius:8px;" />'
-          : '<iframe src="' + doc + '" style="width:100%; height:75vh; border-radius:8px; border:1px solid #CBD5E1; background:#FFFFFF;"></iframe>';
+      document.getElementById('amp-modal-body').innerHTML = '<div class="w-full space-y-4">' + safeDocs.map(function(doc) {
+        return isImageFlyerUrl(doc, '')
+          ? '<img src="' + escapeHtml(doc) + '" style="max-height:75vh; width:auto; margin:0 auto; display:block; border-radius:8px;" />'
+          : '<iframe src="' + escapeHtml(doc) + '" style="width:100%; height:75vh; border-radius:8px; border:1px solid #CBD5E1; background:#FFFFFF;"></iframe>';
       }).join('') + '</div>';
     }
     function closeAmplifierModal() { document.getElementById('amplifier-modal').classList.add('hidden'); document.getElementById('amp-modal-body').innerHTML = ''; }
