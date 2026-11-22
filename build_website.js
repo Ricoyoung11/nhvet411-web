@@ -1891,7 +1891,7 @@ const htmlContent = `<!DOCTYPE html>
     <div class="max-w-7xl mx-auto flex flex-col md-row items-start justify-between gap-4">
       <div>
         <p class="condensed-font font-extrabold text-white text-base uppercase" style="margin:0;"><span style="color:#D5AD36;">NH</span>VET411 • New Hampshire Verified Veteran &amp; VSO Resource Directory</p>
-        <p class="mt-1 text-slate-300" style="margin:4px 0 0 0;">State-scalable veteran &amp; VSO directory • ${finalOrganizations.length} Verified Organizations • 217 Named VSO Contacts • All 10 NH Counties.</p>
+        <p class="mt-1 text-slate-300" style="margin:4px 0 0 0;">State-scalable veteran &amp; VSO directory • <span id="footer-total-vsos">${finalOrganizations.length}</span> Verified Organizations • <span id="footer-total-contacts">${totalNamedContacts}</span> Named VSO Contacts • All <span id="footer-total-counties">${populatedCounties.size}</span> NH Counties.</p>
       </div>
       <div class="flex flex-wrap items-center gap-3 text-slate-300">
         <span>🚨 <strong>Crisis Line:</strong> <a href="tel:988" class="text-white font-bold hover:underline selectable-text">988 (Press 1)</a></span>
@@ -3300,6 +3300,12 @@ const htmlContent = `<!DOCTYPE html>
       if (statCats) statCats.textContent = totalCats;
       const statContacts = document.getElementById('stat-total-contacts');
       if (statContacts) statContacts.textContent = totalContacts;
+      const footerVsos = document.getElementById('footer-total-vsos');
+      if (footerVsos) footerVsos.textContent = totalOrgs;
+      const footerContacts = document.getElementById('footer-total-contacts');
+      if (footerContacts) footerContacts.textContent = totalContacts;
+      const footerCounties = document.getElementById('footer-total-counties');
+      if (footerCounties) footerCounties.textContent = countySet.size;
     }
 
     function initFilters() {
@@ -3562,7 +3568,7 @@ const htmlContent = `<!DOCTYPE html>
       if (filtered.length === 0) {
         grid.innerHTML = '<div class="bg-white rounded-2xl p-8 text-center border shadow-sm" style="grid-column: 1 / -1;">' +
           '<p class="text-base font-extrabold text-blue-950">No organizations matched your current filter criteria.</p>' +
-          '<p class="text-xs text-slate-600 mt-1">Try enabling "+ Include Statewide VSOs" or resetting your filters to view all 147 New Hampshire organizations.</p>' +
+          '<p class="text-xs text-slate-600 mt-1">Try enabling "+ Include Statewide VSOs" or resetting your filters to view all ' + ORGANIZATIONS.length + ' New Hampshire organizations.</p>' +
           '<button onclick="resetAllFilters()" class="mt-3 bg-crimson text-white text-xs font-bold px-5 py-2.5 rounded-xl cursor-pointer shadow-sm">Reset All Filters</button>' +
         '</div>';
         return;
