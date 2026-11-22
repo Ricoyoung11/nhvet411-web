@@ -398,7 +398,7 @@ const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>NHVet411 | New Hampshire Verified Veteran &amp; VSO Resource Directory</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -944,12 +944,14 @@ const htmlContent = `<!DOCTYPE html>
     }
 
     /* EXPLICIT MOBILE VIEW PREVIEW MODE (FOR DESKTOP PITCHES & MOBILE SIMULATOR) */
-    body.force-mobile-view {
-      max-width: 440px;
-      margin: 0 auto !important;
-      border-left: 4px solid #22241F;
-      border-right: 4px solid #22241F;
-      box-shadow: 0 0 50px rgba(24, 25, 22, 0.45);
+    @media (min-width: 768px) {
+      body.force-mobile-view {
+        max-width: 440px;
+        margin: 0 auto !important;
+        border-left: 4px solid #22241F;
+        border-right: 4px solid #22241F;
+        box-shadow: 0 0 50px rgba(24, 25, 22, 0.45);
+      }
     }
     body.force-mobile-view .cards-grid-layout,
     body.force-mobile-view .rankings-grid {
@@ -969,6 +971,404 @@ const htmlContent = `<!DOCTYPE html>
     }
     body.force-mobile-view .mobile-only-bar {
       display: flex !important;
+    }
+
+    /* COMPACT MOBILE HEADER, DRAWERS, HERO ADMIN TOGGLE & KEYBOARD SAFETY */
+    .crisis-mobile-bar {
+      display: none;
+    }
+    .nh-mobile-menu-btn {
+      display: none;
+      align-items: center;
+      gap: 0.25rem;
+      background-color: #FAF8F3;
+      color: #22241F;
+      border: 1px solid #D5CCB8;
+      border-radius: 0.5rem;
+      padding: 0.32rem 0.55rem;
+      font-family: 'Barlow Condensed', 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      line-height: 1.1;
+    }
+    .nh-mobile-menu-btn[aria-expanded="true"] {
+      background-color: #535E46;
+      color: #FFFFFF;
+      border-color: #535E46;
+    }
+    .hero-admin-tools {
+      display: contents;
+    }
+    .hero-mobile-admin-btn {
+      display: none;
+    }
+    .mobile-only-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
+    .mobile-only-bar > a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+      line-height: 1.15;
+    }
+    body.mobile-keyboard-open .mobile-only-bar {
+      display: none !important;
+    }
+
+    /* Activate compact mobile chrome on phones (<768px unless Web view forced) AND in Desktop Mobile preview */
+    @media (max-width: 767px) {
+      html {
+        scroll-padding-top: 86px;
+      }
+      body:not(.force-web-view) .contact-row > * {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      body:not(.force-web-view) .bg-crisis {
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+      }
+      body:not(.force-web-view) .crisis-mobile-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.35rem;
+        flex-wrap: nowrap;
+      }
+      body:not(.force-web-view) .crisis-mobile-quick {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        min-width: 0;
+        flex-wrap: nowrap;
+      }
+      body:not(.force-web-view) .crisis-mobile-pill,
+      body:not(.force-web-view) .crisis-mobile-toggle {
+        padding: 0.22rem 0.5rem;
+        font-size: 0.7rem;
+        gap: 0.25rem;
+        white-space: nowrap;
+        line-height: 1.15;
+      }
+      body:not(.force-web-view) #crisis-desktop-content {
+        display: none;
+      }
+      body:not(.force-web-view) #crisis-desktop-content.mobile-open {
+        display: flex;
+        margin-top: 0.45rem;
+        padding-top: 0.45rem;
+        border-top: 1px solid rgba(213, 173, 54, 0.35);
+      }
+      body:not(.force-web-view) .nh-topnav {
+        padding-left: 0.65rem;
+        padding-right: 0.65rem;
+      }
+      body:not(.force-web-view) .nh-topnav-inner {
+        flex-wrap: wrap;
+        gap: 0.25rem;
+      }
+      body:not(.force-web-view) .nh-brand-link {
+        padding-top: 0.35rem;
+        padding-bottom: 0.35rem;
+        gap: 0.4rem;
+      }
+      body:not(.force-web-view) .nh-brand-nh {
+        font-size: 1.55rem;
+      }
+      body:not(.force-web-view) .nh-brand-vet {
+        font-size: 1.05rem;
+      }
+      body:not(.force-web-view) .nh-brand-sub {
+        font-size: 7.5px;
+        letter-spacing: 0.12em;
+      }
+      body:not(.force-web-view) .nh-brand-meta {
+        display: none;
+      }
+      body:not(.force-web-view) .nav-dir-verbose {
+        display: none;
+      }
+      body:not(.force-web-view) .nh-nav-right {
+        display: contents;
+      }
+      body:not(.force-web-view) .nh-nav-actions {
+        order: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      body:not(.force-web-view) .nh-view-toggle {
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      body:not(.force-web-view) .nh-view-toggle button {
+        font-size: 10px;
+        padding: 0.22rem 0.4rem;
+      }
+      body:not(.force-web-view) .nh-mobile-menu-btn {
+        display: inline-flex;
+      }
+      body:not(.force-web-view) #mobile-nav-drawer {
+        display: none;
+        order: 3;
+        width: 100%;
+        border-top: 1px solid #EAE6DC;
+        padding: 0.35rem 0 0.45rem 0;
+      }
+      body:not(.force-web-view) #mobile-nav-drawer.mobile-open {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.35rem;
+      }
+      body:not(.force-web-view) #mobile-nav-drawer .nav-cell {
+        border: 1px solid #EAE6DC;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.65rem;
+        font-size: 0.84rem;
+        justify-content: flex-start;
+        background-color: #FAF8F3;
+      }
+      body:not(.force-web-view) #resource-search {
+        padding-top: 1.1rem;
+        padding-bottom: 2.25rem;
+      }
+      body:not(.force-web-view) .hero-header-row {
+        gap: 0.85rem;
+        margin-bottom: 1rem;
+      }
+      body:not(.force-web-view) .hero-actions-wrap {
+        width: 100%;
+        gap: 0.4rem;
+      }
+      body:not(.force-web-view) .hero-primary-btn {
+        padding: 0.45rem 0.68rem;
+        font-size: 0.72rem;
+      }
+      body:not(.force-web-view) .hero-mobile-admin-btn {
+        display: inline-flex;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.72rem;
+      }
+      body:not(.force-web-view) #hero-admin-tools {
+        display: none;
+        order: 10;
+        width: 100%;
+      }
+      body:not(.force-web-view) #hero-admin-tools.mobile-open {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.4rem;
+        padding-top: 0.4rem;
+        margin-top: 0.15rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      body:not(.force-web-view) #hero-admin-tools button {
+        padding: 0.42rem 0.65rem;
+        font-size: 0.72rem;
+      }
+      /* Prevent iOS Safari forced auto-zoom on form fields (<16px) */
+      body:not(.force-web-view) input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+      body:not(.force-web-view) select,
+      body:not(.force-web-view) textarea {
+        font-size: 16px !important;
+      }
+      body:not(.force-web-view) #search-input {
+        padding-top: 0.72rem;
+        padding-bottom: 0.72rem;
+      }
+      body:not(.force-web-view) .search-input-icon {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      body:not(.force-web-view) footer.bg-footer {
+        padding-bottom: 5rem;
+      }
+    }
+
+    body.force-mobile-view .bg-crisis {
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;
+      padding-left: 0.55rem;
+      padding-right: 0.55rem;
+    }
+    body.force-mobile-view .crisis-mobile-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.35rem;
+      flex-wrap: nowrap;
+    }
+    body.force-mobile-view .crisis-mobile-quick {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      min-width: 0;
+      flex-wrap: nowrap;
+    }
+    body.force-mobile-view .crisis-mobile-pill,
+    body.force-mobile-view .crisis-mobile-toggle {
+      padding: 0.22rem 0.5rem;
+      font-size: 0.7rem;
+      gap: 0.25rem;
+      white-space: nowrap;
+      line-height: 1.15;
+    }
+    body.force-mobile-view #crisis-desktop-content {
+      display: none;
+    }
+    body.force-mobile-view #crisis-desktop-content.mobile-open {
+      display: flex;
+      margin-top: 0.45rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid rgba(213, 173, 54, 0.35);
+    }
+    body.force-mobile-view .nh-topnav {
+      padding-left: 0.65rem;
+      padding-right: 0.65rem;
+    }
+    body.force-mobile-view .nh-topnav-inner {
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+    body.force-mobile-view .nh-brand-link {
+      padding-top: 0.35rem;
+      padding-bottom: 0.35rem;
+      gap: 0.4rem;
+    }
+    body.force-mobile-view .nh-brand-nh {
+      font-size: 1.55rem;
+    }
+    body.force-mobile-view .nh-brand-vet {
+      font-size: 1.05rem;
+    }
+    body.force-mobile-view .nh-brand-sub {
+      font-size: 7.5px;
+      letter-spacing: 0.12em;
+    }
+    body.force-mobile-view .contact-row > * {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    body.force-mobile-view .nh-brand-meta {
+      display: none;
+    }
+    body.force-mobile-view .nav-dir-verbose {
+      display: none;
+    }
+    body.force-mobile-view .nh-nav-right {
+      display: contents;
+    }
+    body.force-mobile-view .nh-nav-actions {
+      order: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    body.force-mobile-view .nh-view-toggle {
+      margin-left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    body.force-mobile-view .nh-view-toggle button {
+      font-size: 10px;
+      padding: 0.22rem 0.4rem;
+    }
+    body.force-mobile-view .nh-mobile-menu-btn {
+      display: inline-flex;
+    }
+    body.force-mobile-view #mobile-nav-drawer {
+      display: none;
+      order: 3;
+      width: 100%;
+      border-top: 1px solid #EAE6DC;
+      padding: 0.35rem 0 0.45rem 0;
+    }
+    body.force-mobile-view #mobile-nav-drawer.mobile-open {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem;
+    }
+    body.force-mobile-view #mobile-nav-drawer .nav-cell {
+      border: 1px solid #EAE6DC;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.84rem;
+      justify-content: flex-start;
+      background-color: #FAF8F3;
+    }
+    body.force-mobile-view #resource-search {
+      padding-top: 1.1rem;
+      padding-bottom: 2.25rem;
+    }
+    body.force-mobile-view .hero-header-row {
+      gap: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    body.force-mobile-view .hero-actions-wrap {
+      width: 100%;
+      gap: 0.4rem;
+    }
+    body.force-mobile-view .hero-primary-btn {
+      padding: 0.45rem 0.68rem;
+      font-size: 0.72rem;
+    }
+    body.force-mobile-view .hero-mobile-admin-btn {
+      display: inline-flex;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.72rem;
+    }
+    body.force-mobile-view #hero-admin-tools {
+      display: none;
+      order: 10;
+      width: 100%;
+    }
+    body.force-mobile-view #hero-admin-tools.mobile-open {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+      padding-top: 0.4rem;
+      margin-top: 0.15rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    body.force-mobile-view #hero-admin-tools button {
+      padding: 0.42rem 0.65rem;
+      font-size: 0.72rem;
+    }
+    body.force-mobile-view input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+    body.force-mobile-view select,
+    body.force-mobile-view textarea {
+      font-size: 16px !important;
+    }
+    body.force-mobile-view #search-input {
+      padding-top: 0.72rem;
+      padding-bottom: 0.72rem;
+    }
+    body.force-mobile-view .search-input-icon {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    body.force-mobile-view footer.bg-footer {
+      padding-bottom: 5rem;
+    }
+    @media (min-width: 768px) {
+      body.force-mobile-view .mobile-only-bar {
+        max-width: 440px;
+        margin: 0 auto;
+      }
     }
 
     /* SCOPED MODAL INPUT ROW OVERFLOW FIX (#submit-modal) */
@@ -1026,6 +1426,7 @@ const htmlContent = `<!DOCTYPE html>
       margin-top: auto !important;
       margin-bottom: auto !important;
       max-height: calc(100vh - 2rem);
+      max-height: calc(100dvh - 2rem);
       overflow-y: auto;
       overscroll-behavior: contain;
     }
@@ -1146,9 +1547,22 @@ const htmlContent = `<!DOCTYPE html>
 <body class="min-h-screen flex flex-col" id="top">
 
   <!-- STICKY 24/7 EMERGENCY & SAFETY CRISIS BANNER + NHVET411 WHITE HEADER (ALWAYS AT TOP) -->
-  <div class="emergency-sticky-wrapper">
+  <div id="sticky-top-header" class="emergency-sticky-wrapper">
     <div class="bg-crisis text-xs py-1.5 px-3">
-      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="crisis-mobile-bar max-w-7xl mx-auto">
+        <div class="crisis-mobile-quick">
+          <a href="tel:988" class="crisis-pill crisis-mobile-pill" title="Call 988 then Press 1">
+            <span>🚨</span> <span><strong>988</strong> (Press 1)</span>
+          </a>
+          <a href="sms:838255" class="crisis-pill crisis-mobile-pill" title="Text 838255">
+            <span>💬</span> <span>Text <strong>838255</strong></span>
+          </a>
+        </div>
+        <button type="button" id="mobile-crisis-toggle-btn" onclick="toggleMobileCrisisDrawer()" aria-expanded="false" aria-controls="crisis-desktop-content" class="crisis-pill crisis-mobile-toggle cursor-pointer" style="background-color:#D5AD36; color:#181916; border-color:#F7F0D6;">
+          <span>All Crisis</span> <span id="mobile-crisis-chevron" aria-hidden="true">▾</span>
+        </button>
+      </div>
+      <div id="crisis-desktop-content" class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
         <div class="flex flex-wrap items-center gap-2">
           <span class="font-extrabold uppercase tracking-wider px-2 py-0.5 rounded text-[11px] flex items-center gap-1" style="background-color:#D5AD36; color:#181916;">
             <span>🚨</span> <span>24/7 Veteran Emergency &amp; Crisis Support</span>
@@ -1176,34 +1590,41 @@ const htmlContent = `<!DOCTYPE html>
 
     <!-- NHVET411 WHITE NAVIGATION BAR (STATE-SCALABLE DIRECTORY HEADER) -->
     <nav class="nh-topnav px-4">
-      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between">
-        <a href="#top" class="py-2.5 flex items-center gap-2.5">
+      <div class="nh-topnav-inner max-w-7xl mx-auto flex flex-wrap items-center justify-between">
+        <a href="#top" onclick="closeMobileHeaderDrawers()" class="nh-brand-link py-2.5 flex items-center gap-2.5">
           <div class="flex items-center leading-none">
-            <span class="condensed-font font-extrabold text-3xl" style="color:#D5AD36; letter-spacing:-0.02em;">NH</span>
+            <span class="nh-brand-nh condensed-font font-extrabold text-3xl" style="color:#D5AD36; letter-spacing:-0.02em;">NH</span>
             <div class="ml-1" style="line-height:1;">
-              <div class="condensed-font font-extrabold text-xl" style="color:#3B4035; letter-spacing:0.04em;">VET<span style="color:#535E46;">411</span></div>
-              <div class="text-[9px] font-bold uppercase" style="color:#525048; letter-spacing:0.16em;">VETERAN DIRECTORY</div>
+              <div class="nh-brand-vet condensed-font font-extrabold text-xl" style="color:#3B4035; letter-spacing:0.04em;">VET<span style="color:#535E46;">411</span></div>
+              <div class="nh-brand-sub text-[9px] font-bold uppercase" style="color:#525048; letter-spacing:0.16em;">VETERAN DIRECTORY</div>
             </div>
           </div>
-          <span class="text-xs font-semibold text-slate-500 pl-2 border-l" style="border-color:#E5E0D5;">Verified Resource Directory (<strong id="nav-total-count" class="text-slate-900">${finalOrganizations.length}</strong> VSOs)</span>
+          <span class="nh-brand-meta text-xs font-semibold text-slate-500 pl-2 border-l" style="border-color:#E5E0D5;"><span class="nav-dir-verbose">Verified Resource Directory </span>(<strong id="nav-total-count" class="text-slate-900">${finalOrganizations.length}</strong> VSOs)</span>
         </a>
 
-        <div class="flex flex-wrap items-center">
-          <a href="#resource-search" class="nav-cell">
-            <span>🔍</span> <span>Resource Search</span>
-          </a>
-          <a href="#branch-filter-sec" class="nav-cell">
-            <span>🇺🇸</span> <span>Service Branches</span>
-          </a>
-          <a href="#nh-regions-showcase" class="nav-cell">
-            <span>🏔️</span> <span>NH Regions</span>
-          </a>
-          <a href="#directory-section" class="nav-cell">
-            <span>📋</span> <span>All VSOs (<span id="nav-all-vsos-count">${finalOrganizations.length}</span>)</span>
-          </a>
-          <div class="inline-flex items-center bg-slate-100 rounded-lg p-0.5 border ml-2 my-1">
-            <button type="button" id="view-web-btn" onclick="setViewportMode('web')" class="text-[11px] font-bold px-2 py-1 rounded bg-crimson text-white cursor-pointer" title="Standard Desktop/Responsive Web View">🖥️ Web</button>
-            <button type="button" id="view-mobile-btn" onclick="setViewportMode('mobile')" class="text-[11px] font-bold px-2 py-1 rounded text-slate-700 cursor-pointer" title="Preview Mobile-Enabled Handheld Layout">📱 Mobile</button>
+        <div class="nh-nav-right flex flex-wrap items-center">
+          <div id="mobile-nav-drawer" class="flex flex-wrap items-center">
+            <a href="#resource-search" onclick="closeMobileHeaderDrawers()" class="nav-cell">
+              <span>🔍</span> <span>Resource Search</span>
+            </a>
+            <a href="#branch-filter-sec" onclick="closeMobileHeaderDrawers()" class="nav-cell">
+              <span>🇺🇸</span> <span>Service Branches</span>
+            </a>
+            <a href="#nh-regions-showcase" onclick="closeMobileHeaderDrawers()" class="nav-cell">
+              <span>🏔️</span> <span>NH Regions</span>
+            </a>
+            <a href="#directory-section" onclick="closeMobileHeaderDrawers()" class="nav-cell">
+              <span>📋</span> <span>All VSOs (<span id="nav-all-vsos-count">${finalOrganizations.length}</span>)</span>
+            </a>
+          </div>
+          <div class="nh-nav-actions inline-flex items-center">
+            <div class="nh-view-toggle inline-flex items-center bg-slate-100 rounded-lg p-0.5 border ml-2 my-1">
+              <button type="button" id="view-web-btn" onclick="setViewportMode('web')" class="text-[11px] font-bold px-2 py-1 rounded bg-crimson text-white cursor-pointer" title="Standard Desktop/Responsive Web View">🖥️ Web</button>
+              <button type="button" id="view-mobile-btn" onclick="setViewportMode('mobile')" class="text-[11px] font-bold px-2 py-1 rounded text-slate-700 cursor-pointer" title="Preview Mobile-Enabled Handheld Layout">📱 Mobile</button>
+            </div>
+            <button type="button" id="mobile-nav-toggle-btn" onclick="toggleMobileNavDrawer()" aria-expanded="false" aria-controls="mobile-nav-drawer" class="nh-mobile-menu-btn cursor-pointer" title="Open Section Navigation Menu">
+              <span id="mobile-nav-icon" aria-hidden="true">☰</span> <span>Menu</span>
+            </button>
           </div>
         </div>
       </div>
@@ -1213,7 +1634,7 @@ const htmlContent = `<!DOCTYPE html>
   <!-- HERO HEADER & SMART AI / LOCAL RESOURCE SEARCH -->
   <header id="resource-search" class="hero-gradient relative overflow-hidden pt-8 pb-16 px-4">
     <div class="max-w-6xl mx-auto relative z-10">
-      <div class="flex flex-col md-row justify-between items-start gap-6 mb-6">
+      <div class="hero-header-row flex flex-col md-row justify-between items-start gap-6 mb-6">
         <div class="max-w-xl">
           <span class="nh-gold-pill mb-3">OVERVIEW</span>
           <h1 class="condensed-font font-extrabold text-white uppercase" style="font-size: clamp(2.1rem, 4.5vw, 3.25rem); line-height: 1.02; margin: 0.35rem 0 0.65rem 0;">
@@ -1224,31 +1645,38 @@ const htmlContent = `<!DOCTYPE html>
           </p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2">
-          <button onclick="toggleApiKeyModal(true)" class="bg-amber-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
-            <span>🔑</span> <span id="api-status-btn-text">Configure AI Key</span>
-          </button>
-          <button type="button" id="mod-login-btn" onclick="toggleModAuthModal(true, 'login')" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Sign In for NHVet411 Approvals">
-            <span>🔐</span> <span>Moderator Login</span>
-          </button>
-          <button type="button" id="mod-review-btn" onclick="toggleReviewQueueModal(true)" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 relative" title="1-Click Open Pending VSO Review Queue">
-            <span class="mod-bell-wrap" aria-hidden="true">🔔<span id="mod-bell-dot" class="mod-bell-dot hidden"></span></span>
-            <span>Review (<strong id="review-queue-count">0</strong>)</span>
-          </button>
-          <button type="button" id="mod-account-btn" onclick="toggleModAuthModal(true, 'account')" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Account &amp; Password Settings">
-            <span>🛡️</span> <span id="mod-account-label">Moderator</span>
-          </button>
-          <button onclick="openEditModalForOrg(null)" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
+        <div class="hero-actions-wrap flex flex-wrap items-center gap-2">
+          <div id="hero-admin-tools" class="hero-admin-tools">
+            <button onclick="toggleApiKeyModal(true)" class="bg-amber-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
+              <span>🔑</span> <span id="api-status-btn-text">Configure AI Key</span>
+            </button>
+            <button type="button" id="mod-login-btn" onclick="toggleModAuthModal(true, 'login')" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Sign In for NHVet411 Approvals">
+              <span>🔐</span> <span>Moderator Login</span>
+            </button>
+            <button type="button" id="mod-review-btn" onclick="toggleReviewQueueModal(true)" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 relative" title="1-Click Open Pending VSO Review Queue">
+              <span class="mod-bell-wrap" aria-hidden="true">🔔<span id="mod-bell-dot" class="mod-bell-dot hidden"></span></span>
+              <span>Review (<strong id="review-queue-count">0</strong>)</span>
+            </button>
+            <button type="button" id="mod-account-btn" onclick="toggleModAuthModal(true, 'account')" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Account &amp; Password Settings">
+              <span>🛡️</span> <span id="mod-account-label">Moderator</span>
+            </button>
+          </div>
+          <button onclick="openEditModalForOrg(null)" class="hero-primary-btn bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
             <span>✏️</span> <span>Suggest an Edit</span>
           </button>
-          <button onclick="toggleSubmitModal(true); setUploadMode('new');" class="bg-gold-btn font-extrabold text-xs px-3.5 py-2 rounded-lg shadow-md cursor-pointer flex items-center gap-1.5">
+          <button onclick="toggleSubmitModal(true); setUploadMode('new');" class="hero-primary-btn bg-gold-btn font-extrabold text-xs px-3.5 py-2 rounded-lg shadow-md cursor-pointer flex items-center gap-1.5">
             <span>📄</span> <span>Upload VSO Flyer (AI Parse)</span>
+          </button>
+          <button type="button" id="mobile-admin-tools-btn" onclick="toggleMobileAdminTools()" aria-expanded="false" aria-controls="hero-admin-tools" class="hero-mobile-admin-btn bg-glass font-bold text-xs px-2.5 py-2 rounded-lg cursor-pointer items-center gap-1 relative" title="AI Key &amp; Moderator Tools">
+            <span class="mod-bell-wrap" aria-hidden="true">⚙️<span id="mobile-admin-bell-dot" class="mod-bell-dot hidden"></span></span>
+            <span>Admin / Tools</span>
+            <span id="mobile-admin-chevron" aria-hidden="true">▾</span>
           </button>
         </div>
       </div>
 
       <!-- DIRECT VSO SEARCH & AI NAVIGATOR CARD -->
-      <div class="bg-white p-5 rounded-2xl shadow-2xl max-w-5xl mx-auto mt-4 text-slate-900" style="border-top: 4px solid #D5AD36;">
+      <div id="search-card" class="bg-white p-5 rounded-2xl shadow-2xl max-w-5xl mx-auto mt-4 text-slate-900" style="border-top: 4px solid #D5AD36;">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3 border-b pb-2">
           <span class="text-xs font-extrabold uppercase tracking-wider text-slate-900">
             🧭 Direct VSO Resource Search — Filter by ZIP Code, Named Town, Region, Branch, or Ask Any Question
@@ -1257,8 +1685,8 @@ const htmlContent = `<!DOCTYPE html>
 
         <div class="flex flex-col sm-row gap-2">
           <div class="relative flex-1">
-            <input id="search-input" type="text" oninput="onLiveSearchInput(this.value)" onkeydown="if(event.key==='Enter') runAiAssistantFromInput()" placeholder="Type ZIP (e.g. 03101, 03801), Town (Manchester, Laconia, Portsmouth), Region, or ask any question..." class="w-full pl-11 pr-4 py-3.5 rounded-xl text-slate-900 bg-slate-50 border text-sm font-medium" />
-            <svg width="20" height="20" class="w-5 h-5 text-slate-400 absolute left-3.5 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input id="search-input" type="text" enterkeyhint="search" autocomplete="off" oninput="onLiveSearchInput(this.value)" onkeydown="if(event.key==='Enter') runAiAssistantFromInput()" placeholder="Type ZIP (e.g. 03101, 03801), Town (Manchester, Laconia, Portsmouth), Region, or ask any question..." class="w-full pl-11 pr-4 py-3.5 rounded-xl text-slate-900 bg-slate-50 border text-sm font-medium" />
+            <svg width="20" height="20" class="search-input-icon w-5 h-5 text-slate-400 absolute left-3.5 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
           <button onclick="runAiAssistantFromInput()" class="bg-olive condensed-font uppercase font-extrabold px-5 py-3.5 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-1.5 shrink-0 shadow-sm">
             <span>✨</span> <span>Search / Ask AI</span>
@@ -1476,11 +1904,11 @@ const htmlContent = `<!DOCTYPE html>
   </footer>
 
   <!-- MOBILE-ENABLED STICKY BOTTOM ACTION BAR -->
-  <div class="mobile-only-bar fixed bottom-0 left-0 right-0 z-50 text-white border-t px-3 py-2 flex items-center justify-between gap-2 shadow-2xl" style="background-color:#181916; border-color:#3B4035;">
-    <a href="tel:988" class="flex-1 bg-red-600 text-white text-center font-extrabold text-[11px] py-2 px-2 rounded-lg">🚨 Call 988 (Press 1)</a>
-    <a href="#resource-search" class="flex-1 bg-glass text-white text-center font-bold text-[11px] py-2 px-2 rounded-lg">🔍 Search</a>
-    <a href="#nh-regions-showcase" class="flex-1 bg-glass text-white text-center font-bold text-[11px] py-2 px-2 rounded-lg">🏔️ Regions</a>
-    <a href="#directory-section" class="flex-1 bg-amber-500 text-slate-900 text-center font-extrabold text-[11px] py-2 px-2 rounded-lg">📋 VSOs</a>
+  <div class="mobile-only-bar fixed bottom-0 left-0 right-0 z-50 text-white border-t px-2.5 py-2 flex items-center justify-between gap-1.5 shadow-2xl" style="background-color:#181916; border-color:#3B4035;">
+    <a href="tel:988" class="flex-1 bg-red-600 text-white text-center font-extrabold text-[11px] py-2 px-1.5 rounded-lg" title="Call 988 then Press 1">🚨 Call 988</a>
+    <a href="#search-card" onclick="closeMobileHeaderDrawers()" class="flex-1 bg-glass text-white text-center font-bold text-[11px] py-2 px-1.5 rounded-lg">🔍 Search</a>
+    <a href="#nh-regions-showcase" onclick="closeMobileHeaderDrawers()" class="flex-1 bg-glass text-white text-center font-bold text-[11px] py-2 px-1.5 rounded-lg">🏔️ Regions</a>
+    <a href="#directory-section" onclick="closeMobileHeaderDrawers()" class="flex-1 bg-amber-500 text-slate-900 text-center font-extrabold text-[11px] py-2 px-1.5 rounded-lg">📋 VSOs</a>
   </div>
 
   <!-- API KEY VAULT MODAL -->
@@ -1907,9 +2335,15 @@ const htmlContent = `<!DOCTYPE html>
       }
     };
 
-    function setViewportMode(mode) {
-      const isMobile = mode === 'mobile';
-      document.body.classList.toggle('force-mobile-view', isMobile);
+    function isCompactMobileActive() {
+      if (typeof document === 'undefined' || !document.body || !document.body.classList) return false;
+      if (document.body.classList.contains('force-mobile-view')) return true;
+      const w = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth : 1024;
+      return w < 768 && !document.body.classList.contains('force-web-view');
+    }
+
+    function syncViewportModeButtons() {
+      const isMobile = isCompactMobileActive();
       const webBtn = document.getElementById('view-web-btn');
       const mobBtn = document.getElementById('view-mobile-btn');
       if (webBtn && mobBtn) {
@@ -1920,7 +2354,150 @@ const htmlContent = `<!DOCTYPE html>
           ? 'text-[11px] font-bold px-2 py-1 rounded bg-crimson text-white cursor-pointer'
           : 'text-[11px] font-bold px-2 py-1 rounded text-slate-700 cursor-pointer';
       }
-      showToast(isMobile ? '📱 Switched to Mobile-Enabled View' : '🖥️ Switched to Full Web View');
+    }
+
+    function closeMobileHeaderDrawers() {
+      const crisisEl = document.getElementById('crisis-desktop-content');
+      const crisisBtn = document.getElementById('mobile-crisis-toggle-btn');
+      const crisisChev = document.getElementById('mobile-crisis-chevron');
+      if (crisisEl) crisisEl.classList.remove('mobile-open');
+      if (crisisBtn) crisisBtn.setAttribute('aria-expanded', 'false');
+      if (crisisChev) crisisChev.textContent = '▾';
+
+      const navEl = document.getElementById('mobile-nav-drawer');
+      const navBtn = document.getElementById('mobile-nav-toggle-btn');
+      const navIcon = document.getElementById('mobile-nav-icon');
+      if (navEl) navEl.classList.remove('mobile-open');
+      if (navBtn) navBtn.setAttribute('aria-expanded', 'false');
+      if (navIcon) navIcon.textContent = '☰';
+    }
+
+    function toggleMobileCrisisDrawer() {
+      const crisisEl = document.getElementById('crisis-desktop-content');
+      const crisisBtn = document.getElementById('mobile-crisis-toggle-btn');
+      const crisisChev = document.getElementById('mobile-crisis-chevron');
+      if (!crisisEl) return;
+      const willOpen = !crisisEl.classList.contains('mobile-open');
+      closeMobileHeaderDrawers();
+      if (willOpen) {
+        crisisEl.classList.add('mobile-open');
+        if (crisisBtn) crisisBtn.setAttribute('aria-expanded', 'true');
+        if (crisisChev) crisisChev.textContent = '▴';
+      }
+    }
+
+    function toggleMobileNavDrawer() {
+      const navEl = document.getElementById('mobile-nav-drawer');
+      const navBtn = document.getElementById('mobile-nav-toggle-btn');
+      const navIcon = document.getElementById('mobile-nav-icon');
+      if (!navEl) return;
+      const willOpen = !navEl.classList.contains('mobile-open');
+      closeMobileHeaderDrawers();
+      if (willOpen) {
+        navEl.classList.add('mobile-open');
+        if (navBtn) navBtn.setAttribute('aria-expanded', 'true');
+        if (navIcon) navIcon.textContent = '✕';
+      }
+    }
+
+    function toggleMobileAdminTools() {
+      const toolsEl = document.getElementById('hero-admin-tools');
+      const toolsBtn = document.getElementById('mobile-admin-tools-btn');
+      const toolsChev = document.getElementById('mobile-admin-chevron');
+      if (!toolsEl) return;
+      const isOpen = toolsEl.classList.toggle('mobile-open');
+      if (toolsBtn) toolsBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (toolsChev) toolsChev.textContent = isOpen ? '▴' : '▾';
+    }
+
+    function setViewportMode(mode) {
+      const isMobile = mode === 'mobile';
+      const isSmallScreen = (typeof window !== 'undefined' && typeof window.innerWidth === 'number') ? window.innerWidth < 768 : false;
+      if (document.body && document.body.classList) {
+        document.body.classList.toggle('force-mobile-view', isMobile);
+        document.body.classList.toggle('force-web-view', !isMobile && isSmallScreen);
+      }
+      closeMobileHeaderDrawers();
+      syncViewportModeButtons();
+      showToast(isMobile ? '📱 Switched to Compact Mobile View' : '🖥️ Switched to Full Web View');
+    }
+
+    function initMobileExperience() {
+      syncViewportModeButtons();
+      if (typeof document === 'undefined' || !document.addEventListener || !document.body || !document.body.classList) return;
+      if (window.__nhvetMobileInitDone) return;
+      window.__nhvetMobileInitDone = true;
+
+      const isTextControl = function(el) {
+        if (!el || !el.tagName) return false;
+        const tag = el.tagName.toUpperCase();
+        if (tag === 'TEXTAREA' || tag === 'SELECT') return true;
+        if (tag === 'INPUT') {
+          const t = (el.type || 'text').toLowerCase();
+          return t !== 'checkbox' && t !== 'radio' && t !== 'file' && t !== 'button' && t !== 'submit' && t !== 'reset';
+        }
+        return false;
+      };
+
+      let blurTimer = null;
+      document.addEventListener('focusin', function(e) {
+        if (!isCompactMobileActive() || !isTextControl(e.target)) return;
+        if (blurTimer) { clearTimeout(blurTimer); blurTimer = null; }
+        closeMobileHeaderDrawers();
+        document.body.classList.add('mobile-keyboard-open');
+        if (e.target && e.target.id === 'search-input') {
+          const card = document.getElementById('search-card');
+          if (card && typeof card.scrollIntoView === 'function') {
+            setTimeout(function() {
+              if (document.activeElement === e.target) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 220);
+          }
+        }
+      });
+
+      document.addEventListener('focusout', function() {
+        if (blurTimer) clearTimeout(blurTimer);
+        blurTimer = setTimeout(function() {
+          if (!isTextControl(document.activeElement)) {
+            document.body.classList.remove('mobile-keyboard-open');
+          }
+        }, 140);
+      });
+
+      document.addEventListener('click', function(e) {
+        const header = document.getElementById('sticky-top-header');
+        if (header && e.target && typeof header.contains === 'function' && !header.contains(e.target)) {
+          closeMobileHeaderDrawers();
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e && e.key === 'Escape') {
+          closeMobileHeaderDrawers();
+        }
+      });
+
+      if (typeof window !== 'undefined' && window.addEventListener) {
+        window.addEventListener('resize', function() {
+          if (window.innerWidth >= 768 && document.body.classList.contains('force-web-view')) {
+            document.body.classList.remove('force-web-view');
+          }
+          syncViewportModeButtons();
+        });
+        if (window.visualViewport && typeof window.visualViewport.addEventListener === 'function') {
+          window.visualViewport.addEventListener('resize', function() {
+            if (!isCompactMobileActive()) return;
+            const kbVisible = (window.innerHeight - window.visualViewport.height) > 140;
+            if (kbVisible) {
+              document.body.classList.add('mobile-keyboard-open');
+            } else if (!isTextControl(document.activeElement)) {
+              document.body.classList.remove('mobile-keyboard-open');
+            }
+          });
+        }
+      }
     }
 
     function toggleMobileFilters() {
@@ -2460,7 +3037,11 @@ const htmlContent = `<!DOCTYPE html>
     }
 
     async function runAiAssistantFromInput() {
-      const rawQuery = document.getElementById('search-input').value.trim();
+      const searchInputEl = document.getElementById('search-input');
+      if (searchInputEl && typeof searchInputEl.blur === 'function' && typeof document !== 'undefined' && document.activeElement === searchInputEl) {
+        searchInputEl.blur();
+      }
+      const rawQuery = (searchInputEl ? searchInputEl.value : '').trim();
       if (!rawQuery) return resetAllFilters();
 
       const normalized = normalizeSearchQuery(rawQuery);
@@ -2751,6 +3332,7 @@ const htmlContent = `<!DOCTYPE html>
           }
         });
       }
+      initMobileExperience();
       bootstrapSupabaseAndModeration();
     }
 
@@ -5500,15 +6082,17 @@ const htmlContent = `<!DOCTYPE html>
       const safeCount = Math.max(0, Number(count) || 0);
       const countEl = document.getElementById('review-queue-count');
       const dotEl = document.getElementById('mod-bell-dot');
+      const mobileDotEl = document.getElementById('mobile-admin-bell-dot');
       if (countEl) countEl.textContent = safeCount;
-      if (dotEl) {
-        dotEl.classList.toggle('hidden', safeCount === 0);
+      [dotEl, mobileDotEl].forEach(function(el) {
+        if (!el) return;
+        el.classList.toggle('hidden', safeCount === 0);
         if (pulseNew && safeCount > 0) {
-          dotEl.classList.add('mod-bell-dot-pulse');
+          el.classList.add('mod-bell-dot-pulse');
         } else if (safeCount === 0) {
-          dotEl.classList.remove('mod-bell-dot-pulse');
+          el.classList.remove('mod-bell-dot-pulse');
         }
-      }
+      });
       const tabPendingCount = document.getElementById('rq-pending-tab-count');
       if (tabPendingCount) tabPendingCount.textContent = safeCount;
     }
@@ -6225,6 +6809,8 @@ const htmlContent = `<!DOCTYPE html>
         if (badgeEl) badgeEl.classList.add('hidden');
         const dotEl = document.getElementById('mod-bell-dot');
         if (dotEl) dotEl.classList.remove('mod-bell-dot-pulse');
+        const mobileDotEl = document.getElementById('mobile-admin-bell-dot');
+        if (mobileDotEl) mobileDotEl.classList.remove('mod-bell-dot-pulse');
         refreshReviewQueueData(false);
       }
     }
