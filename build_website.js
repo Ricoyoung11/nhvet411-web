@@ -113,115 +113,197 @@ const COMPLETE_NOTEBOOK_CONTACTS = {
   'VSO-002': [{ name: 'Ariel Clemmer', email: 'aclemmer@603legalaid.org' }, { name: 'Harmony Gilbert', email: 'hgilbert@603legalaid.org' }],
   'VSO-003': [{ name: 'Michael Johns', email: 'michael.johns@aimingforzero.org' }, { name: 'Chris Tessier', email: 'chris.tessier@aimingforzero.org' }],
   'VSO-004': [{ name: 'Jenn Satterly', email: 'jen@allsecurefoundation.org' }, { name: 'Tom Satterly', email: 'tom@allsecurefoundation.org' }],
-  'VSO-005': [{ name: 'Linda Lambert', email: 'iwont4gt@gmail.com' }],
-  'VSO-006': [{ name: 'Katherine Breeden', email: 'katherine.breeden@redcross.org' }, { name: 'Dee Chase', email: 'dee.chase@redcross.org' }, { name: 'Sharon Heser', email: 'sheser@comcast.net' }, { name: 'Celeste Stimpson', email: 'celeste.stimpson@redcross.org' }],
-  'VSO-007': [{ name: 'Journey Ewell', email: 'AWARENH@gmail.com' }],
+  'VSO-005': [{ name: 'Linda Lambert', email: '', public_opt_in: false }],
+  'VSO-006': [{ name: 'Katherine Breeden', email: 'katherine.breeden@redcross.org' }, { name: 'Dee Chase', email: 'dee.chase@redcross.org' }, { name: 'Sharon Heser', email: '', public_opt_in: false }, { name: 'Celeste Stimpson', email: 'celeste.stimpson@redcross.org' }],
+  'VSO-007': [{ name: 'Journey Ewell', email: 'AWARENH@gmail.com', public_opt_in: true }],
   'VSO-008': [{ name: 'Gray Somers', email: 'gsomers@arcnh.org' }],
   'VSO-009': [{ name: 'Dr. Kathleen Roth', email: 'kathy@atlibertyconnections.org' }],
   'VSO-010': [{ name: 'Eric Furey', email: 'eric.furey@azimuthcheckfoundation.org' }, { name: 'Sara Shovlin', email: 'sara.shovlin@azimuthcheckfoundation.org' }, { name: 'Yuma Haidara', email: 'yuma.haidara@azimuthcheckfoundation.org' }],
   'VSO-011': [{ name: 'Dan Badger', email: 'dan@badgerwildernessguides.org' }],
   'VSO-012': [{ name: 'Richard Botnick', email: 'rick@botnick.net' }],
-  'VSO-013': [{ name: 'Anthony Varga', email: 'avarga@ccmusicschool.org' }, { name: 'Anthony Varga (Direct)', email: 'aashishbalani27@gmail.com' }],
+  'VSO-013': [{ name: 'Anthony Varga', email: 'avarga@ccmusicschool.org' }],
   'VSO-014': [{ name: 'Randy Carter', email: 'randyc@bridgecluboflowell.org' }, { name: 'Robert Cox', email: 'bobc@bridgecluboflowell.org' }, { name: 'Kyana Mora', email: 'kyanam@bridgecluboflowell.org' }],
   'VSO-015': [{ name: 'Tim Stanton', email: 'tstanton@bdfm.org' }],
   'VSO-016': [{ name: 'Jeff Ladieu', email: 'jladieu@camp-resilience.org' }, { name: 'Elizabeth Mullaney', email: 'emullaney@camp-resilience.org' }, { name: 'Lori Sanderson', email: 'lsanderson@camp-resilience.org' }, { name: 'Holly Summers', email: 'hsummers@camp-resilience.org' }, { name: 'Kurt Webber', email: 'kwebber@camp-resilience.org' }, { name: 'Steve Veinotte', email: 'sveinotte@camp-resilience.org' }],
   'VSO-017': [{ name: 'Kimberly Walther', email: 'kimberly@campsouthernground.org' }],
   'VSO-018': [{ name: 'Shannon Kopp', email: 'shannonkopp@candorful.com' }, { name: 'Pat Hubbell', email: 'pathubbell@candorful.com' }],
   'VSO-019': [{ name: 'Leslie Ela', email: 'info@dmavs.nh.gov' }, { name: 'Ana McKenna', email: 'amckenna@eastersealsnh.org' }],
-  'VSO-020': [{ name: 'Emily McArdle', email: 'u25carrollcounty@outlook.com' }, { name: 'Jennifer Thomas', email: 'jennifer.thomas@graniteuw.org' }, { name: 'Jennifer Hunter', email: 'jennifer.hunter@graniteuw.org' }],
+  'VSO-020': [{ name: 'Emily McArdle', email: 'u25carrollcounty@outlook.com', public_opt_in: true }, { name: 'Jennifer Thomas', email: 'jennifer.thomas@graniteuw.org' }, { name: 'Jennifer Hunter', email: 'jennifer.hunter@graniteuw.org' }],
   'VSO-021': [{ name: 'Michelle Lowe', email: 'Michelle@cathedralofthepines.org' }],
   'VSO-022': [{ name: 'Jennifer Hunter', email: 'jennifer.hunter@graniteuw.org' }, { name: 'Jennifer Thomas', email: 'jennifer.thomas@graniteuw.org' }],
   'VSO-023': [{ name: 'Carly Colombo', email: 'carlycolombo@ironstonefarm.org' }],
-  'VSO-024': [{ name: 'Chase Stanley', email: 'chasingzero22@gmail.com' }],
+  'VSO-024': [{ name: 'Chase Stanley', email: 'chasingzero22@gmail.com', public_opt_in: true }],
   'VSO-025': [{ name: "Gregory d'Arbonne", email: 'gregory.darbonne@ausa.org' }],
   'VSO-026': [{ name: 'Andy Crews', email: 'andy@crewshldgs.org' }],
-  'VSO-027': [{ name: 'Scott McQuade', email: 'elimcquade@gmail.com' }, { name: 'Anna Kay Vorsteg', email: 'a.vorsteg@crossroadshouse.org' }],
+  'VSO-027': [{ name: 'Scott McQuade', email: '', public_opt_in: false }, { name: 'Anna Kay Vorsteg', email: 'a.vorsteg@crossroadshouse.org' }],
   'VSO-028': [{ name: 'Sean Gillery', email: 'sgillery@currier.org' }, { name: 'Kate Pritchard', email: 'kpritchard@currier.org' }, { name: 'Becky McColl', email: 'bmccoll@currier.org' }, { name: 'Lynn Chmura', email: 'lchmura@currier.org' }],
-  'VSO-029': [{ name: 'David Dexter', email: 'danhealyfoundation@gmail.com' }],
+  'VSO-029': [{ name: 'David Dexter', email: 'danhealyfoundation@gmail.com', public_opt_in: true }],
   'VSO-030': [{ name: 'Nicole Desilets-Bixler', email: 'nicole.l.desilets-bixler.nfg@army.mil' }, { name: 'Brenton Fraser', email: 'info@dmavs.nh.gov' }, { name: 'Jamie Cummings', email: 'jamie.cummings@va.gov' }],
   'VSO-031': [{ name: 'Jamie Morse', email: 'commander@davnh.org' }],
   'VSO-032': [{ name: 'Cheryll Andrews', email: 'cheryll.andrews@dismashomenh.org' }, { name: 'Colleen Brough', email: 'colleen.brough@dismashomenh.org' }, { name: 'Wyndi Cashman', email: 'wyndi.cashman@dismashomenh.org' }, { name: 'Angel Colarusso', email: 'angelica.colarusso@dismashomenh.org' }],
   'VSO-033': [{ name: 'Andrea Chrisstoffels', email: 'achrisstoffels@eastersealsnh.org' }, { name: 'Meghan Bliz', email: 'mbilz@eastersealsnh.org' }, { name: 'Courtney Stairs', email: 'cstairs@eastersealsnh.org' }, { name: 'Maureen Beauregard', email: 'mbeauregard@eastersealsnh.org' }, { name: 'Kathy Flynn', email: 'kaflynn@eastersealsnh.org' }, { name: 'Mike Leary', email: 'mleary@eastersealsnh.org' }, { name: 'Ana McKenna', email: 'amckenna@eastersealsnh.org' }, { name: 'Katja Sieling', email: 'ksieling@eastersealsnh.org' }],
   'VSO-034': [{ name: 'Ana McKenna', email: 'amckenna@eastersealsnh.org' }, { name: 'Maureen Beauregard', email: 'mbeauregard@eastersealsnh.org' }, { name: 'Kathy Flynn', email: 'kaflynn@eastersealsnh.org' }, { name: 'Mike Leary', email: 'mleary@eastersealsnh.org' }],
-  'VSO-035': [{ name: 'Scott Brockelman', email: 'scott@equineimmersionfoundation.org' }, { name: 'Marge Hart', email: 'marge.hart188@gmail.com' }, { name: 'Kelly MacCorquodale', email: 'kelly@equineimmersionproject.com' }, { name: 'Tara Mahoney', email: 'tmahoney.eip@gmail.com' }],
+  'VSO-035': [{ name: 'Scott Brockelman', email: 'scott@equineimmersionfoundation.org' }, { name: 'Marge Hart', email: '', public_opt_in: false }, { name: 'Kelly MacCorquodale', email: 'kelly@equineimmersionproject.com' }, { name: 'Tara Mahoney', email: '', public_opt_in: false }],
   'VSO-036': [{ name: 'Derek Gordon', email: 'derek.gordon@fireicefrogs.com' }],
   'VSO-037': [{ name: 'Sean Kilbreth', email: 'Skilbreth@forgehealth.com' }, { name: 'Eileen Meaney', email: 'Emeaney@forgehealth.com' }, { name: 'Nathaniel Taylor', email: 'Ntaylor@forgehealth.com' }],
   'VSO-038': [{ name: 'Jennifer Hunter', email: 'jennifer.hunter@graniteuw.org' }, { name: 'Jennifer Thomas', email: 'jennifer.thomas@graniteuw.org' }],
   'VSO-039': [{ name: 'John Lally', email: 'lallyj@gnmhc.org' }, { name: "Kevin O'Brien", email: 'obrienk@gnmhc.org' }, { name: 'Alicia Somers', email: 'somersa@gnmhc.org' }],
   'VSO-040': [{ name: 'Kim Haight', email: 'kimhaight@guardianrevival.org' }, { name: 'Alexander Othmer', email: 'alexanderothmer@guardianrevival.org' }, { name: 'Elizabeth Ten Dyke', email: 'etendyke@choicewordspr.com' }],
   'VSO-041': [{ name: 'Abigail Alicea', email: 'a.alicea@harborcarenh.org' }, { name: 'Alexandra Baer', email: 'a.baer@harborcarenh.org' }, { name: 'Samuel Dahlberg', email: 's.dahlberg@harborcarenh.org' }, { name: 'Ashley Decato', email: 'a.decato@harborcarenh.org' }, { name: 'Finn Gibbons', email: 'f.gibbons@harborcarenh.org' }, { name: 'Andrea May', email: 'a.may@harborcarenh.org' }, { name: 'Mackenzie Moran', email: 'm.moran@harborcarenh.org' }, { name: 'Henry Och', email: 'h.och@harborcarenh.org' }, { name: 'Amber Stalker', email: 'amber.s@harborcarenh.org' }, { name: 'Doug Starbird', email: 'd.starbird@harborcarenh.org' }, { name: 'Brian Tagliaferro', email: 'b.tagliaferro@harborcarenh.org' }],
-  'VSO-042': [{ name: 'Laura Barker', email: 'heropupsinc@yahoo.com' }, { name: 'Selena Barker', email: 'heropupsinc@yahoo.com' }],
+  'VSO-042': [{ name: 'Laura Barker', email: 'heropupsinc@yahoo.com', public_opt_in: true }, { name: 'Selena Barker', email: 'heropupsinc@yahoo.com', public_opt_in: true }],
   'VSO-043': [{ name: 'Andrew Ruszkiewicz', email: 'vp@heroesharvests.org' }],
-  'VSO-044': [{ name: 'Nona Alexander', email: 'nonaalexander1@gmail.com' }, { name: 'Leslie Cregg-Hyder', email: 'leslie@plannedperfectly.net' }, { name: 'Scott Hyder', email: 'blazrss@yahoo.com' }, { name: 'Matt Kowalski', email: 'mkbfd43@gmail.com' }],
+  'VSO-044': [{ name: 'Nona Alexander', email: '', public_opt_in: false }, { name: 'Leslie Cregg-Hyder', email: 'leslie@plannedperfectly.net' }, { name: 'Scott Hyder', email: '', public_opt_in: false }, { name: 'Matt Kowalski', email: '', public_opt_in: false }],
   'VSO-045': [{ name: 'Harold Pinkham', email: 'harold@highhorses.org' }],
-  'VSO-046': [{ name: 'Laura Landerman-Garber', email: 'holidaycardsnh@gmail.com' }],
+  'VSO-046': [{ name: 'Laura Landerman-Garber', email: 'holidaycardsnh@gmail.com', public_opt_in: true }],
   'VSO-047': [{ name: 'Ryan Casavant', email: 'rcasavant@mgb.org' }, { name: 'Katrina Echevarria', email: 'kechevarria@mgh.harvard.edu' }],
   'VSO-048': [{ name: 'Elizabeth Buddington', email: 'ebuddington@hfotusa.org' }],
-  'VSO-049': [{ name: 'Joseph "Tom" Byron', email: 'tombyron38@gmail.com' }],
+  'VSO-049': [{ name: 'Joseph "Tom" Byron', email: '', public_opt_in: false }],
   'VSO-050': [{ name: 'Michael Gould', email: 'mike@houndstownusa.com' }],
-  'VSO-051': [{ name: 'Angie Gustafson', email: 'angie.gade@houseinthewoods.org' }, { name: 'Paul House', email: 'me_guide@hotmail.com' }],
+  'VSO-051': [{ name: 'Angie Gustafson', email: 'angie.gade@houseinthewoods.org' }, { name: 'Paul House', email: '', public_opt_in: false }],
   'VSO-052': [{ name: 'Brianna Brack', email: 'Brianna.brack@snhu.edu' }, { name: 'Chris Schroeder', email: 'portsmouth@irreverentwarriors.com' }],
   'VSO-053': [{ name: 'Steve Veinotte', email: 'sveinotte@ksrnh.org' }, { name: 'Sarah Young', email: 'syoung@ksrnh.org' }],
   'VSO-054': [{ name: 'Aaron Dugan', email: 'Aaron@LabyrinthTS.org' }],
-  'VSO-055': [{ name: 'Chris Peirce', email: '1sgpeirce@gmail.com' }, { name: 'Kurt Webber', email: 'kwebber@camp-resilience.org' }],
+  'VSO-055': [{ name: 'Chris Peirce', email: '', public_opt_in: false }, { name: 'Kurt Webber', email: 'kwebber@camp-resilience.org' }],
   'VSO-056': [{ name: 'Lis Greiner', email: 'lis.greiner@lesslegmoreheart.com' }],
   'VSO-057': [{ name: 'Jennifer Barlow', email: 'jennifer.barlow@libertyhousenh.org' }, { name: 'Ashley Kitchell', email: 'ashley@libertyhousenh.org' }, { name: 'Jeff (Liberty House)', email: 'jeff@libertyhousenh.org' }],
   'VSO-058': [{ name: 'Kevin Forrest (Medical Center Director)', email: 'Kevin.Forrest@va.gov' }, { name: 'Julie Vose', email: 'Julie.Vose@va.gov' }, { name: 'Justin Moeling (Suicide Prevention)', email: 'john.moeling@va.gov' }, { name: 'Michael Bichrest', email: 'michael.bichrest@va.gov' }, { name: 'Michelle Nerish', email: 'michelle.nerish@va.gov' }, { name: 'Kaitlyn Grimes', email: 'kaitlyn.grimes@va.gov' }],
-  'VSO-059': [{ name: 'Al Brandano', email: 'alb@ThevoiceLibrary.net' }, { name: 'Joshua Skinner', email: 'joshuaskinner88@gmail.com' }],
-  'VSO-060': [{ name: 'Margo LaPointe', email: 'margolapointe33@gmail.com' }, { name: 'David Lee (UNH)', email: 'david.lee@unh.edu' }, { name: 'Philip Brekke (UNH)', email: 'philip.brekke@unh.edu' }],
+  'VSO-059': [{ name: 'Al Brandano', email: 'alb@ThevoiceLibrary.net' }, { name: 'Joshua Skinner', email: '', public_opt_in: false }],
+  'VSO-060': [{ name: 'Margo LaPointe', email: '', public_opt_in: false }, { name: 'David Lee (UNH)', email: 'david.lee@unh.edu' }, { name: 'Philip Brekke (UNH)', email: 'philip.brekke@unh.edu' }],
   'VSO-061': [{ name: 'Jocelyne Bisson', email: 'marketing@mobiusmobility.com' }, { name: 'Laura Gilman', email: '' }],
   'VSO-062': [{ name: 'Amy Cook', email: 'acook@naminh.org' }, { name: 'Heidi Mathews-Cantin', email: 'hcantin@naminh.org' }, { name: 'S. Allen', email: 'sallen@naminh.org' }],
   'VSO-063': [{ name: 'Krystal Bloom', email: 'krystal.bloom@nashuacms.org' }],
   'VSO-064': [{ name: 'Jason Callahan', email: 'jason@newenglandbattalion.org' }],
   'VSO-065': [{ name: 'Sarah Stanley', email: 'sarah.e.stanley@nhvh.nh.gov' }, { name: 'Kimberly MacKay', email: 'kimberly.m.mackay@nhvh.nh.gov' }],
   'VSO-066': [{ name: 'Andrew Grassie', email: 'andrew.grassie.civ@army.mil' }],
-  'VSO-067': [{ name: 'Catherine Bentwood', email: 'cathybentwoodbridgehouse@gmail.com' }],
-  'VSO-068': [{ name: 'Paul Lloyd (State HQ)', email: 'nhvfwstateheadquarters@gmail.com' }, { name: 'Darwin Beeman', email: 'luckytwobealive@comcast.net' }, { name: 'Dennis Manning', email: 'vfwnhmembership@gmail.com' }],
-  'VSO-069': [{ name: 'Linda Massimilla', email: 'balloontraveler@yahoo.com' }, { name: 'Kathryn Cote', email: '' }],
+  'VSO-067': [{ name: 'Catherine Bentwood', email: 'cathybentwoodbridgehouse@gmail.com', public_opt_in: true }],
+  'VSO-068': [{ name: 'Paul Lloyd (State HQ)', email: 'nhvfwstateheadquarters@gmail.com', public_opt_in: true }, { name: 'Darwin Beeman', email: '', public_opt_in: false }, { name: 'Dennis Manning', email: 'vfwnhmembership@gmail.com', public_opt_in: true }],
+  'VSO-069': [{ name: 'Linda Massimilla', email: '', public_opt_in: false }, { name: 'Kathryn Cote', email: '' }],
   'VSO-070': [{ name: 'Andrea Lucas', email: 'andrea.lucas@unh.edu' }, { name: 'Tye Thompson', email: 'tye.thompson@unh.edu' }],
   'VSO-071': [{ name: 'Alison Butler', email: 'abutler@operationdeltadog.org' }, { name: "Julia D'Orazio", email: 'jdorazio@operationdeltadog.org' }, { name: 'Kerry Hildebrand', email: 'khildebrand@operationdeltadog.org' }, { name: 'Charlotte Troddy', email: 'ctroddyn@operationdeltadog.org' }],
   'VSO-072': [{ name: 'Mark Andrews', email: 'Mark.andrews@ophighflight.org' }],
   'VSO-073': [{ name: 'Vince Chambers', email: 'vchambers@overwatch.org' }],
   'VSO-074': [{ name: 'Donna Collins', email: 'grants@palservices.org' }, { name: 'Jennifer Wahlig', email: 'jennifer.wahlig@palservices.org' }],
-  'VSO-075': [{ name: 'Mason DeFrancesco', email: 'info@playforheroes.org' }, { name: 'Sophia DeFrancesco', email: 'sophie.defrancesco@gmail.com' }],
-  'VSO-076': [{ name: 'Jacqui Nelson', email: 'jenelson@plymouth.edu' }, { name: 'Jim Goss', email: 'sgmjim@gmail.com' }],
+  'VSO-075': [{ name: 'Mason DeFrancesco', email: 'info@playforheroes.org' }, { name: 'Sophia DeFrancesco', email: '', public_opt_in: false }],
+  'VSO-076': [{ name: 'Jacqui Nelson', email: 'jenelson@plymouth.edu' }, { name: 'Jim Goss', email: '', public_opt_in: false }],
   'VSO-077': [{ name: 'Joshua Ritson', email: 'jritson@pphnh.org' }],
-  'VSO-078': [{ name: 'Tina Michaud-Gray', email: 'newenglandrapidrecovery@gmail.com' }],
+  'VSO-078': [{ name: 'Tina Michaud-Gray', email: 'newenglandrapidrecovery@gmail.com', public_opt_in: true }],
   'VSO-079': [{ name: 'Jenna Baillargeon', email: 'jenna@reigninghoperanch.com' }],
-  'VSO-080': [{ name: 'Rodney Anderson', email: 'presidentr2r@gmail.com' }],
+  'VSO-080': [{ name: 'Rodney Anderson', email: 'presidentr2r@gmail.com', public_opt_in: true }],
   'VSO-081': [{ name: 'Steven Nisbet', email: 'steven.nisbet@shieldsandstripes.org' }],
-  'VSO-082': [{ name: 'Shannon Giguere', email: 'aashishbalani27@gmail.com' }],
-  'VSO-083': [{ name: 'James Goss', email: 'sgmjim@gmail.com' }],
+  'VSO-082': [{ name: 'Shannon Giguere', email: '', public_opt_in: false }],
+  'VSO-083': [{ name: 'James Goss', email: '', public_opt_in: false }],
   'VSO-084': [{ name: 'Stephanie Ouellette', email: 'stephanie.m.ouellette.ctr@army.mil' }],
   'VSO-085': [{ name: 'Julie Weymouth', email: 'julie@homelandheroesfoundation.org' }],
-  'VSO-086': [{ name: 'Jeff Barker', email: 'thelocalveteraninc@gmail.com' }],
+  'VSO-086': [{ name: 'Jeff Barker', email: 'thelocalveteraninc@gmail.com', public_opt_in: true }],
   'VSO-087': [{ name: 'Allison Wilson', email: 'allison@thehope-project.org' }],
-  'VSO-088': [{ name: 'Margo LaPointe', email: 'margolapointe33@gmail.com' }],
+  'VSO-088': [{ name: 'Margo LaPointe', email: '', public_opt_in: false }],
   'VSO-089': [{ name: 'Karen Kersting', email: 'Karen@upreachtec.org' }],
   'VSO-090': [{ name: 'Shawn Linhares', email: 'shawn.linhares@valor1foundation.org' }],
-  'VSO-091': [{ name: 'Cindy Simmons', email: 'vetsreststop@gmail.com' }],
+  'VSO-091': [{ name: 'Cindy Simmons', email: 'vetsreststop@gmail.com', public_opt_in: true }],
   'VSO-092': [{ name: 'Gary Bent', email: 'gbent@vetpathne.org' }, { name: 'Wayne Dunham', email: 'wdunham@vetpathne.org' }],
   'VSO-093': [{ name: 'Joseph Mastrangelo Jr.', email: 'joe@veteransailing.com' }],
   'VSO-094': [{ name: 'Cynthia Langdon', email: 'cynthialangdon@veteransinc.org' }, { name: 'Jim Ricker', email: 'JimRicker@VeteransInc.org' }],
-  'VSO-095': [{ name: 'Zachary Phillips', email: 'zack@vljnh.org' }, { name: 'Larry Vogelman', email: 'vogelmanlarry@yahoo.com' }],
+  'VSO-095': [{ name: 'Zachary Phillips', email: 'zack@vljnh.org' }, { name: 'Larry Vogelman', email: '', public_opt_in: false }],
   'VSO-096': [{ name: 'Michael York', email: 'michael.york@veteransonthe48.org' }],
   'VSO-097': [{ name: "Rae O'Donnell", email: 'Rae@VRANH.org' }],
   'VSO-098': [{ name: 'Brianna Renner', email: 'brianna@veteransyogaproject.org' }],
-  'VSO-099': [{ name: 'Chuck Bradley', email: 'veterans2veteransgroup@gmail.com' }, { name: 'Eric McNail', email: 'veterans2veteransgroup@gmail.com' }],
-  'VSO-100': [{ name: 'Bill Kingston', email: 'DC9guy@comcast.net' }],
-  'VSO-101': [{ name: 'Paul Lloyd', email: 'pjl64@comcast.net' }],
+  'VSO-099': [{ name: 'Chuck Bradley', email: 'veterans2veteransgroup@gmail.com', public_opt_in: true }, { name: 'Eric McNail', email: 'veterans2veteransgroup@gmail.com', public_opt_in: true }],
+  'VSO-100': [{ name: 'Bill Kingston', email: '', public_opt_in: false }],
+  'VSO-101': [{ name: 'Paul Lloyd', email: '', public_opt_in: false }],
   'VSO-102': [{ name: 'Steven Soule', email: 'STEVEN.SOULE@VFW.ORG' }],
   'VSO-103': [{ name: 'Morgan Morani', email: 'morgan@vouchersforveterans.org' }, { name: "Kelly O'Neil", email: 'kelly@vouchersforveterans.org' }],
-  'VSO-104': [{ name: 'Faith Harris', email: 'walkingwithhonor@gmail.com' }],
+  'VSO-104': [{ name: 'Faith Harris', email: 'walkingwithhonor@gmail.com', public_opt_in: true }],
   'VSO-105': [{ name: 'Lawrence "Tiger" Prentice (Founder & President)', email: 'tiger@walkwithtiger.org' }],
   'VSO-106': [{ name: 'Laura Sellards', email: 'laura@warriordogfoundation.org' }],
   'VSO-107': [{ name: 'Sean Rosario', email: 'srosario@warriorhealthfoundation.org' }],
   'VSO-108': [{ name: 'Kat Rogers', email: 'Kat@wildsoulserenity.com' }],
-  'VSO-109': [{ name: 'Michelle King', email: 'womenofgwot@gmail.com' }],
+  'VSO-109': [{ name: 'Michelle King', email: 'womenofgwot@gmail.com', public_opt_in: true }],
   'VSO-110': [{ name: 'Brian Hansen', email: 'brianh@workerbeefund.org' }],
   'VSO-111': [{ name: 'Kandie Hale', email: 'khale@woundedwarriorproject.org' }, { name: 'Christian Lanman', email: 'clanman@woundedwarriorproject.org' }, { name: 'Bruce Laureiro', email: 'blaureiro@woundedwarriorproject.org' }],
-  'VSO-112': [{ name: 'Nancy Garnhart', email: 'nancygarnhart@gmail.com' }, { name: 'Michelle James', email: 'michelle.james@yogainaction.org' }, { name: 'Rochelle Jewell', email: 'rochelle.jewell@yogainaction.org' }, { name: 'Michelle Gonzales Verdi', email: 'michelleverdi@me.com' }]
+  'VSO-112': [{ name: 'Nancy Garnhart', email: '', public_opt_in: false }, { name: 'Michelle James', email: 'michelle.james@yogainaction.org' }, { name: 'Rochelle Jewell', email: 'rochelle.jewell@yogainaction.org' }, { name: 'Michelle Gonzales Verdi', email: '', public_opt_in: false }]
 };
+
+const PERSONAL_EMAIL_DOMAINS = new Set([
+  'gmail.com', 'yahoo.com', 'comcast.net', 'hotmail.com',
+  'outlook.com', 'me.com', 'aol.com', 'icloud.com',
+  'msn.com', 'live.com', 'ymail.com', 'protonmail.com'
+]);
+
+// Official organizational/chapter role inboxes hosted on free providers (approved to display publicly)
+const OFFICIAL_ORG_FREE_EMAILS = new Set([
+  'awarenh@gmail.com',
+  'u25carrollcounty@outlook.com',
+  'chasingzero22@gmail.com',
+  'danhealyfoundation@gmail.com',
+  'heropupsinc@yahoo.com',
+  'holidaycardsnh@gmail.com',
+  'cathybentwoodbridgehouse@gmail.com',
+  'nhvfwstateheadquarters@gmail.com',
+  'vfwnhmembership@gmail.com',
+  'newenglandrapidrecovery@gmail.com',
+  'presidentr2r@gmail.com',
+  'thelocalveteraninc@gmail.com',
+  'vetsreststop@gmail.com',
+  'veterans2veteransgroup@gmail.com',
+  'walkingwithhonor@gmail.com',
+  'womenofgwot@gmail.com',
+  'thehonorbear@gmail.com'
+]);
+
+const AUTHORIZED_BASELINE_FLYERS = new Set([
+  'walkwithtiger.pdf',
+  'The Honor Bear project.pdf',
+  'Swim_With_A_Mission_Flyer.svg'
+]);
+
+const BASELINE_VERIFIED_DATE = '2026-11-19';
+
+function isPersonalDomainEmail(email) {
+  const clean = String(email || '').trim().toLowerCase();
+  if (!clean || !clean.includes('@')) return false;
+  if (OFFICIAL_ORG_FREE_EMAILS.has(clean)) return false;
+  const dom = clean.split('@').pop();
+  return PERSONAL_EMAIL_DOMAINS.has(dom);
+}
+
+function scrubOrgForPublicOutput(org) {
+  const copy = JSON.parse(JSON.stringify(org));
+  const contacts = Array.isArray(copy.staff_contacts) ? copy.staff_contacts : [];
+  copy.staff_contacts = contacts.map(c => {
+    const entry = { ...c };
+    const lower = String(entry.email || '').trim().toLowerCase();
+    if (OFFICIAL_ORG_FREE_EMAILS.has(lower)) {
+      entry.public_opt_in = true;
+      return entry;
+    }
+    if (entry.email && isPersonalDomainEmail(entry.email) && entry.public_opt_in !== true) {
+      entry.email = '';
+      entry.public_opt_in = false;
+    }
+    return entry;
+  });
+
+  const lowerPrimary = String(copy.email || '').trim().toLowerCase();
+  if (OFFICIAL_ORG_FREE_EMAILS.has(lowerPrimary)) {
+    copy.public_opt_in = true;
+  } else if (copy.email && isPersonalDomainEmail(copy.email) && copy.public_opt_in !== true) {
+    const fallback = copy.staff_contacts.find(c => c.email && (!isPersonalDomainEmail(c.email) || c.public_opt_in === true));
+    copy.email = fallback ? fallback.email : '';
+    copy.public_opt_in = false;
+  } else if (!copy.email) {
+    const fallback = copy.staff_contacts.find(c => c.email && (!isPersonalDomainEmail(c.email) || c.public_opt_in === true));
+    if (fallback) copy.email = fallback.email;
+  }
+
+  if (copy.amplifier_doc) {
+    copy.media_authorized = typeof copy.media_authorized === 'boolean'
+      ? copy.media_authorized
+      : AUTHORIZED_BASELINE_FLYERS.has(copy.amplifier_doc);
+  } else {
+    copy.media_authorized = false;
+  }
+  return copy;
+}
 
 function resolveGeo(zip, city) {
   let cleanZip = String(zip || '').trim().replace(/[^0-9]/g, '');
@@ -341,15 +423,16 @@ function convertMasterRecord(rec, idx) {
     if (fs.existsSync(path.resolve('./walkwithtiger.pdf'))) ampDoc = 'walkwithtiger.pdf';
   }
 
-  return {
+  return scrubOrgForPublicOutput({
     id: vsoId.toLowerCase(), name: orgName, categories: mapCategories(rawCats, orgName, orgType),
     description: desc, address: parsed.address || rec.address || '', city: geo.city, zip: geo.zip,
     county: geo.county, region_id: geo.region_id, ...(geo.secondary_region_id ? { secondary_region_id: geo.secondary_region_id } : {}),
-    is_statewide: isStatewide, phone: phone, email: parsed.email || rec.email || (staffContacts[0]?.email || ''),
+    is_statewide: isStatewide, phone: phone, email: parsed.email || rec.email || (staffContacts.find(s => s.email)?.email || ''),
     website: rec.website_url || rec.website || '', branches: detectBranches(orgName, desc), verified_vso: true,
-    staff_contacts: staffContacts, last_verified: todayISO, source_url: rec.website_url || rec.website || 'https://www.nhveterans.nh.gov/',
-    amplifier_doc: ampDoc
-  };
+    staff_contacts: staffContacts, last_verified: rec.last_verified || BASELINE_VERIFIED_DATE, source_url: rec.website_url || rec.website || 'https://www.nhveterans.nh.gov/',
+    amplifier_doc: ampDoc,
+    media_authorized: Boolean(ampDoc && AUTHORIZED_BASELINE_FLYERS.has(ampDoc))
+  });
 }
 
 let finalOrganizations = [];
@@ -364,21 +447,23 @@ if (forceReset) {
   const converted = validMasterRecords.map((rec, idx) => convertMasterRecord(rec, idx));
 
   const honorBearGeo = resolveGeo('03247', 'Laconia');
-  const honorBearRecord = {
+  const honorBearRecord = scrubOrgForPublicOutput({
     id: 'the-honor-bear-project-laconia', name: 'The Honor Bear Project', categories: ['mental-health-wellness', 'recreation-outdoors'],
     description: "A 501(c)(3) non-profit charity hosting 'Flags for Forgotten Heroes' and providing ocean fishing trips for Veterans.",
     address: 'P.O. Box 7225', city: honorBearGeo.city, zip: honorBearGeo.zip, county: honorBearGeo.county, region_id: honorBearGeo.region_id,
-    is_statewide: false, phone: '(978) 828-7811', email: 'thehonorbear@gmail.com', website: 'https://www.thehonorbearproject.com',
-    branches: ['navy', 'coast-guard', 'all'], verified_vso: true, staff_contacts: [{ name: 'Kim Hebert (Founder & President)', email: 'thehonorbear@gmail.com' }],
-    last_verified: todayISO, source_url: 'https://www.thehonorbearproject.com', amplifier_doc: 'The Honor Bear project.pdf'
-  };
+    is_statewide: false, phone: '(978) 828-7811', email: 'thehonorbear@gmail.com', public_opt_in: true, website: 'https://www.thehonorbearproject.com',
+    branches: ['navy', 'coast-guard', 'all'], verified_vso: true, staff_contacts: [{ name: 'Kim Hebert (Founder & President)', email: 'thehonorbear@gmail.com', public_opt_in: true }],
+    last_verified: BASELINE_VERIFIED_DATE, source_url: 'https://www.thehonorbearproject.com', amplifier_doc: 'The Honor Bear project.pdf', media_authorized: true
+  });
 
   const map = new Map();
   for (const item of [...converted, honorBearRecord]) map.set(item.id, item);
   finalOrganizations = Array.from(map.values());
   fs.writeFileSync(LIVE_DB_PATH, JSON.stringify(finalOrganizations, null, 2), 'utf-8');
 } else {
-  finalOrganizations = JSON.parse(fs.readFileSync(LIVE_DB_PATH, 'utf-8')).filter(o => o.id !== 'vso-test-999');
+  finalOrganizations = JSON.parse(fs.readFileSync(LIVE_DB_PATH, 'utf-8'))
+    .filter(o => o.id !== 'vso-test-999')
+    .map(o => scrubOrgForPublicOutput(o));
 }
 
 const totalNamedContacts = finalOrganizations.reduce((acc, o) => acc + (o.staff_contacts ? o.staff_contacts.length : 0), 0);
@@ -1685,8 +1770,8 @@ const htmlContent = `<!DOCTYPE html>
 
         <div class="flex flex-col sm-row gap-2">
           <div class="relative flex-1">
-            <input id="search-input" type="text" enterkeyhint="search" autocomplete="off" oninput="onLiveSearchInput(this.value)" onkeydown="if(event.key==='Enter') runAiAssistantFromInput()" placeholder="Type ZIP (e.g. 03101, 03801), Town (Manchester, Laconia, Portsmouth), Region, or ask any question..." class="w-full pl-11 pr-4 py-3.5 rounded-xl text-slate-900 bg-slate-50 border text-sm font-medium" />
-            <svg width="20" height="20" class="search-input-icon w-5 h-5 text-slate-400 absolute left-3.5 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input id="search-input" type="text" aria-label="Search veteran resources by ZIP code, town, region, branch, or question" enterkeyhint="search" autocomplete="off" oninput="onLiveSearchInput(this.value)" onkeydown="if(event.key==='Enter') runAiAssistantFromInput()" placeholder="Type ZIP (e.g. 03101, 03801), Town (Manchester, Laconia, Portsmouth), Region, or ask any question..." class="w-full pl-11 pr-4 py-3.5 rounded-xl text-slate-900 bg-slate-50 border text-sm font-medium" />
+            <svg width="20" height="20" aria-hidden="true" class="search-input-icon w-5 h-5 text-slate-400 absolute left-3.5 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
           <button onclick="runAiAssistantFromInput()" class="bg-olive condensed-font uppercase font-extrabold px-5 py-3.5 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-1.5 shrink-0 shadow-sm">
             <span>✨</span> <span>Search / Ask AI</span>
@@ -1718,7 +1803,7 @@ const htmlContent = `<!DOCTYPE html>
                 <p id="ai-navigator-text" class="leading-relaxed text-slate-700" style="margin:0;"></p>
               </div>
             </div>
-            <button onclick="document.getElementById('ai-navigator-response').classList.add('hidden')" class="text-slate-500 font-bold cursor-pointer bg-white px-2 py-0.5 rounded border">✕</button>
+            <button type="button" aria-label="Dismiss AI navigator match summary" onclick="document.getElementById('ai-navigator-response').classList.add('hidden')" class="text-slate-500 font-bold cursor-pointer bg-white px-2 py-0.5 rounded border">✕</button>
           </div>
         </div>
       </div>
@@ -1834,7 +1919,7 @@ const htmlContent = `<!DOCTYPE html>
         </div>
         <div class="flex flex-wrap items-center gap-3">
           <div>
-            <label class="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-1" style="display:block;">Or Select NH County:</label>
+            <label for="county-select" class="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-1" style="display:block;">Or Select NH County:</label>
             <select id="county-select" onchange="onCountyChange()" class="rounded-xl border px-3 py-2 text-xs font-bold text-slate-800 bg-white shadow-sm">
               <option value="all">All 10 NH Counties</option>
             </select>
@@ -1892,6 +1977,13 @@ const htmlContent = `<!DOCTYPE html>
       <div>
         <p class="condensed-font font-extrabold text-white text-base uppercase" style="margin:0;"><span style="color:#D5AD36;">NH</span>VET411 • New Hampshire Verified Veteran &amp; VSO Resource Directory</p>
         <p class="mt-1 text-slate-300" style="margin:4px 0 0 0;">State-scalable veteran &amp; VSO directory • <span id="footer-total-vsos">${finalOrganizations.length}</span> Verified Organizations • <span id="footer-total-contacts">${totalNamedContacts}</span> Named VSO Contacts • All <span id="footer-total-counties">${populatedCounties.size}</span> NH Counties.</p>
+        <div class="flex flex-wrap items-center gap-3 mt-2 text-[11px] text-slate-300">
+          <button type="button" id="footer-terms-link" onclick="openLegalModal('terms')" class="text-slate-300 hover:underline font-semibold cursor-pointer" style="background:none; border:none; padding:0;">Terms &amp; Disclaimer</button>
+          <span aria-hidden="true">•</span>
+          <button type="button" id="footer-privacy-link" onclick="openLegalModal('privacy')" class="text-slate-300 hover:underline font-semibold cursor-pointer" style="background:none; border:none; padding:0;">Privacy Policy</button>
+          <span aria-hidden="true">•</span>
+          <button type="button" id="footer-dmca-link" onclick="openLegalModal('dmca')" class="text-slate-300 hover:underline font-semibold cursor-pointer" style="background:none; border:none; padding:0;">DMCA / Removal Request</button>
+        </div>
       </div>
       <div class="flex flex-wrap items-center gap-3 text-slate-300">
         <span>🚨 <strong>Crisis Line:</strong> <a href="tel:988" class="text-white font-bold hover:underline selectable-text">988 (Press 1)</a></span>
@@ -1912,23 +2004,23 @@ const htmlContent = `<!DOCTYPE html>
   </div>
 
   <!-- API KEY VAULT MODAL -->
-  <div id="apikey-modal" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4">
+  <div id="apikey-modal" role="dialog" aria-modal="true" aria-labelledby="apikey-modal-heading" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-      <button onclick="toggleApiKeyModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
-      <h3 class="text-base font-extrabold text-slate-900 mb-1" style="margin-top:0;">🔑 Secure Browser Key Vault</h3>
+      <button type="button" aria-label="Close API key modal" onclick="toggleApiKeyModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
+      <h3 id="apikey-modal-heading" class="text-base font-extrabold text-slate-900 mb-1" style="margin-top:0;">🔑 Secure Browser Key Vault</h3>
       <p class="text-xs text-slate-600 mb-4">Enter your Gemini API key to enable live semantic AI queries and <strong>unscripted Live Flyer auto-parsing</strong> via <em>gemini-3.8-flash</em>. Stored privately in your browser's localStorage and never exposed in code.</p>
-      <input type="password" id="api-key-input" placeholder="Paste Gemini API Key (AIzaSy...)" class="w-full rounded-xl border px-3.5 py-2.5 text-xs mb-3 bg-slate-50" />
+      <input type="password" id="api-key-input" aria-label="Gemini API Key" placeholder="Paste Gemini API Key (AIzaSy...)" class="w-full rounded-xl border px-3.5 py-2.5 text-xs mb-3 bg-slate-50" />
       <div class="flex justify-end gap-2">
-        <button onclick="clearApiKey()" class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-2.5 rounded-xl border cursor-pointer">Clear Key</button>
-        <button onclick="saveApiKey()" class="bg-navy text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">Save Vault Key</button>
+        <button type="button" onclick="clearApiKey()" class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-2.5 rounded-xl border cursor-pointer">Clear Key</button>
+        <button type="button" onclick="saveApiKey()" class="bg-navy text-white text-xs font-bold px-4 py-2.5 rounded-xl cursor-pointer">Save Vault Key</button>
       </div>
     </div>
   </div>
 
   <!-- UPLOAD / EDIT MODAL -->
-  <div id="submit-modal" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
+  <div id="submit-modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
     <div class="modal-frosted rounded-2xl w-full max-w-xl p-6 shadow-2xl relative my-8">
-      <button onclick="toggleSubmitModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
+      <button type="button" aria-label="Close upload and edit modal" onclick="toggleSubmitModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
       <div class="flex items-center gap-2 mb-1">
         <span class="bg-emerald-100 text-emerald-800 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">Zero-Data-Entry AI Portal</span>
         <h3 id="modal-heading" class="text-base font-extrabold text-slate-900" style="margin:0;">Upload a Flyer or Suggest an Edit</h3>
@@ -1953,7 +2045,7 @@ const htmlContent = `<!DOCTYPE html>
 
       <form id="vso-submission-form" onsubmit="handleVsoSubmit(event)" class="space-y-3">
         <div id="existing-org-box" class="hidden">
-          <label class="text-xs font-bold text-slate-700 mb-1" style="display:block;">Select Existing VSO Organization:</label>
+          <label for="amp-org-select" class="text-xs font-bold text-slate-700 mb-1" style="display:block;">Select Existing VSO Organization:</label>
           <select id="amp-org-select" onchange="onExistingOrgSelected(this.value)" class="w-full rounded-xl border px-3 py-2 text-xs font-semibold bg-white"></select>
         </div>
 
@@ -1961,7 +2053,7 @@ const htmlContent = `<!DOCTYPE html>
         <div id="add-contact-target-banner" class="hidden rounded-xl p-3.5 text-xs shadow-sm" style="background-color:#F7F0D6; border:2px solid #D5AD36; color:#181916;"></div>
 
         <div class="border-2 border-dashed border-blue-300 bg-blue-50/70 rounded-2xl p-4 text-center">
-          <label id="sub-file-drop-label" class="text-xs font-bold text-blue-950 mb-1" style="display:block;">Drop VSO Flyer or Business Card (PDF, PNG, JPG, SVG)</label>
+          <label for="sub-file" id="sub-file-drop-label" class="text-xs font-bold text-blue-950 mb-1" style="display:block;">Drop VSO Flyer or Business Card (PDF, PNG, JPG, SVG)</label>
           <input type="file" id="sub-file" accept=".pdf,.png,.jpg,.jpeg,.webp,.svg" onchange="onFlyerSelected()" class="w-full text-xs text-slate-600 cursor-pointer bg-white p-2 rounded-lg border" />
           <div id="ai-parse-banner" class="hidden mt-3 p-2.5 bg-emerald-100 border border-emerald-300 text-emerald-950 rounded-lg text-[11px] font-bold"></div>
         </div>
@@ -1974,17 +2066,17 @@ const htmlContent = `<!DOCTYPE html>
 
         <div id="optional-fields-drawer" class="text-xs bg-slate-50/80 rounded-xl p-3.5 border space-y-2">
           <div id="org-name-field-wrap">
-            <input type="text" id="sub-name" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="w-full rounded-lg border px-3 py-2 text-xs font-semibold bg-white" placeholder="Organization Name" required />
+            <input type="text" id="sub-name" aria-label="Organization Name" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="w-full rounded-lg border px-3 py-2 text-xs font-semibold bg-white" placeholder="Organization Name" required />
           </div>
           <div id="org-geo-fields-row" class="flex flex-col sm-row gap-2">
-            <input type="text" id="sub-address" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Street / Venue" />
-            <input type="text" id="sub-city" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="NH City or 'Statewide'" />
-            <input type="text" id="sub-zip" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="ZIP Code" />
+            <input type="text" id="sub-address" aria-label="Street Address or Venue" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Street / Venue" />
+            <input type="text" id="sub-city" aria-label="New Hampshire City or Statewide" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="NH City or 'Statewide'" />
+            <input type="text" id="sub-zip" aria-label="ZIP Code" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="ZIP Code" />
           </div>
           <div id="contact-fields-row" class="flex flex-col sm-row gap-2">
-            <input type="text" id="sub-staff" oninput="syncPrimaryContactToParsedList()" class="flex-1 rounded-lg border px-3 py-2 text-xs font-semibold bg-white" placeholder="Contact Name &amp; Role (e.g. Jane Doe, Service Officer)" />
-            <input type="email" id="sub-email" oninput="syncPrimaryContactToParsedList(); checkDuplicateVsoFromForm();" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Contact Email Address" />
-            <input type="text" id="sub-phone" oninput="syncPrimaryContactToParsedList(); checkDuplicateVsoFromForm();" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Phone Number / Ext" />
+            <input type="text" id="sub-staff" aria-label="Primary Contact Name and Role" oninput="syncPrimaryContactToParsedList()" class="flex-1 rounded-lg border px-3 py-2 text-xs font-semibold bg-white" placeholder="Contact Name &amp; Role (e.g. Jane Doe, Service Officer)" />
+            <input type="email" id="sub-email" aria-label="Primary Contact Email Address" oninput="syncPrimaryContactToParsedList(); checkDuplicateVsoFromForm();" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Contact Email Address" />
+            <input type="text" id="sub-phone" aria-label="Primary Phone Number" oninput="syncPrimaryContactToParsedList(); checkDuplicateVsoFromForm();" onblur="checkDuplicateVsoFromForm()" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Phone Number / Ext" />
           </div>
 
           <!-- MULTI-CONTACT PARSED / EDITABLE ROSTER LIST -->
@@ -1997,18 +2089,26 @@ const htmlContent = `<!DOCTYPE html>
           </div>
 
           <div id="org-extra-fields-wrap" class="space-y-2 pt-1">
-            <input type="url" id="sub-website" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="w-full rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Website URL (https://...)" />
-            <textarea id="sub-desc" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" rows="2" class="w-full rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Service description &amp; mission..."></textarea>
+            <input type="url" id="sub-website" aria-label="Organization Website URL" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" class="w-full rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Website URL (https://...)" />
+            <textarea id="sub-desc" aria-label="Service Description and Mission" oninput="checkDuplicateVsoFromForm()" onblur="checkDuplicateVsoFromForm()" rows="2" class="w-full rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Service description &amp; mission..."></textarea>
           </div>
 
           <!-- OPTIONAL SUBMITTER INFO FOR PUBLIC WIKI EDITS -->
           <div id="submitter-info-row" class="pt-2 border-t space-y-1.5">
             <div class="text-[11px] font-bold text-slate-700">Your Info (Optional — helps moderators verify or follow up with you):</div>
             <div class="flex flex-col sm-row gap-2">
-              <input type="text" id="sub-submitter-name" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Your Name / Organization (Optional)" />
-              <input type="email" id="sub-submitter-email" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Your Email (Optional — for status updates)" />
+              <input type="text" id="sub-submitter-name" aria-label="Your Name or Organization (Optional)" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Your Name / Organization (Optional)" />
+              <input type="email" id="sub-submitter-email" aria-label="Your Email for Status Updates (Optional)" class="flex-1 rounded-lg border px-3 py-2 text-xs bg-white" placeholder="Your Email (Optional — for status updates)" />
             </div>
           </div>
+        </div>
+
+        <div class="rounded-xl p-3 border bg-white text-xs text-slate-800">
+          <label for="sub-license-checkbox" class="flex items-start gap-2 cursor-pointer leading-snug">
+            <input type="checkbox" id="sub-license-checkbox" onchange="if(this.checked && document.getElementById('sub-license-error')) document.getElementById('sub-license-error').classList.add('hidden')" required class="mt-0.5 shrink-0 cursor-pointer" />
+            <span>I confirm I am authorized to share this information and any attached files, and I grant NHVet411 a non-exclusive license to display them publicly.</span>
+          </label>
+          <div id="sub-license-error" class="hidden mt-1.5 text-[11px] font-bold" style="color:#991B1B;">Please check the authorization box above before submitting.</div>
         </div>
 
         <div class="pt-2 flex justify-end gap-2">
@@ -2021,13 +2121,13 @@ const htmlContent = `<!DOCTYPE html>
   </div>
 
   <!-- MODERATOR REVIEW QUEUE & HISTORY MODAL -->
-  <div id="review-queue-modal" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
+  <div id="review-queue-modal" role="dialog" aria-modal="true" aria-labelledby="review-queue-heading" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
     <div class="modal-frosted rounded-2xl w-full p-6 shadow-2xl relative my-8">
-      <button onclick="toggleReviewQueueModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
+      <button type="button" aria-label="Close moderator review queue modal" onclick="toggleReviewQueueModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
       <div class="flex flex-wrap items-center justify-between gap-3 mb-3" style="padding-right: 2.75rem;">
         <div>
           <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">NHVET411 MODERATION</span>
-          <h3 class="text-lg font-extrabold text-slate-900 mt-1" style="margin-bottom:0;">🔔 VSO Approval Workspace</h3>
+          <h3 id="review-queue-heading" class="text-lg font-extrabold text-slate-900 mt-1" style="margin-bottom:0;">🔔 VSO Approval Workspace</h3>
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <div class="inline-flex items-center gap-1 bg-slate-100 p-1 rounded-xl border">
@@ -2047,14 +2147,14 @@ const htmlContent = `<!DOCTYPE html>
   </div>
 
   <!-- MODERATOR LOGIN, PASSWORD RESET & ACCOUNT MODAL -->
-  <div id="mod-auth-modal" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
+  <div id="mod-auth-modal" role="dialog" aria-modal="true" aria-labelledby="mod-auth-heading" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto">
     <div class="modal-frosted rounded-2xl w-full max-w-md p-6 shadow-2xl relative my-8">
-      <button onclick="toggleModAuthModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
+      <button type="button" aria-label="Close moderator account modal" onclick="toggleModAuthModal(false)" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
 
       <!-- VIEW 1: EMAIL + PASSWORD LOGIN -->
       <div id="mod-auth-view-login">
         <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">MODERATOR PORTAL</span>
-        <h3 class="text-lg font-extrabold text-slate-900 mt-1 mb-1">🔐 Moderator Sign In</h3>
+        <h3 id="mod-auth-heading" class="text-lg font-extrabold text-slate-900 mt-1 mb-1">🔐 Moderator Sign In</h3>
         <p class="text-xs text-slate-600 mb-4">Sign in with your approved NHVet411 moderator email and password to review VSO edits or apply live directory updates.</p>
         <form onsubmit="handleModeratorLoginSubmit(event)" class="space-y-3">
           <div>
@@ -2126,9 +2226,9 @@ const htmlContent = `<!DOCTYPE html>
         </div>
         <form onsubmit="handleSetNewPasswordSubmit(event, false)" class="pt-3 border-t space-y-2.5">
           <div class="text-xs font-extrabold text-slate-900">Change Your Password (Strong Criteria Required)</div>
-          <input type="password" id="mod-change-pw-new" oninput="updatePasswordChecklistUi('mod-change-pw-new', 'mod-change-pw-checklist')" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2 text-xs bg-white" placeholder="New strong password (12+ chars)" />
+          <input type="password" id="mod-change-pw-new" aria-label="New Moderator Password" oninput="updatePasswordChecklistUi('mod-change-pw-new', 'mod-change-pw-checklist')" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2 text-xs bg-white" placeholder="New strong password (12+ chars)" />
           <div id="mod-change-pw-checklist" class="flex flex-wrap gap-1.5"></div>
-          <input type="password" id="mod-change-pw-confirm" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2 text-xs bg-white" placeholder="Confirm new password" />
+          <input type="password" id="mod-change-pw-confirm" aria-label="Confirm New Moderator Password" autocomplete="new-password" required class="w-full rounded-xl border px-3.5 py-2 text-xs bg-white" placeholder="Confirm new password" />
           <div class="flex justify-end">
             <button type="submit" id="mod-change-pw-submit-btn" class="bg-navy text-white text-xs font-extrabold px-4 py-2 rounded-xl cursor-pointer">🔒 Update Password</button>
           </div>
@@ -2140,13 +2240,56 @@ const htmlContent = `<!DOCTYPE html>
   </div>
 
   <!-- AMPLIFIER LIGHTBOX MODAL -->
-  <div id="amplifier-modal" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4">
+  <div id="amplifier-modal" role="dialog" aria-modal="true" aria-labelledby="amp-modal-title" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl w-full max-w-4xl flex flex-col shadow-2xl overflow-hidden" style="max-height:90vh;">
       <div class="flex items-center justify-between px-5 py-3 bg-navy text-white">
         <h3 id="amp-modal-title" class="text-sm font-extrabold" style="margin:0;">Amplifier Brochure / Business Card</h3>
-        <button onclick="closeAmplifierModal()" class="text-white font-bold text-xs py-1.5 px-3 bg-glass rounded cursor-pointer">✕ Close</button>
+        <button type="button" aria-label="Close flyer viewer modal" onclick="closeAmplifierModal()" class="text-white font-bold text-xs py-1.5 px-3 bg-glass rounded cursor-pointer">✕ Close</button>
       </div>
       <div id="amp-modal-body" class="p-4 flex-1 bg-slate-100 flex items-center justify-center" style="min-height:420px; overflow:auto;"></div>
+    </div>
+  </div>
+
+  <!-- ACCESSIBLE LEGAL, PRIVACY & DMCA / REMOVAL MODAL -->
+  <div id="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto" onclick="if(event.target===this) closeLegalModal()">
+    <div class="modal-frosted rounded-2xl w-full max-w-xl p-6 shadow-2xl relative my-8">
+      <button type="button" id="legal-modal-close-btn" aria-label="Close legal information modal" onclick="closeLegalModal()" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
+      <div class="mb-3" style="padding-right:2.5rem;">
+        <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">LEGAL, PRIVACY &amp; REMOVAL POLICY</span>
+        <h3 id="legal-modal-title" class="text-lg font-extrabold text-slate-900 mt-1" style="margin-bottom:0;">NHVet411 Directory Policies</h3>
+        <p class="text-[11px] text-slate-600 mt-0.5" style="margin-bottom:0;">Operated by <strong>NHVet411 (Independent New Hampshire Veteran Resource Project)</strong> • Contact: <a href="mailto:admin@nhvet411.org" class="text-blue-700 font-bold hover:underline selectable-text">admin@nhvet411.org</a></p>
+      </div>
+
+      <div class="flex flex-wrap gap-1.5 mb-3 bg-slate-100/80 p-1.5 rounded-xl border" role="tablist" aria-label="Legal sections">
+        <button type="button" id="legal-tab-terms" role="tab" aria-selected="true" onclick="setLegalModalSection('terms')" class="flex-1 py-2 px-2.5 rounded-lg text-xs font-extrabold bg-olive text-white cursor-pointer">⚖️ Terms &amp; Disclaimer</button>
+        <button type="button" id="legal-tab-privacy" role="tab" aria-selected="false" onclick="setLegalModalSection('privacy')" class="flex-1 py-2 px-2.5 rounded-lg text-xs font-bold bg-white text-slate-700 border cursor-pointer">🔒 Privacy Policy</button>
+        <button type="button" id="legal-tab-dmca" role="tab" aria-selected="false" onclick="setLegalModalSection('dmca')" class="flex-1 py-2 px-2.5 rounded-lg text-xs font-bold bg-white text-slate-700 border cursor-pointer">📄 DMCA / Removal</button>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-800 leading-relaxed" style="max-height:62vh; overflow-y:auto;">
+        <section id="legal-panel-terms" role="tabpanel" aria-labelledby="legal-tab-terms" class="bg-white rounded-xl p-4 border space-y-2">
+          <h4 class="text-sm font-extrabold text-slate-900" style="margin:0;">Terms of Use &amp; Non-Endorsement Disclaimer</h4>
+          <p style="margin:0;"><strong>Informational Directory Only:</strong> NHVet411 is an independent community-maintained informational directory and does not provide medical, clinical, legal, financial, or emergency crisis services. If you or a loved one are in crisis or experiencing an emergency, call <strong>911</strong> or contact the <strong>24/7 Veterans Crisis Line by dialing <a href="tel:988" class="text-blue-700 font-bold hover:underline">988 (then Press 1)</a></strong> or texting <strong><a href="sms:838255" class="text-blue-700 font-bold hover:underline">838255</a></strong>.</p>
+          <p style="margin:0;"><strong>Non-Endorsement &amp; VA Accreditation Notice:</strong> Inclusion in NHVet411 does not constitute an endorsement, warranty, or affiliation with the U.S. Department of Veterans Affairs (VA) or the State of New Hampshire. Only organizations formally accredited under 38 C.F.R. § 14.629 are authorized to represent veterans on federal VA benefit claims. The <strong>&ldquo;✓ Checked YYYY-MM&rdquo;</strong> badge indicates only the month when public contact details were last checked active.</p>
+        </section>
+
+        <section id="legal-panel-privacy" role="tabpanel" aria-labelledby="legal-tab-privacy" class="hidden bg-white rounded-xl p-4 border space-y-2">
+          <h4 class="text-sm font-extrabold text-slate-900" style="margin:0;">Privacy Policy</h4>
+          <p style="margin:0;"><strong>No Ads, No Data Sales, No Veteran Accounts:</strong> NHVet411 does not run advertising, sell personal information, use behavioral tracking cookies, or require veterans to create accounts to browse or contact resources.</p>
+          <p style="margin:0;"><strong>Local Filtering vs. Optional AI Search:</strong> Typing in the search bar or clicking region, county, branch, and category filters runs locally in your browser. When you press <strong>Enter</strong> / click <strong>Search / Ask AI</strong> or upload a flyer for auto-parsing, only that submitted text or file is transmitted over encrypted HTTPS through our stateless Edge Function proxy (which applies short-lived IP rate limiting against abuse) to Google Gemini solely to match directory listings or extract form fields. NHVet411 does not store a database of veteran search queries.</p>
+          <p style="margin:0;"><strong>Directory Submissions &amp; Contact Opt-In:</strong> Optional submitter names and email addresses entered on the resource update form are used strictly for moderation verification and status updates. Individual personal-domain email addresses are suppressed from public listings unless authorized or opted in.</p>
+        </section>
+
+        <section id="legal-panel-dmca" role="tabpanel" aria-labelledby="legal-tab-dmca" class="hidden bg-white rounded-xl p-4 border space-y-2">
+          <h4 class="text-sm font-extrabold text-slate-900" style="margin:0;">DMCA Copyright &amp; Immediate Listing / Contact Removal Policy</h4>
+          <p style="margin:0;"><strong>Immediate Contact or Listing Removal:</strong> Any organization or individual who wishes to update or immediately remove a listed contact name, email address, phone number, organization listing, or attached flyer may email <strong><a href="mailto:admin@nhvet411.org?subject=NHVet411%20Removal%20or%20Update%20Request" class="text-blue-700 font-bold hover:underline selectable-text">admin@nhvet411.org</a></strong> with the organization/contact name and requested change. Good-faith removal requests are honored promptly.</p>
+          <p style="margin:0;"><strong>Copyright / DMCA Notices (17 U.S.C. § 512):</strong> NHVet411 respects intellectual property rights and displays third-party flyers only with authorization or submitter license confirmation. If you believe any material on NHVet411 infringes your copyright, send a written notice identifying the copyrighted work, the specific listing or URL on NHVet411, your contact information, and a good-faith statement of unauthorized use to <strong><a href="mailto:admin@nhvet411.org?subject=DMCA%20Notice%20-%20NHVet411" class="text-blue-700 font-bold hover:underline selectable-text">admin@nhvet411.org</a></strong>.</p>
+        </section>
+      </div>
+
+      <div class="pt-3 mt-3 border-t flex justify-end">
+        <button type="button" onclick="closeLegalModal()" class="px-4 py-2 rounded-xl bg-navy text-white text-xs font-bold cursor-pointer">Close</button>
+      </div>
     </div>
   </div>
 
@@ -2476,6 +2619,18 @@ const htmlContent = `<!DOCTYPE html>
       document.addEventListener('keydown', function(e) {
         if (e && e.key === 'Escape') {
           closeMobileHeaderDrawers();
+          const legalEl = document.getElementById('legal-modal');
+          if (legalEl && !legalEl.classList.contains('hidden')) closeLegalModal();
+          const ampEl = document.getElementById('amplifier-modal');
+          if (ampEl && !ampEl.classList.contains('hidden')) closeAmplifierModal();
+          const apiEl = document.getElementById('apikey-modal');
+          if (apiEl && !apiEl.classList.contains('hidden')) toggleApiKeyModal(false);
+          const subEl = document.getElementById('submit-modal');
+          if (subEl && !subEl.classList.contains('hidden')) toggleSubmitModal(false);
+          const modAuthEl = document.getElementById('mod-auth-modal');
+          if (modAuthEl && !modAuthEl.classList.contains('hidden')) toggleModAuthModal(false);
+          const rqEl = document.getElementById('review-queue-modal');
+          if (rqEl && !rqEl.classList.contains('hidden')) toggleReviewQueueModal(false);
         }
       });
 
@@ -2500,6 +2655,71 @@ const htmlContent = `<!DOCTYPE html>
       }
     }
 
+    const CLIENT_PERSONAL_EMAIL_DOMAINS = [
+      'gmail.com', 'yahoo.com', 'comcast.net', 'hotmail.com',
+      'outlook.com', 'me.com', 'aol.com', 'icloud.com',
+      'msn.com', 'live.com', 'ymail.com', 'protonmail.com'
+    ];
+    const CLIENT_OFFICIAL_ORG_FREE_EMAILS = [
+      'awarenh@gmail.com', 'u25carrollcounty@outlook.com', 'chasingzero22@gmail.com',
+      'danhealyfoundation@gmail.com', 'heropupsinc@yahoo.com', 'holidaycardsnh@gmail.com',
+      'cathybentwoodbridgehouse@gmail.com', 'nhvfwstateheadquarters@gmail.com',
+      'vfwnhmembership@gmail.com', 'newenglandrapidrecovery@gmail.com',
+      'presidentr2r@gmail.com', 'thelocalveteraninc@gmail.com', 'vetsreststop@gmail.com',
+      'veterans2veteransgroup@gmail.com', 'walkingwithhonor@gmail.com',
+      'womenofgwot@gmail.com', 'thehonorbear@gmail.com'
+    ];
+    const CLIENT_AUTHORIZED_BASELINE_FLYERS = [
+      'walkwithtiger.pdf', 'The Honor Bear project.pdf', 'Swim_With_A_Mission_Flyer.svg'
+    ];
+
+    function getPublicSafeEmail(rawEmail, publicOptIn) {
+      const em = String(rawEmail || '').trim();
+      if (!em || em.indexOf('@') === -1) return '';
+      const lower = em.toLowerCase();
+      if (publicOptIn === true || CLIENT_OFFICIAL_ORG_FREE_EMAILS.indexOf(lower) !== -1) return em;
+      const dom = lower.split('@').pop();
+      if (CLIENT_PERSONAL_EMAIL_DOMAINS.indexOf(dom) !== -1) return '';
+      return em;
+    }
+
+    let lastLegalModalTrigger = null;
+    function setLegalModalSection(section) {
+      const target = (section === 'privacy' || section === 'dmca') ? section : 'terms';
+      const sections = ['terms', 'privacy', 'dmca'];
+      const activeTabCls = 'flex-1 py-2 px-2.5 rounded-lg text-xs font-extrabold bg-olive text-white cursor-pointer';
+      const inactiveTabCls = 'flex-1 py-2 px-2.5 rounded-lg text-xs font-bold bg-white text-slate-700 border cursor-pointer';
+      sections.forEach(function(sec) {
+        const tab = document.getElementById('legal-tab-' + sec);
+        const panel = document.getElementById('legal-panel-' + sec);
+        const isCurrent = sec === target;
+        if (tab) {
+          tab.className = isCurrent ? activeTabCls : inactiveTabCls;
+          tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+        }
+        if (panel) panel.classList.toggle('hidden', !isCurrent);
+      });
+    }
+
+    function openLegalModal(section) {
+      lastLegalModalTrigger = (typeof document !== 'undefined' && document.activeElement) ? document.activeElement : null;
+      const modal = document.getElementById('legal-modal');
+      if (!modal) return;
+      setLegalModalSection(section || 'terms');
+      modal.classList.remove('hidden');
+      const closeBtn = document.getElementById('legal-modal-close-btn');
+      if (closeBtn && typeof closeBtn.focus === 'function') closeBtn.focus();
+    }
+
+    function closeLegalModal() {
+      const modal = document.getElementById('legal-modal');
+      if (modal) modal.classList.add('hidden');
+      if (lastLegalModalTrigger && typeof lastLegalModalTrigger.focus === 'function') {
+        lastLegalModalTrigger.focus();
+      }
+      lastLegalModalTrigger = null;
+    }
+
     function toggleMobileFilters() {
       const panel = document.getElementById('detailed-filter-panel');
       if (panel) panel.classList.toggle('hidden');
@@ -2516,9 +2736,15 @@ const htmlContent = `<!DOCTYPE html>
         ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(fullAddr)
         : '';
       const catNames = (org.categories || []).map(function(c) { return getCategoryName(c); }).join(', ');
-      const primaryEmail = org.email || ((org.staff_contacts && org.staff_contacts[0] && org.staff_contacts[0].email) ? org.staff_contacts[0].email : '');
+      const safeLeadEmail = (org.staff_contacts && org.staff_contacts[0])
+        ? getPublicSafeEmail(org.staff_contacts[0].email, org.staff_contacts[0].public_opt_in)
+        : '';
+      const primaryEmail = getPublicSafeEmail(org.email, org.public_opt_in) || safeLeadEmail;
       const contactsList = (org.staff_contacts && org.staff_contacts.length > 0)
-        ? org.staff_contacts.map(function(s) { return '  • ' + s.name + (s.email ? ' (' + s.email + ')' : ''); }).join('\\r\\n')
+        ? org.staff_contacts.map(function(s) {
+            const se = getPublicSafeEmail(s.email, s.public_opt_in);
+            return '  • ' + s.name + (se ? ' (' + se + ')' : '');
+          }).join('\\r\\n')
         : '  • Contact main office via phone or email above';
 
       const subject = 'NH Veteran Resource for You: ' + org.name + ' (' + (org.city || 'NH') + ')';
@@ -3592,7 +3818,10 @@ const htmlContent = `<!DOCTYPE html>
         const titleHtml = (hasActiveSearch && activeHighlights.length > 0) ? highlightText(org.name, activeHighlights) : escapeHtml(org.name);
         const descHtml = (hasActiveSearch && activeHighlights.length > 0) ? highlightText(org.description, activeHighlights) : escapeHtml(org.description);
 
-        const primaryEmail = org.email || ((org.staff_contacts && org.staff_contacts[0] && org.staff_contacts[0].email) ? org.staff_contacts[0].email : '');
+        const safeFirstContactEmail = (org.staff_contacts && org.staff_contacts[0])
+          ? getPublicSafeEmail(org.staff_contacts[0].email, org.staff_contacts[0].public_opt_in)
+          : '';
+        const primaryEmail = getPublicSafeEmail(org.email, org.public_opt_in) || safeFirstContactEmail;
         const emailMailto = primaryEmail ? ('mailto:' + primaryEmail + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
         const primaryEmailHtml = isEmailQ ? highlightText(primaryEmail, [rawQ]) : escapeHtml(primaryEmail);
         const cleanDigits = org.phone ? org.phone.replace(/[^0-9]/g, '') : '';
@@ -3622,11 +3851,12 @@ const htmlContent = `<!DOCTYPE html>
         }
         if (org.staff_contacts && org.staff_contacts.length > 0) {
           const lead = org.staff_contacts[0];
-          const leadMail = lead.email ? ('mailto:' + lead.email + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
-          const leadEmailHtml = lead.email ? (isEmailQ ? highlightText(lead.email, [rawQ]) : escapeHtml(lead.email)) : '';
+          const leadSafeEmail = getPublicSafeEmail(lead.email, lead.public_opt_in);
+          const leadMail = leadSafeEmail ? ('mailto:' + leadSafeEmail + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
+          const leadEmailHtml = leadSafeEmail ? (isEmailQ ? highlightText(leadSafeEmail, [rawQ]) : escapeHtml(leadSafeEmail)) : '';
           priorityRows += '<div class="contact-row">' +
             '<span class="text-slate-600 font-semibold flex items-center gap-1 shrink-0"><span>👤</span> <span>VSO Contact:</span></span>' +
-            '<span class="font-bold text-slate-800 text-right">' + escapeHtml(lead.name) + (lead.email ? ' (<a href="' + escapeHtml(leadMail) + '" class="selectable-text text-blue-700 hover:underline">' + leadEmailHtml + '</a>)' : '') + '</span>' +
+            '<span class="font-bold text-slate-800 text-right">' + escapeHtml(lead.name) + (leadSafeEmail ? ' (<a href="' + escapeHtml(leadMail) + '" class="selectable-text text-blue-700 hover:underline">' + leadEmailHtml + '</a>)' : '') + '</span>' +
           '</div>';
         }
 
@@ -3651,18 +3881,20 @@ const htmlContent = `<!DOCTYPE html>
           '<span>🤝</span> <span>Share with a Buddy (Email Full VSO Info)</span>' +
         '</a>';
 
-        const ampBtn = org.amplifier_doc
+        const canShowAmplifier = !!(org.amplifier_doc && org.media_authorized !== false);
+        const ampBtn = canShowAmplifier
           ? '<button onclick="openAmplifierModal(\\'' + org.id + '\\')" class="w-full text-center bg-amber-500 font-extrabold text-xs py-2.5 px-3 rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-sm border"><span>📄</span> <span>View Official Amplifier Flyer / Card</span></button>'
           : '';
 
         let contactsDrawer = '';
         if (org.staff_contacts && org.staff_contacts.length > 1) {
           const items = org.staff_contacts.map(function(s) {
-            const sMail = s.email ? ('mailto:' + s.email + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
-            const sEmailHtml = s.email ? (isEmailQ ? highlightText(s.email, [rawQ]) : escapeHtml(s.email)) : '';
+            const sSafeEmail = getPublicSafeEmail(s.email, s.public_opt_in);
+            const sMail = sSafeEmail ? ('mailto:' + sSafeEmail + '?subject=' + encodeURIComponent('Veteran Inquiry via NHVet411 — ' + org.name)) : '';
+            const sEmailHtml = sSafeEmail ? (isEmailQ ? highlightText(sSafeEmail, [rawQ]) : escapeHtml(sSafeEmail)) : '';
             return '<li class="flex items-center justify-between gap-2 py-1 border-b border-slate-100">' +
               '<span class="font-bold text-slate-800 selectable-text">' + escapeHtml(s.name) + '</span>' +
-              (s.email ? '<a href="' + escapeHtml(sMail) + '" class="selectable-text text-blue-700 font-semibold break-all hover:underline">✉️ ' + sEmailHtml + '</a>' : '') +
+              (sSafeEmail ? '<a href="' + escapeHtml(sMail) + '" class="selectable-text text-blue-700 font-semibold break-all hover:underline">✉️ ' + sEmailHtml + '</a>' : '') +
             '</li>';
           }).join('');
           contactsDrawer = '<details class="text-xs bg-slate-50 rounded-xl p-2.5 border">' +
@@ -3671,12 +3903,15 @@ const htmlContent = `<!DOCTYPE html>
           '</details>';
         }
 
+        const checkedYm = String(org.last_verified || '').slice(0, 7) || 'Active';
+        const checkedTooltip = 'Contact details checked active as of ' + checkedYm + '. Informational listing only; not VA accreditation or an endorsement.';
+
         return '<article id="vso-card-' + org.id + '" class="' + cardTypeClass + ' p-5 flex flex-col justify-between">' +
           '<div>' +
             '<div class="flex flex-wrap justify-between items-center gap-1 mb-2">' +
               '<span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ' + badgeClass + '">' + badge + '</span>' +
               '<div class="flex items-center gap-1">' +
-                '<span class="text-[10px] font-extrabold text-blue-900 bg-blue-50 px-2 py-0.5 rounded-full border">✓ Verified VSO</span>' +
+                '<span tabindex="0" title="' + escapeHtml(checkedTooltip) + '" aria-label="' + escapeHtml(checkedTooltip) + '" class="text-[10px] font-extrabold text-blue-900 bg-blue-50 px-2 py-0.5 rounded-full border">✓ Checked ' + escapeHtml(checkedYm) + '</span>' +
                 '<button onclick="openAddContactForOrg(\\'' + org.id + '\\')" class="text-[10px] font-extrabold text-slate-900 px-2 py-0.5 rounded border cursor-pointer" style="background-color:#F7F0D6; border-color:#D5AD36;" title="Add a contact or business card to this VSO">👤 + Contact</button>' +
                 '<button onclick="openEditModalForOrg(\\'' + org.id + '\\')" class="text-[10px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded border cursor-pointer">✏️ Edit</button>' +
               '</div>' +
@@ -4030,12 +4265,12 @@ const htmlContent = `<!DOCTYPE html>
       listEl.innerHTML = contacts.map(function(c, idx) {
         const isChecked = c.checked !== false;
         return '<div class="flex flex-wrap items-center gap-1.5 bg-white p-2 rounded-lg border shadow-sm">' +
-          '<input type="checkbox" ' + (isChecked ? 'checked' : '') + ' onchange="updateParsedContactField(' + idx + ', \\'checked\\', this.checked)" class="cursor-pointer" title="Include this contact when saving" />' +
-          '<input type="text" value="' + escapeHtml(c.name || '') + '" oninput="updateParsedContactField(' + idx + ', \\'name\\', this.value)" placeholder="Full Name" class="flex-1 rounded border px-2 py-1 text-[11px] font-semibold" style="min-width:110px;" />' +
-          '<input type="text" value="' + escapeHtml(c.role || '') + '" oninput="updateParsedContactField(' + idx + ', \\'role\\', this.value)" placeholder="Role / Title" class="flex-1 rounded border px-2 py-1 text-[11px]" style="min-width:95px;" />' +
-          '<input type="email" value="' + escapeHtml(c.email || '') + '" oninput="updateParsedContactField(' + idx + ', \\'email\\', this.value)" placeholder="Email" class="flex-1 rounded border px-2 py-1 text-[11px]" style="min-width:125px;" />' +
-          '<input type="text" value="' + escapeHtml(c.phone || '') + '" oninput="updateParsedContactField(' + idx + ', \\'phone\\', this.value)" placeholder="Direct Phone" class="rounded border px-2 py-1 text-[11px]" style="width:105px;" />' +
-          '<button type="button" onclick="removeParsedContactRow(' + idx + ')" class="text-[11px] font-bold text-slate-500 hover:text-slate-900 px-1.5 py-0.5 rounded bg-slate-100 cursor-pointer" title="Remove row">✕</button>' +
+          '<input type="checkbox" aria-label="Include contact row" ' + (isChecked ? 'checked' : '') + ' onchange="updateParsedContactField(' + idx + ', \\'checked\\', this.checked)" class="cursor-pointer" title="Include this contact when saving" />' +
+          '<input type="text" aria-label="Contact Full Name" value="' + escapeHtml(c.name || '') + '" oninput="updateParsedContactField(' + idx + ', \\'name\\', this.value)" placeholder="Full Name" class="flex-1 rounded border px-2 py-1 text-[11px] font-semibold" style="min-width:110px;" />' +
+          '<input type="text" aria-label="Contact Role or Title" value="' + escapeHtml(c.role || '') + '" oninput="updateParsedContactField(' + idx + ', \\'role\\', this.value)" placeholder="Role / Title" class="flex-1 rounded border px-2 py-1 text-[11px]" style="min-width:95px;" />' +
+          '<input type="email" aria-label="Contact Email" value="' + escapeHtml(c.email || '') + '" oninput="updateParsedContactField(' + idx + ', \\'email\\', this.value)" placeholder="Email" class="flex-1 rounded border px-2 py-1 text-[11px]" style="min-width:125px;" />' +
+          '<input type="text" aria-label="Contact Direct Phone" value="' + escapeHtml(c.phone || '') + '" oninput="updateParsedContactField(' + idx + ', \\'phone\\', this.value)" placeholder="Direct Phone" class="rounded border px-2 py-1 text-[11px]" style="width:105px;" />' +
+          '<button type="button" aria-label="Remove contact row" onclick="removeParsedContactRow(' + idx + ')" class="text-[11px] font-bold text-slate-500 hover:text-slate-900 px-1.5 py-0.5 rounded bg-slate-100 cursor-pointer" title="Remove row">✕</button>' +
         '</div>';
       }).join('');
     }
@@ -4202,14 +4437,14 @@ const htmlContent = `<!DOCTYPE html>
           '<div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">' + escapeHtml(c.label) + ' Differs:</div>' +
           '<div class="grid grid-cols-1 md-grid-cols-2 gap-2">' +
             '<label class="flex items-start gap-2 p-2 rounded-lg border cursor-pointer ' + (chosen === 'keep' ? 'bg-emerald-50 border-emerald-300' : 'bg-slate-50') + '">' +
-              '<input type="radio" name="conflict-' + c.key + '" value="keep" ' + (chosen === 'keep' ? 'checked' : '') + ' onchange="setConflictChoice(\\'' + c.key + '\\', \\'keep\\')" class="mt-0.5 cursor-pointer" />' +
+              '<input type="radio" aria-label="Keep current value" name="conflict-' + c.key + '" value="keep" ' + (chosen === 'keep' ? 'checked' : '') + ' onchange="setConflictChoice(\\'' + c.key + '\\', \\'keep\\')" class="mt-0.5 cursor-pointer" />' +
               '<div class="text-[11px] leading-snug">' +
                 '<div class="font-extrabold text-slate-900">Keep Current Value (Safe Default)</div>' +
                 '<div class="text-slate-700 break-all mt-0.5">' + escapeHtml(c.currentVal) + '</div>' +
               '</div>' +
             '</label>' +
             '<label class="flex items-start gap-2 p-2 rounded-lg border cursor-pointer ' + (chosen === 'uploaded' ? 'bg-amber-50 border-amber-300' : 'bg-slate-50') + '">' +
-              '<input type="radio" name="conflict-' + c.key + '" value="uploaded" ' + (chosen === 'uploaded' ? 'checked' : '') + ' onchange="setConflictChoice(\\'' + c.key + '\\', \\'uploaded\\')" class="mt-0.5 cursor-pointer" />' +
+              '<input type="radio" aria-label="Use uploaded or form value" name="conflict-' + c.key + '" value="uploaded" ' + (chosen === 'uploaded' ? 'checked' : '') + ' onchange="setConflictChoice(\\'' + c.key + '\\', \\'uploaded\\')" class="mt-0.5 cursor-pointer" />' +
               '<div class="text-[11px] leading-snug">' +
                 '<div class="font-extrabold text-slate-900">Use Uploaded / Form Value</div>' +
                 '<div class="text-slate-700 break-all mt-0.5">' + escapeHtml(c.uploadedVal) + '</div>' +
@@ -4390,6 +4625,10 @@ const htmlContent = `<!DOCTYPE html>
 
     function toggleSubmitModal(show) {
       document.getElementById('submit-modal').classList.toggle('hidden', !show);
+      const licBox = document.getElementById('sub-license-checkbox');
+      const licErr = document.getElementById('sub-license-error');
+      if (licBox) licBox.checked = false;
+      if (licErr) licErr.classList.add('hidden');
       if (show) {
         updateModeratorUi();
       } else {
@@ -5459,6 +5698,10 @@ const htmlContent = `<!DOCTYPE html>
           let modifiedExisting = false;
           if (incEmail && !existing.email) {
             existing.email = incEmail;
+            if (inc.public_opt_in === true) existing.public_opt_in = true;
+            modifiedExisting = true;
+          } else if (inc.public_opt_in === true && existing.public_opt_in !== true) {
+            existing.public_opt_in = true;
             modifiedExisting = true;
           }
           if (incName && incName.length > (existing.name || '').length && normalizeContactName(existing.name) === normIncName) {
@@ -5472,7 +5715,7 @@ const htmlContent = `<!DOCTYPE html>
           }
         } else {
           const finalName = incName || (targetOrg.name + ' Contact');
-          targetOrg.staff_contacts.push({ name: finalName, email: incEmail });
+          targetOrg.staff_contacts.push({ name: finalName, email: incEmail, public_opt_in: inc.public_opt_in === true });
           addedCount++;
           addedNames.push(finalName);
         }
@@ -5689,6 +5932,10 @@ const htmlContent = `<!DOCTYPE html>
             updatedFields.push('Amplifier Flyer');
           }
           targetOrg.amplifier_doc = ampSource;
+          targetOrg.media_authorized = payload.license_accepted !== false;
+        }
+        if (email && payload.license_accepted !== false) {
+          targetOrg.public_opt_in = true;
         }
 
         // 4. Contacts update: replace roster in Full Edit mode (allowing contact turnover), non-destructive merge otherwise
@@ -5702,7 +5949,8 @@ const htmlContent = `<!DOCTYPE html>
                 name: (c.name || (targetOrg.name + ' Contact')).trim(),
                 role: (c.role || '').trim(),
                 email: (c.email || '').trim(),
-                phone: (c.phone || '').trim()
+                phone: (c.phone || '').trim(),
+                public_opt_in: c.public_opt_in !== false && payload.license_accepted !== false
               };
             });
           const diff = computeContactsDiff(prevContacts, cleanRoster, true);
@@ -5751,7 +5999,8 @@ const htmlContent = `<!DOCTYPE html>
               name: (c.name || (name + ' Contact')).trim(),
               role: (c.role || '').trim(),
               email: (c.email || '').trim(),
-              phone: (c.phone || '').trim()
+              phone: (c.phone || '').trim(),
+              public_opt_in: c.public_opt_in !== false && payload.license_accepted !== false
             });
           }
         });
@@ -5761,12 +6010,13 @@ const htmlContent = `<!DOCTYPE html>
           name: name,
           categories: isSwam ? ['benefits-advocacy', 'financial-legal', 'service-animals-equine', 'mental-health-wellness', 'recreation-outdoors'] : ['mental-health-wellness', 'veterans-posts-community'],
           description: desc || ('Verified New Hampshire veteran organization serving ' + city + '.'),
-          address: address, city: city, zip: zip, county: county, region_id: region_id, is_statewide: isStatewide, phone: phone, email: email, website: website, branches: ['all'], verified_vso: true,
+          address: address, city: city, zip: zip, county: county, region_id: region_id, is_statewide: isStatewide, phone: phone, email: email, public_opt_in: payload.license_accepted !== false, website: website, branches: ['all'], verified_vso: true,
           staff_contacts: initialContacts,
           last_verified: new Date().toISOString().slice(0, 10),
           source_url: website || '',
           amplifier_doc: initialAmp,
-          amplifier_docs: initialAmp ? [initialAmp] : []
+          amplifier_docs: initialAmp ? [initialAmp] : [],
+          media_authorized: initialAmp ? (payload.license_accepted !== false) : false
         };
 
         return {
@@ -5893,25 +6143,32 @@ const htmlContent = `<!DOCTYPE html>
         ? row.staff_contacts
             .filter(function(c) { return c && (c.name || c.email || c.phone); })
             .map(function(c) {
+              const safeEmail = getPublicSafeEmail(c.email || '', c.public_opt_in);
               return {
                 name: formatContactWithRole(c.name || '', c.role || ''),
                 role: c.role || '',
-                email: c.email || '',
-                phone: c.phone || ''
+                email: safeEmail,
+                phone: c.phone || '',
+                public_opt_in: c.public_opt_in === true || CLIENT_OFFICIAL_ORG_FREE_EMAILS.indexOf(String(c.email || '').trim().toLowerCase()) !== -1
               };
             })
         : [];
       const ampUrls = [];
       if (Array.isArray(row.amplifier_docs)) {
         row.amplifier_docs.forEach(function(d) {
+          if (d && d.media_authorized === false) return;
           const u = (d && (d.public_url || d.storage_path)) || '';
           if (u && ampUrls.indexOf(u) === -1) ampUrls.push(u);
         });
       }
-      if (row.amplifier_doc && ampUrls.indexOf(row.amplifier_doc) === -1) {
+      if (row.amplifier_doc && row.media_authorized !== false && ampUrls.indexOf(row.amplifier_doc) === -1) {
         ampUrls.unshift(row.amplifier_doc);
       }
-      const primaryAmp = row.amplifier_doc || (ampUrls.length > 0 ? ampUrls[ampUrls.length - 1] : null);
+      const primaryAmp = (row.media_authorized === false) ? null : (row.amplifier_doc || (ampUrls.length > 0 ? ampUrls[ampUrls.length - 1] : null));
+      const mediaAuthorized = typeof row.media_authorized === 'boolean'
+        ? row.media_authorized
+        : !!(primaryAmp && (CLIENT_AUTHORIZED_BASELINE_FLYERS.indexOf(primaryAmp) !== -1 || /^https?:\\/\\//i.test(primaryAmp)));
+      const safePrimaryEmail = getPublicSafeEmail(row.email || '', row.public_opt_in) || ((contacts.find(function(c) { return !!c.email; }) || {}).email || '');
       return {
         id: row.id,
         name: row.name || '',
@@ -5925,7 +6182,8 @@ const htmlContent = `<!DOCTYPE html>
         secondary_region_id: row.secondary_region_id || null,
         is_statewide: !!row.is_statewide,
         phone: row.phone || '',
-        email: row.email || '',
+        email: safePrimaryEmail,
+        public_opt_in: row.public_opt_in === true || CLIENT_OFFICIAL_ORG_FREE_EMAILS.indexOf(String(row.email || '').trim().toLowerCase()) !== -1,
         website: row.website || '',
         branches: Array.isArray(row.branches) && row.branches.length > 0 ? row.branches : ['all'],
         verified_vso: row.verified_vso !== false,
@@ -5933,7 +6191,8 @@ const htmlContent = `<!DOCTYPE html>
         last_verified: row.last_verified || '',
         source_url: row.source_url || row.website || '',
         amplifier_doc: primaryAmp,
-        amplifier_docs: ampUrls
+        amplifier_docs: ampUrls,
+        media_authorized: mediaAuthorized
       };
     }
 
@@ -6529,6 +6788,17 @@ const htmlContent = `<!DOCTYPE html>
     // =========================================================================
     async function handleVsoSubmit(e) {
       if (e && e.preventDefault) e.preventDefault();
+      const licenseCheckbox = document.getElementById('sub-license-checkbox');
+      const licenseErr = document.getElementById('sub-license-error');
+      if (!licenseCheckbox || !licenseCheckbox.checked) {
+        if (licenseErr) licenseErr.classList.remove('hidden');
+        if (licenseCheckbox && typeof licenseCheckbox.focus === 'function') licenseCheckbox.focus();
+        showToast('⚠️ Please check the authorization box before submitting.');
+        return false;
+      }
+      if (licenseErr) licenseErr.classList.add('hidden');
+      const licenseAcceptedAt = new Date().toISOString();
+
       const name = document.getElementById('sub-name').value.trim();
       const address = document.getElementById('sub-address').value.trim();
       const rawCityInput = document.getElementById('sub-city').value.trim();
@@ -6565,7 +6835,9 @@ const htmlContent = `<!DOCTYPE html>
 
       const effectiveOrgName = targetOrg ? targetOrg.name : name;
       const isSwam = effectiveOrgName.toLowerCase().includes('swim with a mission') || effectiveOrgName.toLowerCase().includes('swam') || (targetOrg && targetOrg.id === 'swim-with-a-mission-bedford');
-      const incomingContacts = getEffectiveIncomingContacts(isSwam, staffName, email, effectiveOrgName);
+      const incomingContacts = getEffectiveIncomingContacts(isSwam, staffName, email, effectiveOrgName).map(function(c) {
+        return Object.assign({}, c, { public_opt_in: true });
+      });
 
       if (state.uploadMode === 'add-contact' && incomingContacts.length === 0) {
         showToast('⚠️ Please enter a contact name or email (or drop a business card) to add a contact.');
@@ -6609,7 +6881,9 @@ const htmlContent = `<!DOCTYPE html>
 
         const submissionPayload = {
           queueId: 'queue-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6),
-          submittedAt: new Date().toISOString(),
+          submittedAt: licenseAcceptedAt,
+          license_accepted: true,
+          license_accepted_at: licenseAcceptedAt,
           uploadMode: state.uploadMode,
           isMergeMode: isMergeMode,
           replaceContacts: replaceContacts,
@@ -7150,8 +7424,8 @@ const htmlContent = `<!DOCTYPE html>
             return '<div class="p-2 rounded-lg bg-slate-50 border text-[11px] space-y-1">' +
               '<div class="font-bold text-slate-800">' + escapeHtml(cf.label) + '</div>' +
               '<div class="flex flex-wrap gap-3">' +
-                '<label class="inline-flex items-center gap-1 cursor-pointer"><input type="radio" name="rq-cf-' + escapeHtml(item.id) + '-' + escapeHtml(cf.key) + '" ' + (curChoice === 'current' ? 'checked' : '') + ' onchange="setPendingConflictChoice(\\'' + escapeHtml(item.id) + '\\', \\'' + escapeHtml(cf.key) + '\\', \\'current\\')" /> Keep Current: <strong>' + escapeHtml(cf.currentVal) + '</strong></label>' +
-                '<label class="inline-flex items-center gap-1 cursor-pointer"><input type="radio" name="rq-cf-' + escapeHtml(item.id) + '-' + escapeHtml(cf.key) + '" ' + (curChoice === 'uploaded' ? 'checked' : '') + ' onchange="setPendingConflictChoice(\\'' + escapeHtml(item.id) + '\\', \\'' + escapeHtml(cf.key) + '\\', \\'uploaded\\')" /> Use Submitted: <strong>' + escapeHtml(cf.uploadedVal) + '</strong></label>' +
+                '<label class="inline-flex items-center gap-1 cursor-pointer"><input type="radio" aria-label="Keep current value" name="rq-cf-' + escapeHtml(item.id) + '-' + escapeHtml(cf.key) + '" ' + (curChoice === 'current' ? 'checked' : '') + ' onchange="setPendingConflictChoice(\\'' + escapeHtml(item.id) + '\\', \\'' + escapeHtml(cf.key) + '\\', \\'current\\')" /> Keep Current: <strong>' + escapeHtml(cf.currentVal) + '</strong></label>' +
+                '<label class="inline-flex items-center gap-1 cursor-pointer"><input type="radio" aria-label="Use submitted value" name="rq-cf-' + escapeHtml(item.id) + '-' + escapeHtml(cf.key) + '" ' + (curChoice === 'uploaded' ? 'checked' : '') + ' onchange="setPendingConflictChoice(\\'' + escapeHtml(item.id) + '\\', \\'' + escapeHtml(cf.key) + '\\', \\'uploaded\\')" /> Use Submitted: <strong>' + escapeHtml(cf.uploadedVal) + '</strong></label>' +
               '</div>' +
             '</div>';
           }).join('') +
@@ -7422,7 +7696,7 @@ const htmlContent = `<!DOCTYPE html>
 
     function openAmplifierModal(id) {
       const org = ORGANIZATIONS.find(function(o) { return o.id === id; });
-      if (!org || !org.amplifier_doc) return;
+      if (!org || !org.amplifier_doc || org.media_authorized === false) return;
       const docs = (Array.isArray(org.amplifier_docs) && org.amplifier_docs.length > 0) ? org.amplifier_docs : [org.amplifier_doc];
       const safeDocs = docs.map(sanitizeSafeMediaUrl).filter(Boolean);
       if (safeDocs.length === 0) return;

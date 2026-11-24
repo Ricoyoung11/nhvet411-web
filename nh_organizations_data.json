@@ -27,7 +27,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://51vets.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-002",
@@ -63,7 +64,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.603legalaid.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-003",
@@ -97,7 +99,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://aimingforzero.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-004",
@@ -132,7 +135,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://allsecurefoundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-005",
@@ -149,7 +153,7 @@
     "region_id": "merrimack-valley",
     "is_statewide": false,
     "phone": "",
-    "email": "iwont4gt@gmail.com",
+    "email": "",
     "website": "https://www.legionnh.org/",
     "branches": [
       "all"
@@ -158,12 +162,14 @@
     "staff_contacts": [
       {
         "name": "Linda Lambert",
-        "email": "iwont4gt@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.legionnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-006",
@@ -196,7 +202,8 @@
       },
       {
         "name": "Sharon Heser",
-        "email": "sheser@comcast.net"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Celeste Stimpson",
@@ -205,7 +212,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.redcross.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-007",
@@ -232,12 +240,15 @@
     "staff_contacts": [
       {
         "name": "Journey Ewell",
-        "email": "AWARENH@gmail.com"
+        "email": "AWARENH@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/AWARENH/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-008",
@@ -269,7 +280,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://arcnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-009",
@@ -300,7 +312,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://atlibertyconnections.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-010",
@@ -339,7 +352,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://azimuthcheckfoundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-011",
@@ -370,7 +384,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.badgerbasecamp.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-012",
@@ -400,7 +415,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://blueskyequestrianstables.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-013",
@@ -416,7 +432,7 @@
     "region_id": "merrimack-valley",
     "is_statewide": false,
     "phone": "(603) 228-1196",
-    "email": "aashishbalani27@gmail.com",
+    "email": "avarga@ccmusicschool.org",
     "website": "https://ccmusicschool.org/",
     "branches": [
       "all"
@@ -426,15 +442,12 @@
       {
         "name": "Anthony Varga",
         "email": "avarga@ccmusicschool.org"
-      },
-      {
-        "name": "Anthony Varga (Direct)",
-        "email": "aashishbalani27@gmail.com"
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://ccmusicschool.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-014",
@@ -474,7 +487,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://bridgecluboflowell.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-015",
@@ -504,7 +518,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://bdfm.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-016",
@@ -554,7 +569,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.camp-resilience.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-017",
@@ -584,7 +600,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://campsouthernground.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-018",
@@ -618,7 +635,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://candorful.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-019",
@@ -652,7 +670,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.nhveterans.nh.gov/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-020",
@@ -678,7 +697,8 @@
     "staff_contacts": [
       {
         "name": "Emily McArdle",
-        "email": "u25carrollcounty@outlook.com"
+        "email": "u25carrollcounty@outlook.com",
+        "public_opt_in": true
       },
       {
         "name": "Jennifer Thomas",
@@ -691,7 +711,9 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.graniteuw.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-021",
@@ -723,7 +745,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://cathedralofthepines.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-022",
@@ -758,7 +781,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.graniteuw.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-023",
@@ -789,7 +813,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://ironstonefarm.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-024",
@@ -814,12 +839,15 @@
     "staff_contacts": [
       {
         "name": "Chase Stanley",
-        "email": "chasingzero22@gmail.com"
+        "email": "chasingzero22@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.chasingzero22.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-025",
@@ -850,7 +878,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.ausa.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-026",
@@ -880,7 +909,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://crewshldgs.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-027",
@@ -896,7 +926,7 @@
     "region_id": "seacoast",
     "is_statewide": false,
     "phone": "(603) 436-2218",
-    "email": "elimcquade@gmail.com",
+    "email": "a.vorsteg@crossroadshouse.org",
     "website": "https://crossroadshouse.org/",
     "branches": [
       "all"
@@ -905,7 +935,8 @@
     "staff_contacts": [
       {
         "name": "Scott McQuade",
-        "email": "elimcquade@gmail.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Anna Kay Vorsteg",
@@ -914,7 +945,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://crossroadshouse.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-028",
@@ -956,7 +988,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://currier.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-029",
@@ -982,12 +1015,15 @@
     "staff_contacts": [
       {
         "name": "David Dexter",
-        "email": "danhealyfoundation@gmail.com"
+        "email": "danhealyfoundation@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://thedanhealyfoundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-030",
@@ -1026,7 +1062,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.nhveterans.nh.gov/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-031",
@@ -1058,7 +1095,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://davnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-032",
@@ -1101,7 +1139,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://dismashomenh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-033",
@@ -1161,7 +1200,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://vetscount.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-034",
@@ -1203,7 +1243,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://militaryveteranscampusnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-035",
@@ -1233,7 +1274,8 @@
       },
       {
         "name": "Marge Hart",
-        "email": "marge.hart188@gmail.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Kelly MacCorquodale",
@@ -1241,12 +1283,14 @@
       },
       {
         "name": "Tara Mahoney",
-        "email": "tmahoney.eip@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://equineimmersionfoundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-036",
@@ -1276,7 +1320,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://fireicefrogs.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-037",
@@ -1315,7 +1360,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://forgehealth.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-038",
@@ -1350,7 +1396,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.graniteuw.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-039",
@@ -1388,7 +1435,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://gnmhc.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-040",
@@ -1428,7 +1476,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://guardianrevival.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-041",
@@ -1500,7 +1549,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://harborcarenh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-042",
@@ -1525,16 +1575,20 @@
     "staff_contacts": [
       {
         "name": "Laura Barker",
-        "email": "heropupsinc@yahoo.com"
+        "email": "heropupsinc@yahoo.com",
+        "public_opt_in": true
       },
       {
         "name": "Selena Barker",
-        "email": "heropupsinc@yahoo.com"
+        "email": "heropupsinc@yahoo.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://heropups.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-043",
@@ -1566,7 +1620,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://heroesharvests.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-044",
@@ -1582,7 +1637,7 @@
     "region_id": "statewide",
     "is_statewide": true,
     "phone": "",
-    "email": "nonaalexander1@gmail.com",
+    "email": "leslie@plannedperfectly.net",
     "website": "https://hiddenbattles.org/",
     "branches": [
       "all"
@@ -1591,7 +1646,8 @@
     "staff_contacts": [
       {
         "name": "Nona Alexander",
-        "email": "nonaalexander1@gmail.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Leslie Cregg-Hyder",
@@ -1599,16 +1655,19 @@
       },
       {
         "name": "Scott Hyder",
-        "email": "blazrss@yahoo.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Matt Kowalski",
-        "email": "mkbfd43@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://hiddenbattles.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-045",
@@ -1639,7 +1698,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://highhorses.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-046",
@@ -1664,12 +1724,15 @@
     "staff_contacts": [
       {
         "name": "Laura Landerman-Garber",
-        "email": "holidaycardsnh@gmail.com"
+        "email": "holidaycardsnh@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://militaryholidaycardchallenge.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-047",
@@ -1703,7 +1766,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://homebase.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-048",
@@ -1733,7 +1797,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://hfotusa.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-049",
@@ -1749,7 +1814,7 @@
     "region_id": "merrimack-valley",
     "is_statewide": false,
     "phone": "(603) 518-5368",
-    "email": "tombyron38@gmail.com",
+    "email": "",
     "website": "https://honorflightnewengland.org/",
     "branches": [
       "all"
@@ -1758,12 +1823,14 @@
     "staff_contacts": [
       {
         "name": "Joseph \"Tom\" Byron",
-        "email": "tombyron38@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://honorflightnewengland.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-050",
@@ -1793,7 +1860,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://houndstownusa.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-051",
@@ -1824,12 +1892,14 @@
       },
       {
         "name": "Paul House",
-        "email": "me_guide@hotmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://houseinthewoods.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-052",
@@ -1863,7 +1933,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://irreverentwarriors.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-053",
@@ -1898,7 +1969,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://ksrnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-054",
@@ -1928,7 +2000,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://labyrinthts.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-055",
@@ -1944,7 +2017,7 @@
     "region_id": "lakes",
     "is_statewide": false,
     "phone": "",
-    "email": "1sgpeirce@gmail.com",
+    "email": "kwebber@camp-resilience.org",
     "website": "https://www.camp-resilience.org/",
     "branches": [
       "all"
@@ -1953,7 +2026,8 @@
     "staff_contacts": [
       {
         "name": "Chris Peirce",
-        "email": "1sgpeirce@gmail.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Kurt Webber",
@@ -1962,7 +2036,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.camp-resilience.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-056",
@@ -1994,7 +2069,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://lesslegmoreheart.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-057",
@@ -2033,7 +2109,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://libertyhousenh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-058",
@@ -2085,7 +2162,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.va.gov/manchester-health-care/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-059",
@@ -2114,12 +2192,14 @@
       },
       {
         "name": "Joshua Skinner",
-        "email": "joshuaskinner88@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://thevoicelibrary.net/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-060",
@@ -2136,7 +2216,7 @@
     "region_id": "seacoast",
     "is_statewide": false,
     "phone": "",
-    "email": "margolapointe33@gmail.com",
+    "email": "david.lee@unh.edu",
     "website": "https://extension.unh.edu/",
     "branches": [
       "all"
@@ -2145,7 +2225,8 @@
     "staff_contacts": [
       {
         "name": "Margo LaPointe",
-        "email": "margolapointe33@gmail.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "David Lee (UNH)",
@@ -2158,7 +2239,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://extension.unh.edu/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-061",
@@ -2193,7 +2275,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://mobiusmobility.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-062",
@@ -2233,7 +2316,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://naminh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-063",
@@ -2264,7 +2348,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://nashuacms.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-064",
@@ -2296,7 +2381,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://newenglandbattalion.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-065",
@@ -2331,7 +2417,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.veteranshome.nh.gov/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-066",
@@ -2364,7 +2451,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://nh.ng.mil/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-067",
@@ -2391,12 +2479,15 @@
     "staff_contacts": [
       {
         "name": "Catherine Bentwood",
-        "email": "cathybentwoodbridgehouse@gmail.com"
+        "email": "cathybentwoodbridgehouse@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://bridgehousenh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-068",
@@ -2423,20 +2514,25 @@
     "staff_contacts": [
       {
         "name": "Paul Lloyd (State HQ)",
-        "email": "nhvfwstateheadquarters@gmail.com"
+        "email": "nhvfwstateheadquarters@gmail.com",
+        "public_opt_in": true
       },
       {
         "name": "Darwin Beeman",
-        "email": "luckytwobealive@comcast.net"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Dennis Manning",
-        "email": "vfwnhmembership@gmail.com"
+        "email": "vfwnhmembership@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-069",
@@ -2452,7 +2548,7 @@
     "region_id": "white-mountains",
     "is_statewide": false,
     "phone": "",
-    "email": "balloontraveler@yahoo.com",
+    "email": "",
     "website": "https://northcountryveteransdental.org/",
     "branches": [
       "all"
@@ -2461,7 +2557,8 @@
     "staff_contacts": [
       {
         "name": "Linda Massimilla",
-        "email": "balloontraveler@yahoo.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Kathryn Cote",
@@ -2470,7 +2567,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://northcountryveteransdental.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-070",
@@ -2506,7 +2604,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://nepassage.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-071",
@@ -2548,7 +2647,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://operationdeltadog.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-072",
@@ -2579,7 +2679,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://ophighflight.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-073",
@@ -2609,7 +2710,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://overwatch.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-074",
@@ -2644,7 +2746,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://palservices.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-075",
@@ -2673,12 +2776,14 @@
       },
       {
         "name": "Sophia DeFrancesco",
-        "email": "sophie.defrancesco@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://playforheroes.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-076",
@@ -2696,7 +2801,7 @@
     "secondary_region_id": "lakes",
     "is_statewide": false,
     "phone": "(603) 535-5000",
-    "email": "sgmjim@gmail.com",
+    "email": "jenelson@plymouth.edu",
     "website": "https://www.plymouth.edu/",
     "branches": [
       "all"
@@ -2709,12 +2814,14 @@
       },
       {
         "name": "Jim Goss",
-        "email": "sgmjim@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.plymouth.edu/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-077",
@@ -2744,7 +2851,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://pphnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-078",
@@ -2769,12 +2877,15 @@
     "staff_contacts": [
       {
         "name": "Tina Michaud-Gray",
-        "email": "newenglandrapidrecovery@gmail.com"
+        "email": "newenglandrapidrecovery@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "http://www.newenglandrapidrecovery.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-079",
@@ -2805,7 +2916,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://reigninghoperanch.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-080",
@@ -2832,12 +2944,15 @@
     "staff_contacts": [
       {
         "name": "Rodney Anderson",
-        "email": "presidentr2r@gmail.com"
+        "email": "presidentr2r@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://rotorstoreels.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-081",
@@ -2868,7 +2983,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://shieldsandstripes.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-082",
@@ -2885,7 +3001,7 @@
     "region_id": "statewide",
     "is_statewide": true,
     "phone": "",
-    "email": "aashishbalani27@gmail.com",
+    "email": "",
     "website": "https://strongwaterfarm.org/",
     "branches": [
       "all"
@@ -2894,12 +3010,14 @@
     "staff_contacts": [
       {
         "name": "Shannon Giguere",
-        "email": "aashishbalani27@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://strongwaterfarm.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-083",
@@ -2917,7 +3035,7 @@
     "secondary_region_id": "lakes",
     "is_statewide": false,
     "phone": "",
-    "email": "sgmjim@gmail.com",
+    "email": "",
     "website": "https://studentveterans.org/",
     "branches": [
       "all"
@@ -2926,12 +3044,14 @@
     "staff_contacts": [
       {
         "name": "James Goss",
-        "email": "sgmjim@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://studentveterans.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-084",
@@ -2961,7 +3081,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://armymwr.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-085",
@@ -2993,7 +3114,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://homelandheroesfoundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-086",
@@ -3018,12 +3140,15 @@
     "staff_contacts": [
       {
         "name": "Jeff Barker",
-        "email": "thelocalveteraninc@gmail.com"
+        "email": "thelocalveteraninc@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://thelocalveteran.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-087",
@@ -3053,7 +3178,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://thehope-project.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-088",
@@ -3070,7 +3196,7 @@
     "region_id": "statewide",
     "is_statewide": true,
     "phone": "",
-    "email": "margolapointe33@gmail.com",
+    "email": "",
     "website": "https://toursofduty.org/",
     "branches": [
       "all"
@@ -3079,12 +3205,14 @@
     "staff_contacts": [
       {
         "name": "Margo LaPointe",
-        "email": "margolapointe33@gmail.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://toursofduty.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-089",
@@ -3115,7 +3243,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://upreachtec.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-090",
@@ -3145,7 +3274,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://valor1foundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-091",
@@ -3171,12 +3301,15 @@
     "staff_contacts": [
       {
         "name": "Cindy Simmons",
-        "email": "vetsreststop@gmail.com"
+        "email": "vetsreststop@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.vrsnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-092",
@@ -3212,7 +3345,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.veteranpathwaysne.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-093",
@@ -3244,7 +3378,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://veteransailing.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-094",
@@ -3279,7 +3414,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://veteransinc.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-095",
@@ -3308,12 +3444,14 @@
       },
       {
         "name": "Larry Vogelman",
-        "email": "vogelmanlarry@yahoo.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://vljnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-096",
@@ -3344,7 +3482,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://veteransonthe48.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-097",
@@ -3376,7 +3515,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://vrahelps.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-098",
@@ -3406,7 +3546,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://veteransyogaproject.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-099",
@@ -3431,16 +3572,20 @@
     "staff_contacts": [
       {
         "name": "Chuck Bradley",
-        "email": "veterans2veteransgroup@gmail.com"
+        "email": "veterans2veteransgroup@gmail.com",
+        "public_opt_in": true
       },
       {
         "name": "Eric McNail",
-        "email": "veterans2veteransgroup@gmail.com"
+        "email": "veterans2veteransgroup@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://veterans2veteransgroup.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-100",
@@ -3457,7 +3602,7 @@
     "region_id": "seacoast",
     "is_statewide": false,
     "phone": "(603) 973-5000",
-    "email": "DC9guy@comcast.net",
+    "email": "",
     "website": "https://vfw168.org/",
     "branches": [
       "all"
@@ -3466,12 +3611,14 @@
     "staff_contacts": [
       {
         "name": "Bill Kingston",
-        "email": "DC9guy@comcast.net"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://vfw168.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-101",
@@ -3488,7 +3635,7 @@
     "region_id": "merrimack-valley",
     "is_statewide": false,
     "phone": "(603) 228-8907",
-    "email": "pjl64@comcast.net",
+    "email": "",
     "website": "https://www.facebook.com/ConcordVeteransOfForeignWarsPost1631",
     "branches": [
       "all"
@@ -3497,12 +3644,14 @@
     "staff_contacts": [
       {
         "name": "Paul Lloyd",
-        "email": "pjl64@comcast.net"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/ConcordVeteransOfForeignWarsPost1631",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-102",
@@ -3534,7 +3683,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://vfw.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-103",
@@ -3569,7 +3719,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://vouchersforveterans.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-104",
@@ -3594,12 +3745,15 @@
     "staff_contacts": [
       {
         "name": "Faith Harris",
-        "email": "walkingwithhonor@gmail.com"
+        "email": "walkingwithhonor@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://walkingwithhonor.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-105",
@@ -3630,7 +3784,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://walkwithtiger.org/",
-    "amplifier_doc": "walkwithtiger.pdf"
+    "amplifier_doc": "walkwithtiger.pdf",
+    "media_authorized": true
   },
   {
     "id": "vso-106",
@@ -3661,7 +3816,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://warriordogfoundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-107",
@@ -3691,7 +3847,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://warriorhealthfoundation.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-108",
@@ -3721,7 +3878,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://wildsoulserenity.com/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-109",
@@ -3746,12 +3904,15 @@
     "staff_contacts": [
       {
         "name": "Michelle King",
-        "email": "womenofgwot@gmail.com"
+        "email": "womenofgwot@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://womenofgwot.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false,
+    "public_opt_in": true
   },
   {
     "id": "vso-110",
@@ -3781,7 +3942,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://workerbeefund.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-111",
@@ -3822,7 +3984,8 @@
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://woundedwarriorproject.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-112",
@@ -3847,7 +4010,8 @@
     "staff_contacts": [
       {
         "name": "Nancy Garnhart",
-        "email": "nancygarnhart@gmail.com"
+        "email": "",
+        "public_opt_in": false
       },
       {
         "name": "Michelle James",
@@ -3859,12 +4023,14 @@
       },
       {
         "name": "Michelle Gonzales Verdi",
-        "email": "michelleverdi@me.com"
+        "email": "",
+        "public_opt_in": false
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://yogainaction.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-113",
@@ -3890,7 +4056,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/VFWPOST483/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-114",
@@ -3915,7 +4082,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-115",
@@ -3940,7 +4108,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-116",
@@ -3965,7 +4134,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-117",
@@ -3990,7 +4160,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/vfwpost1088",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-118",
@@ -4015,7 +4186,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/DerryMemorialVFWPost1617",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-119",
@@ -4040,7 +4212,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-120",
@@ -4065,7 +4238,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-121",
@@ -4091,7 +4265,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-122",
@@ -4117,7 +4292,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/JohnWWeeksVFWPost3041",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-123",
@@ -4142,7 +4318,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-124",
@@ -4167,7 +4344,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-125",
@@ -4193,7 +4371,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-126",
@@ -4219,7 +4398,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfw4479.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-127",
@@ -4246,7 +4426,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-128",
@@ -4272,7 +4453,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-129",
@@ -4298,7 +4480,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-130",
@@ -4323,7 +4506,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-131",
@@ -4348,7 +4532,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-132",
@@ -4373,7 +4558,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfw5791.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-133",
@@ -4398,7 +4584,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-134",
@@ -4424,7 +4611,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-135",
@@ -4449,7 +4637,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-136",
@@ -4474,7 +4663,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-137",
@@ -4500,7 +4690,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-138",
@@ -4525,7 +4716,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-139",
@@ -4550,7 +4742,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-140",
@@ -4575,7 +4768,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/MerrimackVFW",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-141",
@@ -4600,7 +4794,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-142",
@@ -4626,7 +4821,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-143",
@@ -4651,7 +4847,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-144",
@@ -4676,7 +4873,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://www.facebook.com/PelhamVFW10722",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-145",
@@ -4702,7 +4900,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "https://vfwnh.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "vso-146",
@@ -4727,7 +4926,8 @@
     "staff_contacts": [],
     "last_verified": "2026-11-19",
     "source_url": "http://hollisvfw.org/",
-    "amplifier_doc": null
+    "amplifier_doc": null,
+    "media_authorized": false
   },
   {
     "id": "the-honor-bear-project-laconia",
@@ -4745,6 +4945,7 @@
     "is_statewide": false,
     "phone": "(978) 828-7811",
     "email": "thehonorbear@gmail.com",
+    "public_opt_in": true,
     "website": "https://www.thehonorbearproject.com",
     "branches": [
       "navy",
@@ -4755,11 +4956,13 @@
     "staff_contacts": [
       {
         "name": "Kim Hebert (Founder & President)",
-        "email": "thehonorbear@gmail.com"
+        "email": "thehonorbear@gmail.com",
+        "public_opt_in": true
       }
     ],
     "last_verified": "2026-11-19",
     "source_url": "https://www.thehonorbearproject.com",
-    "amplifier_doc": "The Honor Bear project.pdf"
+    "amplifier_doc": "The Honor Bear project.pdf",
+    "media_authorized": true
   }
 ]

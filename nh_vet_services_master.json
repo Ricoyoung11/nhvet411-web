@@ -85,7 +85,7 @@
         "Community Support",
         "Family Assistance"
       ],
-      "contact_info": "iwont4gt@gmail.com",
+      "contact_info": "",
       "organization_type": "Veterans Auxiliary Post",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -187,7 +187,7 @@
       "service_categories": [
         "Music Therapy & Expressive Arts"
       ],
-      "contact_info": "aashishbalani27@gmail.com",
+      "contact_info": "avarga@ccmusicschool.org",
       "organization_type": "Community Music Program",
       "checkin_status": "Included in Check-in",
       "matched_checkin_emails": "avarga@ccmusicschool.org"
@@ -361,7 +361,7 @@
       "service_categories": [
         "Emergency Housing & Shelter Support"
       ],
-      "contact_info": "elimcquade@gmail.com",
+      "contact_info": "",
       "organization_type": "Emergency Shelter",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -585,7 +585,7 @@
         "Suicide Prevention",
         "Peer Therapy"
       ],
-      "contact_info": "nonaalexander1@gmail.com",
+      "contact_info": "",
       "organization_type": "Nonprofit Organization",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -646,7 +646,7 @@
       "service_categories": [
         "Free Flights for Veterans to Memorials in Washington DC"
       ],
-      "contact_info": "tombyron38@gmail.com",
+      "contact_info": "",
       "organization_type": "Nonprofit Organization",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -719,10 +719,10 @@
       "service_categories": [
         "Community Health & Veteran Support Network"
       ],
-      "contact_info": "1sgpeirce@gmail.com",
+      "contact_info": "",
       "organization_type": "Regional Coalition",
       "checkin_status": "Included in Check-in",
-      "matched_checkin_emails": "1sgpeirce@gmail.com, jladieu@camp-resilience.org, sveinotte@camp-resilience.org"
+      "matched_checkin_emails": "jladieu@camp-resilience.org, sveinotte@camp-resilience.org"
     },
     {
       "id": "VSO-056",
@@ -784,10 +784,10 @@
       "service_categories": [
         "Support & Youth Programs for Military Children"
       ],
-      "contact_info": "margolapointe33@gmail.com",
+      "contact_info": "",
       "organization_type": "University Youth Program",
       "checkin_status": "Included in Check-in",
-      "matched_checkin_emails": "david.lee@unh.edu, margolapointe33@gmail.com, philip.brekke@unh.edu, tye.thompson@unh.edu"
+      "matched_checkin_emails": "david.lee@unh.edu, philip.brekke@unh.edu, tye.thompson@unh.edu"
     },
     {
       "id": "VSO-061",
@@ -900,7 +900,7 @@
       "service_categories": [
         "Free & Low-Cost Dental Care for Vets"
       ],
-      "contact_info": "balloontraveler@yahoo.com",
+      "contact_info": "",
       "organization_type": "Healthcare Program",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -987,7 +987,7 @@
         "GI Bill",
         "Career Coaching"
       ],
-      "contact_info": "sgmjim@gmail.com",
+      "contact_info": "",
       "organization_type": "University Military Office",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -1059,7 +1059,7 @@
       "service_categories": [
         "Equestrian Therapeutic Programs"
       ],
-      "contact_info": "aashishbalani27@gmail.com",
+      "contact_info": "",
       "organization_type": "Equine Therapy Center",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -1071,7 +1071,7 @@
       "service_categories": [
         "Student Veteran Peer Support & Campus Advocacy"
       ],
-      "contact_info": "sgmjim@gmail.com",
+      "contact_info": "",
       "organization_type": "Student Veteran Chapter",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -1134,10 +1134,10 @@
       "service_categories": [
         "Mental Health & Veteran Advocacy"
       ],
-      "contact_info": "margolapointe33@gmail.com",
+      "contact_info": "",
       "organization_type": "Nonprofit Organization",
       "checkin_status": "Included in Check-in",
-      "matched_checkin_emails": "margolapointe33@gmail.com"
+      "matched_checkin_emails": "None"
     },
     {
       "id": "VSO-089",
@@ -1291,7 +1291,7 @@
         "Community Post",
         "Meetings"
       ],
-      "contact_info": "DC9guy@comcast.net / (603) 973-5000 | 25 Cottage Street, Portsmouth, NH 03801",
+      "contact_info": "(603) 973-5000 | 25 Cottage Street, Portsmouth, NH 03801",
       "organization_type": "VFW Local Post",
       "checkin_status": "NOT Included in Check-in",
       "matched_checkin_emails": "None"
@@ -1305,10 +1305,10 @@
         "Community Post",
         "Meetings"
       ],
-      "contact_info": "pjl64@comcast.net / (603) 228-8907 | 6 Court Street, Concord, NH 03301",
+      "contact_info": "(603) 228-8907 | 6 Court Street, Concord, NH 03301",
       "organization_type": "VFW Local Post",
       "checkin_status": "Included in Check-in",
-      "matched_checkin_emails": "pjl64@comcast.net"
+      "matched_checkin_emails": "None"
     },
     {
       "id": "VSO-102",

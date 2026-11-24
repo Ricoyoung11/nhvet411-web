@@ -110,8 +110,15 @@ function createAppHarness({ fetchMock = null } = {}) {
   makeEl('review-queue-body');
   makeEl('rq-new-badge', { classes: ['hidden'] });
   makeEl('mod-auth-modal', { classes: ['hidden'] });
+  makeEl('apikey-modal', { classes: ['hidden'] });
   makeEl('submit-modal', { classes: ['hidden'] });
   makeEl('amplifier-modal', { classes: ['hidden'] });
+  makeEl('legal-modal', { classes: ['hidden'] });
+  makeEl('legal-panel-terms');
+  makeEl('legal-panel-privacy', { classes: ['hidden'] });
+  makeEl('legal-panel-dmca', { classes: ['hidden'] });
+  makeEl('sub-license-checkbox', { checked: false });
+  makeEl('sub-license-error', { classes: ['hidden'] });
   makeEl('sub-success', { classes: ['hidden'] });
   makeEl('ai-parse-banner', { classes: ['hidden'] });
   makeEl('parsed-contacts-list');
@@ -134,6 +141,7 @@ function createAppHarness({ fetchMock = null } = {}) {
   const domListeners = {};
   const document = {
     hidden: false,
+    body: makeEl('body'),
     getElementById(id) {
       if (!elements.has(id)) makeEl(id);
       return elements.get(id);
@@ -237,7 +245,7 @@ function createAppHarness({ fetchMock = null } = {}) {
   // Trigger initial render
   vm.runInContext('renderDirectory()', ctx);
 
-  return { ctx, document, localStorage, sessionStorage, historyCalls, getRenderedCards, html };
+  return { ctx, document, domListeners, localStorage, sessionStorage, historyCalls, getRenderedCards, html };
 }
 
 test('1. Baseline data integrity: 147 orgs, RYoung28 removed, shared emails preserved, SWAM/Angers excluded', () => {
@@ -452,13 +460,13 @@ test('7. Gemini API model chain uses gemini-3.5-flash-lite -> gemini-4-hydrogen,
 test('8. Shared POC emails return EVERY organization sharing that email (including org.email & staff_contacts)', async () => {
   const { ctx, document, getRenderedCards } = createAppHarness();
 
-  // Shared across 2 orgs
-  document.getElementById('search-input').value = 'sgmjim@gmail.com';
+  // Official POC email shared across 2 orgs (Camp Resilience & Lakes Region Veterans Coalition)
+  document.getElementById('search-input').value = 'kwebber@camp-resilience.org';
   await ctx.runAiAssistantFromInput();
   let ids = getRenderedCards().map(c => c.id);
-  assert.deepEqual(ids.sort(), ['vso-076', 'vso-083']);
-  assert.ok(getRenderedCards()[0].html.includes('href="mailto:sgmjim@gmail.com?subject='), 'mailto href must stay intact');
-  assert.ok(getRenderedCards()[0].html.includes('<mark class="search-hl">sgmjim@gmail.com</mark>'), 'Email text should highlight inline');
+  assert.deepEqual(ids.sort(), ['vso-016', 'vso-055']);
+  assert.ok(getRenderedCards().some(c => c.html.includes('href="mailto:kwebber@camp-resilience.org?subject=')), 'mailto href must stay intact');
+  assert.ok(getRenderedCards().some(c => c.html.includes('<mark class="search-hl">kwebber@camp-resilience.org</mark>')), 'Email text should highlight inline');
 
   // Shared across 3 orgs
   document.getElementById('search-input').value = 'amckenna@eastersealsnh.org';
@@ -723,13 +731,20 @@ test('14. Public visitor security lockout & Supabase pending_submissions routing
   assert.equal(document.getElementById('review-queue-modal').classList.contains('hidden'), true, 'Review modal stays closed for public');
   assert.equal(document.getElementById('mod-auth-modal').classList.contains('hidden'), false, 'Redirects public user to Moderator Login modal');
 
-  // Public edit + flyer upload routes to Storage + pending_submissions with Prefer: return=minimal
+  // Public edit + flyer upload requires license checkbox, then routes to Storage + pending_submissions with Prefer: return=minimal
   ctx.openEditModalForOrg('vso-030');
   document.getElementById('sub-phone').value = '(603) 555-9999';
   document.getElementById('sub-submitter-name').value = 'VSO Officer Pat';
   document.getElementById('sub-submitter-email').value = 'pat@vso.org';
   vm.runInContext('state.uploadedFileObj = { name: "new-card.png", type: "image/png", size: 2048 }; state.uploadedFileName = "new-card.png";', ctx);
 
+  // Unchecked license box must block submission with zero network calls
+  assert.equal(document.getElementById('sub-license-checkbox').checked, false);
+  assert.equal(await ctx.handleVsoSubmit({ preventDefault() {} }), false);
+  assert.equal(calls.length, 0, 'Must NOT upload flyer or POST submission before license checkbox is checked');
+
+  // Checking license box enables submission and attaches license_accepted + license_accepted_at
+  document.getElementById('sub-license-checkbox').checked = true;
   await ctx.handleVsoSubmit({ preventDefault() {} });
 
   const storageCall = calls.find(c => c.url.includes('/storage/v1/object/vso-flyers/submissions/'));
@@ -742,6 +757,8 @@ test('14. Public visitor security lockout & Supabase pending_submissions routing
   assert.equal(submitted.target_org_id, 'vso-030');
   assert.equal(submitted.submitter_name, 'VSO Officer Pat');
   assert.equal(submitted.submitter_email, 'pat@vso.org');
+  assert.equal(submitted.payload.license_accepted, true, 'Submission payload must record license_accepted: true');
+  assert.ok(/^\d{4}-\d{2}-\d{2}T/.test(submitted.payload.license_accepted_at), 'Submission payload must record ISO license_accepted_at');
   assert.ok(submitted.payload.flyerMeta.url.includes('/storage/v1/object/public/vso-flyers/submissions/'));
 
   // Live directory must remain untouched before moderator approval
@@ -1122,6 +1139,7 @@ test('20. Moderator direct live edit RPC & 260-org single-query scale stress tes
   ctx.updateModeratorUi();
   ctx.openEditModalForOrg('vso-extra-1');
   document.getElementById('sub-desc').value = 'Live moderator edit verified for stress testing.';
+  document.getElementById('sub-license-checkbox').checked = true;
   await ctx.handleVsoSubmit({ preventDefault() {} });
   assert.equal(liveSaveCalled, true, 'Moderator live edit must invoke moderator_save_organization RPC');
 });
@@ -1143,4 +1161,164 @@ test('21. Migration 002 RLS & concurrency SQL audit + build_website.js env var d
   assert.equal(builderSrc.includes('SUPABASE_SERVICE_ROLE_KEY'), false, 'build_website.js must NEVER touch SUPABASE_SERVICE_ROLE_KEY');
   assert.equal(builderSrc.includes('process.env.GEMINI_API_KEY'), false, 'build_website.js must NEVER touch GEMINI_API_KEY');
 });
+
+test('22. Pre-Launch Hygiene #1: Personal email privacy scrub (opt-in only) + leaked email removal + official org free-domain preservation', () => {
+  const html = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+  const orgs = JSON.parse(fs.readFileSync(DATA_JSON_PATH, 'utf8'));
+
+  // Leaked extraction artifact and all 22 unconfirmed individual personal emails must NOT exist in public JSON or index.html
+  const forbiddenEmails = [
+    'aashishbalani27@gmail.com',
+    'iwont4gt@gmail.com',
+    'sheser@comcast.net',
+    'elimcquade@gmail.com',
+    'marge.hart188@gmail.com',
+    'tmahoney.eip@gmail.com',
+    'nonaalexander1@gmail.com',
+    'blazrss@yahoo.com',
+    'mkbfd43@gmail.com',
+    'tombyron38@gmail.com',
+    'me_guide@hotmail.com',
+    '1sgpeirce@gmail.com',
+    'joshuaskinner88@gmail.com',
+    'margolapointe33@gmail.com',
+    'luckytwobealive@comcast.net',
+    'balloontraveler@yahoo.com',
+    'sophie.defrancesco@gmail.com',
+    'sgmjim@gmail.com',
+    'vogelmanlarry@yahoo.com',
+    'dc9guy@comcast.net',
+    'pjl64@comcast.net',
+    'nancygarnhart@gmail.com',
+    'michelleverdi@me.com'
+  ];
+  for (const em of forbiddenEmails) {
+    assert.equal(html.toLowerCase().includes(em), false, `Suppressed personal email "${em}" must NOT appear anywhere in index.html`);
+    assert.equal(JSON.stringify(orgs).toLowerCase().includes(em), false, `Suppressed personal email "${em}" must NOT appear in nh_organizations_data.json`);
+  }
+
+  // Named contacts whose personal emails were suppressed MUST still retain their names on the cards
+  const vso005 = orgs.find(o => o.id === 'vso-005');
+  assert.ok(vso005.staff_contacts.some(c => c.name.includes('Linda Lambert') && c.email === ''), 'Linda Lambert name must remain while personal email is stripped');
+  const vso076 = orgs.find(o => o.id === 'vso-076');
+  assert.equal(vso076.email, 'jenelson@plymouth.edu', 'vso-076 primary email should fall back to official .edu address');
+  assert.ok(vso076.staff_contacts.some(c => c.name.includes('Jim Goss') && c.email === ''), 'Jim Goss name must remain while personal gmail is stripped');
+
+  // Official VSO role/chapter inboxes on free providers MUST remain active and opted-in
+  for (const officialFree of ['nhvfwstateheadquarters@gmail.com', 'heropupsinc@yahoo.com', 'thehonorbear@gmail.com', 'vetsreststop@gmail.com', 'womenofgwot@gmail.com']) {
+    assert.ok(html.toLowerCase().includes(officialFree), `Official org inbox "${officialFree}" must remain visible in index.html`);
+  }
+
+  // Runtime defense-in-depth: injecting an unconfirmed @gmail.com contact hides email in HTML & share text until public_opt_in: true
+  const { ctx, getRenderedCards } = createAppHarness();
+  vm.runInContext(`
+    const target = ORGANIZATIONS.find(o => o.id === 'vso-005');
+    target.email = 'unopted_volunteer@gmail.com';
+    target.public_opt_in = false;
+    target.staff_contacts = [{ name: 'Linda Lambert', email: 'unopted_volunteer@gmail.com', public_opt_in: false }];
+    renderDirectory();
+  `, ctx);
+  let card005 = getRenderedCards().find(c => c.id === 'vso-005');
+  assert.equal(card005.html.includes('unopted_volunteer@gmail.com'), false, 'Unopted personal email must be hidden in card HTML');
+  let share005 = vm.runInContext('buildBuddyShareData(ORGANIZATIONS.find(o => o.id === "vso-005"))', ctx);
+  assert.equal(share005.bodyText.includes('unopted_volunteer@gmail.com'), false, 'Unopted personal email must be hidden in Buddy Share body');
+
+  vm.runInContext(`
+    const target2 = ORGANIZATIONS.find(o => o.id === 'vso-005');
+    target2.public_opt_in = true;
+    target2.staff_contacts[0].public_opt_in = true;
+    renderDirectory();
+  `, ctx);
+  card005 = getRenderedCards().find(c => c.id === 'vso-005');
+  assert.ok(card005.html.includes('unopted_volunteer@gmail.com'), 'Explicit public_opt_in: true must allow personal-domain email to render');
+});
+
+test('23. Pre-Launch Hygiene #2: Third-party flyer media_authorized gate & required unchecked upload license checkbox', async () => {
+  const { ctx, document, getRenderedCards } = createAppHarness();
+
+  // Confirmed baseline flyers (walkwithtiger.pdf & The Honor Bear project.pdf) have media_authorized: true and render
+  let cards = getRenderedCards();
+  const tigerCard = cards.find(c => c.id === 'vso-105');
+  const bearCard = cards.find(c => c.id === 'the-honor-bear-project-laconia');
+  assert.ok(tigerCard.html.includes('openAmplifierModal'), 'Authorized walkwithtiger.pdf must render View Official Amplifier button');
+  assert.ok(bearCard.html.includes('openAmplifierModal'), 'Authorized Honor Bear PDF must render View Official Amplifier button');
+
+  // Unconfirmed third-party flyer (media_authorized: false) must NOT render button or open lightbox
+  vm.runInContext(`
+    const unauthOrg = ORGANIZATIONS.find(o => o.id === 'vso-001');
+    unauthOrg.amplifier_doc = 'unconfirmed_third_party.pdf';
+    unauthOrg.media_authorized = false;
+    renderDirectory();
+  `, ctx);
+  cards = getRenderedCards();
+  const org001Card = cards.find(c => c.id === 'vso-001');
+  assert.equal(org001Card.html.includes('openAmplifierModal'), false, 'media_authorized: false must suppress flyer button on public card');
+  ctx.openAmplifierModal('vso-001');
+  assert.equal(document.getElementById('amplifier-modal').classList.contains('hidden'), true, 'openAmplifierModal must refuse unauthorized flyer');
+
+  // Opening submit modal resets #sub-license-checkbox to unchecked, and submitting unchecked is blocked
+  ctx.openEditModalForOrg('vso-030');
+  assert.equal(document.getElementById('sub-license-checkbox').checked, false, 'License checkbox must default to unchecked when modal opens');
+  const blockedRes = await ctx.handleVsoSubmit({ preventDefault() {} });
+  assert.equal(blockedRes, false, 'Unchecked license checkbox must block form submission');
+  assert.equal(document.getElementById('sub-license-error').classList.contains('hidden'), false, 'Validation error message must display');
+});
+
+test('24. Pre-Launch Hygiene #3: Card badge scoped to data freshness (✓ Checked YYYY-MM) with non-endorsement tooltip', () => {
+  const { getRenderedCards, html } = createAppHarness();
+  assert.equal(html.includes('>✓ Verified VSO<'), false, 'Legacy "✓ Verified VSO" badge text must be replaced');
+  const cards = getRenderedCards();
+  const dmavs = cards.find(c => c.id === 'vso-030');
+  assert.ok(dmavs.html.includes('✓ Checked 2026-11'), 'Card must display ✓ Checked YYYY-MM from last_verified');
+  assert.ok(dmavs.html.includes('Contact details checked active as of 2026-11. Informational listing only; not VA accreditation or an endorsement.'), 'Card badge must include non-endorsement & non-VA-accreditation tooltip');
+});
+
+test('25. Pre-Launch Hygiene #4 & #5: Footer legal links, accessible legal modal, Escape-key close across all 6 modals, and WCAG AA form labels', () => {
+  const { ctx, document, domListeners, html } = createAppHarness();
+  ctx.initMobileExperience();
+
+  // Footer contains Terms & Disclaimer, Privacy Policy, and DMCA / Removal Request links
+  assert.ok(html.includes('id="footer-terms-link"') && html.includes('Terms &amp; Disclaimer'));
+  assert.ok(html.includes('id="footer-privacy-link"') && html.includes('Privacy Policy'));
+  assert.ok(html.includes('id="footer-dmca-link"') && html.includes('DMCA / Removal Request'));
+
+  // Legal modal sections switch cleanly and contain confirmed entity/email + crisis line + accurate Gemini proxy disclosure
+  ctx.openLegalModal('privacy');
+  assert.equal(document.getElementById('legal-modal').classList.contains('hidden'), false);
+  assert.equal(document.getElementById('legal-panel-privacy').classList.contains('hidden'), false);
+  assert.equal(document.getElementById('legal-panel-terms').classList.contains('hidden'), true);
+  assert.ok(html.includes('NHVet411 (Independent New Hampshire Veteran Resource Project)'));
+  assert.ok(html.includes('admin@nhvet411.org'));
+  assert.ok(html.includes('988 (then Press 1)'));
+  assert.ok(html.includes('Google Gemini'));
+  assert.ok(html.includes('17 U.S.C. § 512'));
+
+  // Escape key closes every interactive modal
+  for (const modalId of ['legal-modal', 'amplifier-modal', 'apikey-modal', 'submit-modal', 'mod-auth-modal', 'review-queue-modal']) {
+    document.getElementById(modalId).classList.remove('hidden');
+    for (const fn of (domListeners.keydown || [])) {
+      fn({ key: 'Escape' });
+    }
+    assert.equal(document.getElementById(modalId).classList.contains('hidden'), true, `Escape key must close #${modalId}`);
+  }
+
+  // All 6 modals must declare role="dialog" and aria-modal="true"
+  for (const modalId of ['apikey-modal', 'submit-modal', 'review-queue-modal', 'mod-auth-modal', 'amplifier-modal', 'legal-modal']) {
+    const tagMatch = html.match(new RegExp(`<div id="${modalId}"[^>]*>`));
+    assert.ok(tagMatch, `Missing modal #${modalId}`);
+    assert.ok(tagMatch[0].includes('role="dialog"') && tagMatch[0].includes('aria-modal="true"'), `#${modalId} must have role="dialog" and aria-modal="true"`);
+  }
+
+  // Every form input/select/textarea in index.html must have an associated <label for="id"> or aria-label
+  const controlTags = [...html.matchAll(/<(input|select|textarea)\b([^>]*)>/gi)];
+  assert.ok(controlTags.length >= 20, `Expected >=20 form controls, found ${controlTags.length}`);
+  for (const [, tag, attrs] of controlTags) {
+    const idMatch = attrs.match(/\bid="([^"]+)"/i);
+    const hasAriaLabel = /\baria-label="[^"]+"/i.test(attrs);
+    const hasLabelFor = idMatch ? new RegExp(`<label[^>]*\\bfor="${idMatch[1]}"`, 'i').test(html) : false;
+    const isWrappedInLabel = idMatch && idMatch[1] === 'include-statewide-toggle';
+    assert.ok(hasAriaLabel || hasLabelFor || isWrappedInLabel, `Form control <${tag}> (${idMatch ? idMatch[1] : attrs}) is missing <label for> or aria-label`);
+  }
+});
+
 

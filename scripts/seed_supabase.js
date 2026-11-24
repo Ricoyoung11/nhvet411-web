@@ -28,6 +28,29 @@ const supabase = createClient(supabaseUrl, serviceKey, {
   auth: { persistSession: false }
 });
 
+const PERSONAL_DOMAINS = new Set([
+  'gmail.com', 'yahoo.com', 'comcast.net', 'hotmail.com',
+  'outlook.com', 'me.com', 'aol.com', 'icloud.com',
+  'msn.com', 'live.com', 'ymail.com', 'protonmail.com'
+]);
+const OFFICIAL_ORG_FREE_EMAILS = new Set([
+  'awarenh@gmail.com', 'u25carrollcounty@outlook.com', 'chasingzero22@gmail.com',
+  'danhealyfoundation@gmail.com', 'heropupsinc@yahoo.com', 'holidaycardsnh@gmail.com',
+  'cathybentwoodbridgehouse@gmail.com', 'nhvfwstateheadquarters@gmail.com',
+  'vfwnhmembership@gmail.com', 'newenglandrapidrecovery@gmail.com',
+  'presidentr2r@gmail.com', 'thelocalveteraninc@gmail.com', 'vetsreststop@gmail.com',
+  'veterans2veteransgroup@gmail.com', 'walkingwithhonor@gmail.com',
+  'womenofgwot@gmail.com', 'thehonorbear@gmail.com'
+]);
+function safePublicEmail(email, optIn) {
+  const clean = String(email || '').trim();
+  const lower = clean.toLowerCase();
+  if (!clean || !clean.includes('@')) return '';
+  if (optIn === true || OFFICIAL_ORG_FREE_EMAILS.has(lower)) return clean;
+  if (PERSONAL_DOMAINS.has(lower.split('@').pop())) return '';
+  return clean;
+}
+
 async function main() {
   const orgs = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
   console.log(`📦 Seeding ${orgs.length} verified NHVet411 baseline organizations into ${supabaseUrl}...`);
@@ -45,13 +68,13 @@ async function main() {
     secondary_region_id: o.secondary_region_id || null,
     is_statewide: Boolean(o.is_statewide),
     phone: o.phone || '',
-    email: o.email || '',
+    email: safePublicEmail(o.email, o.public_opt_in),
     website: o.website || '',
     branches: Array.isArray(o.branches) && o.branches.length ? o.branches : ['all'],
     verified_vso: Boolean(o.verified_vso ?? true),
     last_verified: o.last_verified || new Date().toISOString().slice(0, 10),
     source_url: o.source_url || o.website || '',
-    amplifier_doc: o.amplifier_doc || null,
+    amplifier_doc: (o.amplifier_doc && o.media_authorized !== false) ? o.amplifier_doc : null,
     status: 'approved'
   }));
 
@@ -76,7 +99,7 @@ async function main() {
         organization_id: o.id,
         name: c.name || '',
         role: c.role || '',
-        email: c.email || '',
+        email: safePublicEmail(c.email, c.public_opt_in),
         phone: c.phone || ''
       }));
       const { error: insErr } = await supabase.from('staff_contacts').insert(rows);
@@ -84,7 +107,7 @@ async function main() {
       contactCount += rows.length;
     }
 
-    if (o.amplifier_doc) {
+    if (o.amplifier_doc && o.media_authorized !== false) {
       await supabase.from('amplifier_docs').delete().eq('organization_id', o.id);
       const { error: ampErr } = await supabase.from('amplifier_docs').insert({
         organization_id: o.id,

@@ -6,6 +6,10 @@ node_modules/
 .env.local
 .env.*.local
 
+# Local-only opt-in outreach contact list (contains unconfirmed personal emails)
+private_email_outreach_list.json
+dist/
+
 # Generated test flyer (SWAM/Angers intentionally excluded from baseline for post-reset testing)
 Swim_With_A_Mission_Flyer.svg
 
