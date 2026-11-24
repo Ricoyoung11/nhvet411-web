@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node build_website.js",
     "seed": "node scripts/seed_supabase.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test tests/search.test.js"
   },
   "keywords": [],
   "author": "",
