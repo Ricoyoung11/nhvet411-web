@@ -4,7 +4,10 @@ import path from 'path';
 const LOOKUP_PATH = path.resolve('./nh_lookup_schema.json');
 const MASTER_SEED_PATH = path.resolve('./nh_vet_services_master.json');
 const LIVE_DB_PATH = path.resolve('./nh_organizations_data.json');
+const WHATS_NEW_PATH = path.resolve('./whats_new.json');
 const HTML_OUTPUT_PATH = path.resolve('./index.html');
+const VERSION_OUTPUT_PATH = path.resolve('./version.json');
+const FAVICON_OUTPUT_PATH = path.resolve('./favicon.svg');
 const SWAM_FLYER_PATH = path.resolve('./Swim_With_A_Mission_Flyer.svg');
 
 if (!fs.existsSync(LOOKUP_PATH)) {
@@ -14,6 +17,27 @@ if (!fs.existsSync(LOOKUP_PATH)) {
 
 const nhLookup = JSON.parse(fs.readFileSync(LOOKUP_PATH, 'utf-8'));
 const todayISO = new Date().toISOString().split('T')[0];
+const whatsNewData = fs.existsSync(WHATS_NEW_PATH)
+  ? JSON.parse(fs.readFileSync(WHATS_NEW_PATH, 'utf-8'))
+  : { currentVersion: '1.0.0', lastUpdated: todayISO, approvedByOwner: false, releases: [] };
+const siteVersion = String(whatsNewData.currentVersion || '1.0.0').trim();
+
+// Option 1A: Stacked VET / 411 Charcoal Tactical Badge Favicon
+const faviconSvgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="nhv1a" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#272A24"/>
+      <stop offset="100%" stop-color="#141512"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="13" fill="url(#nhv1a)" stroke="#D5AD36" stroke-width="3.5"/>
+  <text x="32" y="27.5" text-anchor="middle" fill="#F4EFE2" font-family="Arial Narrow, Impact, sans-serif" font-weight="900" font-size="21.5" letter-spacing="0.6">VET</text>
+  <rect x="11" y="31.5" width="42" height="2.4" rx="1.2" fill="#D5AD36" opacity="0.9"/>
+  <text x="32" y="55" text-anchor="middle" fill="#D5AD36" font-family="Arial Narrow, Impact, sans-serif" font-weight="900" font-size="24.5" letter-spacing="0.4">411</text>
+</svg>`;
+fs.writeFileSync(FAVICON_OUTPUT_PATH, faviconSvgContent, 'utf-8');
+const faviconDataUri = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(faviconSvgContent.replace(/\s+/g, ' ').trim());
+
 const rawSupabaseUrl = String(process.env.NHVET411_SUPABASE_URL || process.env.SUPABASE_URL || '').trim().replace(/\/+$/, '');
 const geminiProxyUrl = String(
   process.env.NHVET411_GEMINI_PROXY_URL ||
@@ -484,7 +508,10 @@ const htmlContent = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#181916" />
   <title>NHVet411 | New Hampshire Verified Veteran &amp; VSO Resource Directory</title>
+  <link rel="icon" type="image/svg+xml" href="${faviconDataUri}" />
+  <link rel="alternate icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
@@ -1084,11 +1111,57 @@ const htmlContent = `<!DOCTYPE html>
       color: #FFFFFF;
       border-color: #535E46;
     }
-    .hero-admin-tools {
-      display: contents;
+    .hero-admin-dropdown-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 0.35rem;
+      padding-left: 0.6rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.22);
+      z-index: 35;
     }
     .hero-mobile-admin-btn {
+      display: inline-flex;
+      opacity: 0.82;
+      transition: opacity 0.15s ease;
+    }
+    .hero-mobile-admin-btn:hover,
+    .hero-mobile-admin-btn[aria-expanded="true"] {
+      opacity: 1;
+    }
+    .hero-admin-tools {
       display: none;
+    }
+    .hero-admin-tools.mobile-open {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 0.45rem);
+      min-width: 11.5rem;
+      padding: 0.45rem;
+      border-radius: 0.75rem;
+      background-color: rgba(24, 25, 22, 0.96);
+      border: 1px solid rgba(213, 173, 54, 0.45);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+      z-index: 45;
+      white-space: nowrap;
+    }
+    .hero-actions-wrap.hero-admin-is-mod .hero-mobile-admin-btn {
+      display: none;
+    }
+    .hero-actions-wrap.hero-admin-is-mod #hero-admin-tools {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+      position: static;
+      min-width: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
     .mobile-only-bar {
       position: fixed;
@@ -1241,18 +1314,35 @@ const htmlContent = `<!DOCTYPE html>
         padding: 0.45rem 0.68rem;
         font-size: 0.72rem;
       }
-      body:not(.force-web-view) .hero-mobile-admin-btn {
+      body:not(.force-web-view) .hero-admin-dropdown-wrap {
+        display: contents;
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+      }
+      body:not(.force-web-view) .hero-mobile-admin-btn,
+      body:not(.force-web-view) .hero-actions-wrap.hero-admin-is-mod .hero-mobile-admin-btn {
         display: inline-flex;
         padding: 0.45rem 0.65rem;
         font-size: 0.72rem;
       }
-      body:not(.force-web-view) #hero-admin-tools {
+      body:not(.force-web-view) #hero-admin-tools,
+      body:not(.force-web-view) .hero-actions-wrap.hero-admin-is-mod #hero-admin-tools {
         display: none;
+        position: static;
+        min-width: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
         order: 10;
         width: 100%;
       }
-      body:not(.force-web-view) #hero-admin-tools.mobile-open {
+      body:not(.force-web-view) #hero-admin-tools.mobile-open,
+      body:not(.force-web-view) .hero-actions-wrap.hero-admin-is-mod #hero-admin-tools.mobile-open {
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
         gap: 0.4rem;
@@ -1410,18 +1500,35 @@ const htmlContent = `<!DOCTYPE html>
       padding: 0.45rem 0.68rem;
       font-size: 0.72rem;
     }
-    body.force-mobile-view .hero-mobile-admin-btn {
+    body.force-mobile-view .hero-admin-dropdown-wrap {
+      display: contents;
+      margin-left: 0;
+      padding-left: 0;
+      border-left: none;
+    }
+    body.force-mobile-view .hero-mobile-admin-btn,
+    body.force-mobile-view .hero-actions-wrap.hero-admin-is-mod .hero-mobile-admin-btn {
       display: inline-flex;
       padding: 0.45rem 0.65rem;
       font-size: 0.72rem;
     }
-    body.force-mobile-view #hero-admin-tools {
+    body.force-mobile-view #hero-admin-tools,
+    body.force-mobile-view .hero-actions-wrap.hero-admin-is-mod #hero-admin-tools {
       display: none;
+      position: static;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
       order: 10;
       width: 100%;
     }
-    body.force-mobile-view #hero-admin-tools.mobile-open {
+    body.force-mobile-view #hero-admin-tools.mobile-open,
+    body.force-mobile-view .hero-actions-wrap.hero-admin-is-mod #hero-admin-tools.mobile-open {
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
       gap: 0.4rem;
@@ -1491,7 +1598,9 @@ const htmlContent = `<!DOCTYPE html>
     #review-queue-modal,
     #mod-auth-modal,
     #apikey-modal,
-    #amplifier-modal {
+    #amplifier-modal,
+    #legal-modal,
+    #whats-new-modal {
       z-index: 70 !important;
       align-items: flex-start !important;
       padding-top: 1rem !important;
@@ -1507,6 +1616,8 @@ const htmlContent = `<!DOCTYPE html>
     #submit-modal > .modal-frosted,
     #review-queue-modal > .modal-frosted,
     #mod-auth-modal > .modal-frosted,
+    #legal-modal > .modal-frosted,
+    #whats-new-modal > .modal-frosted,
     #apikey-modal > div {
       margin-top: auto !important;
       margin-bottom: auto !important;
@@ -1627,6 +1738,72 @@ const htmlContent = `<!DOCTYPE html>
       color: #6E6C63;
     }
     .py-1\\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+
+    /* SUBTLE VERSION-BUMP UPDATE PILL IN NAVBAR */
+    .nh-update-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background-color: #F7F0D6;
+      color: #181916;
+      border: 1px solid #D5AD36;
+      border-radius: 9999px;
+      padding: 0.24rem 0.6rem;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      line-height: 1.15;
+      transition: background-color 0.15s ease;
+    }
+    .nh-update-pill:hover {
+      background-color: #D5AD36;
+    }
+
+    /* NH SILHOUETTE VERTICAL US FLAG SEARCH LOADER (4 U.S.C. § 7(i)) */
+    .nh-flag-loader-wrap {
+      position: relative;
+      width: 34px;
+      height: 64px;
+      flex-shrink: 0;
+    }
+    .nh-flag-loader-svg {
+      position: absolute;
+      inset: 0;
+      width: 34px !important;
+      height: 64px !important;
+      display: block;
+    }
+    @keyframes nhFlagRise {
+      0% { clip-path: inset(100% 0 0 0); -webkit-clip-path: inset(100% 0 0 0); }
+      82% { clip-path: inset(0% 0 0 0); -webkit-clip-path: inset(0% 0 0 0); }
+      100% { clip-path: inset(0% 0 0 0); -webkit-clip-path: inset(0% 0 0 0); }
+    }
+    .nh-flag-loader-fill {
+      animation: nhFlagRise 3.4s ease-in-out infinite;
+    }
+    @keyframes nhSearchSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .nh-search-spinner {
+      width: 15px !important;
+      height: 15px !important;
+      animation: nhSearchSpin 0.85s linear infinite;
+    }
+    #search-submit-btn:disabled {
+      opacity: 0.88;
+      cursor: wait;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nh-flag-loader-fill {
+        animation: none;
+        clip-path: inset(0% 0 0 0);
+        -webkit-clip-path: inset(0% 0 0 0);
+      }
+      .nh-search-spinner {
+        animation: none;
+      }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col" id="top">
@@ -1661,8 +1838,8 @@ const htmlContent = `<!DOCTYPE html>
           <a href="tel:8337106477" class="crisis-pill" title="Call NH Rapid Response 24/7 Crisis">
             <span>🚑</span> <span>NH Rapid Response: <strong class="selectable-text">833-710-6477</strong></span>
           </a>
-          <a href="tel:211" class="crisis-pill" title="Dial NH 211 for Immediate Shelter & Assistance">
-            <span>🏠</span> <span>NH 211: <strong class="selectable-text">Dial 211</strong></span>
+          <a href="tel:211" class="crisis-pill" title="Dial 211 for 211NH Help (24/7 Shelter, Food, Housing &amp; Community Assistance)">
+            <span>🏠</span> <span><strong class="selectable-text">Dial 211</strong>: 211NH Help</span>
           </a>
         </div>
         <div class="flex items-center gap-2">
@@ -1702,7 +1879,10 @@ const htmlContent = `<!DOCTYPE html>
               <span>📋</span> <span>All VSOs (<span id="nav-all-vsos-count">${finalOrganizations.length}</span>)</span>
             </a>
           </div>
-          <div class="nh-nav-actions inline-flex items-center">
+          <div class="nh-nav-actions inline-flex items-center gap-1.5">
+            <button type="button" id="update-available-btn" onclick="window.location.reload()" class="hidden nh-update-pill cursor-pointer" title="A newer version of NHVet411 is ready — click to refresh">
+              <span aria-hidden="true">↻</span> <span>Update Available</span>
+            </button>
             <div class="nh-view-toggle inline-flex items-center bg-slate-100 rounded-lg p-0.5 border ml-2 my-1">
               <button type="button" id="view-web-btn" onclick="setViewportMode('web')" class="text-[11px] font-bold px-2 py-1 rounded bg-crimson text-white cursor-pointer" title="Standard Desktop/Responsive Web View">🖥️ Web</button>
               <button type="button" id="view-mobile-btn" onclick="setViewportMode('mobile')" class="text-[11px] font-bold px-2 py-1 rounded text-slate-700 cursor-pointer" title="Preview Mobile-Enabled Handheld Layout">📱 Mobile</button>
@@ -1730,33 +1910,32 @@ const htmlContent = `<!DOCTYPE html>
           </p>
         </div>
 
-        <div class="hero-actions-wrap flex flex-wrap items-center gap-2">
-          <div id="hero-admin-tools" class="hero-admin-tools">
-            <button onclick="toggleApiKeyModal(true)" class="bg-amber-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
-              <span>🔑</span> <span id="api-status-btn-text">Configure AI Key</span>
-            </button>
-            <button type="button" id="mod-login-btn" onclick="toggleModAuthModal(true, 'login')" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Sign In for NHVet411 Approvals">
-              <span>🔐</span> <span>Moderator Login</span>
-            </button>
-            <button type="button" id="mod-review-btn" onclick="toggleReviewQueueModal(true)" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 relative" title="1-Click Open Pending VSO Review Queue">
-              <span class="mod-bell-wrap" aria-hidden="true">🔔<span id="mod-bell-dot" class="mod-bell-dot hidden"></span></span>
-              <span>Review (<strong id="review-queue-count">0</strong>)</span>
-            </button>
-            <button type="button" id="mod-account-btn" onclick="toggleModAuthModal(true, 'account')" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Account &amp; Password Settings">
-              <span>🛡️</span> <span id="mod-account-label">Moderator</span>
-            </button>
-          </div>
+        <div id="hero-actions-wrap" class="hero-actions-wrap flex flex-wrap items-center gap-2">
           <button onclick="openEditModalForOrg(null)" class="hero-primary-btn bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5">
             <span>✏️</span> <span>Suggest an Edit</span>
           </button>
           <button onclick="toggleSubmitModal(true); setUploadMode('new');" class="hero-primary-btn bg-gold-btn font-extrabold text-xs px-3.5 py-2 rounded-lg shadow-md cursor-pointer flex items-center gap-1.5">
             <span>📄</span> <span>Upload VSO Flyer (AI Parse)</span>
           </button>
-          <button type="button" id="mobile-admin-tools-btn" onclick="toggleMobileAdminTools()" aria-expanded="false" aria-controls="hero-admin-tools" class="hero-mobile-admin-btn bg-glass font-bold text-xs px-2.5 py-2 rounded-lg cursor-pointer items-center gap-1 relative" title="AI Key &amp; Moderator Tools">
-            <span class="mod-bell-wrap" aria-hidden="true">⚙️<span id="mobile-admin-bell-dot" class="mod-bell-dot hidden"></span></span>
-            <span>Admin / Tools</span>
-            <span id="mobile-admin-chevron" aria-hidden="true">▾</span>
-          </button>
+          <div id="hero-admin-dropdown-wrap" class="hero-admin-dropdown-wrap">
+            <button type="button" id="mobile-admin-tools-btn" onclick="toggleMobileAdminTools()" aria-expanded="false" aria-controls="hero-admin-tools" class="hero-mobile-admin-btn bg-glass font-semibold text-xs px-2.5 py-2 rounded-lg cursor-pointer items-center gap-1 relative" title="Moderator &amp; Admin Tools">
+              <span class="mod-bell-wrap" aria-hidden="true">⚙️<span id="mobile-admin-bell-dot" class="mod-bell-dot hidden"></span></span>
+              <span>Admin</span>
+              <span id="mobile-admin-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div id="hero-admin-tools" class="hero-admin-tools">
+              <button type="button" id="mod-login-btn" onclick="closeAdminToolsDropdown(); toggleModAuthModal(true, 'login')" class="bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Sign In for NHVet411 Approvals">
+                <span>🔐</span> <span>Moderator Login</span>
+              </button>
+              <button type="button" id="mod-review-btn" onclick="closeAdminToolsDropdown(); toggleReviewQueueModal(true)" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 relative" title="1-Click Open Pending VSO Review Queue">
+                <span class="mod-bell-wrap" aria-hidden="true">🔔<span id="mod-bell-dot" class="mod-bell-dot hidden"></span></span>
+                <span>Review (<strong id="review-queue-count">0</strong>)</span>
+              </button>
+              <button type="button" id="mod-account-btn" onclick="closeAdminToolsDropdown(); toggleModAuthModal(true, 'account')" class="hidden bg-glass font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5" title="Moderator Account &amp; Password Settings">
+                <span>🛡️</span> <span id="mod-account-label">Moderator</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1764,19 +1943,19 @@ const htmlContent = `<!DOCTYPE html>
       <div id="search-card" class="bg-white p-5 rounded-2xl shadow-2xl max-w-5xl mx-auto mt-4 text-slate-900" style="border-top: 4px solid #D5AD36;">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3 border-b pb-2">
           <span class="text-xs font-extrabold uppercase tracking-wider text-slate-900">
-            🧭 Direct VSO Resource Search — Filter by ZIP Code, Named Town, Region, Branch, or Ask Any Question
+            🧭 Direct VSO Resource Search — Ask Any Question, or Filter by ZIP Code, Town, Region &amp; Branch
           </span>
         </div>
 
         <div class="flex flex-col sm-row gap-2">
           <div class="relative flex-1">
-            <input id="search-input" type="text" aria-label="Search veteran resources by ZIP code, town, region, branch, or question" enterkeyhint="search" autocomplete="off" oninput="onLiveSearchInput(this.value)" onkeydown="if(event.key==='Enter') runAiAssistantFromInput()" placeholder="Type ZIP (e.g. 03101, 03801), Town (Manchester, Laconia, Portsmouth), Region, or ask any question..." class="w-full pl-11 pr-4 py-3.5 rounded-xl text-slate-900 bg-slate-50 border text-sm font-medium" />
+            <input id="search-input" type="text" aria-label="Ask any question, or search veteran resources by ZIP code, town, region, or branch" enterkeyhint="search" autocomplete="off" oninput="onLiveSearchInput(this.value)" onkeydown="if(event.key==='Enter') runAiAssistantFromInput()" placeholder="Ask any question, or enter a ZIP code or NH town..." class="w-full pl-11 pr-4 py-3.5 rounded-xl text-slate-900 bg-slate-50 border text-sm font-medium" />
             <svg width="20" height="20" aria-hidden="true" class="search-input-icon w-5 h-5 text-slate-400 absolute left-3.5 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
-          <button onclick="runAiAssistantFromInput()" class="bg-olive condensed-font uppercase font-extrabold px-5 py-3.5 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-1.5 shrink-0 shadow-sm">
-            <span>✨</span> <span>Search / Ask AI</span>
+          <button type="button" id="search-submit-btn" onclick="runAiAssistantFromInput()" class="bg-olive condensed-font uppercase font-extrabold px-5 py-3.5 rounded-xl text-sm cursor-pointer flex items-center justify-center gap-1.5 shrink-0 shadow-sm">
+            <span id="search-submit-icon">✨</span> <span id="search-submit-label">Search / Ask AI</span>
           </button>
-          <button onclick="resetAllFilters()" class="bg-slate-100 text-slate-800 condensed-font uppercase font-bold px-4 py-3.5 rounded-xl text-sm border cursor-pointer shrink-0">Reset Filters</button>
+          <button type="button" onclick="resetAllFilters()" class="bg-slate-100 text-slate-800 condensed-font uppercase font-bold px-4 py-3.5 rounded-xl text-sm border cursor-pointer shrink-0">Reset Filters</button>
         </div>
 
         <!-- QUICK TOWN / ZIP SHORTCUTS -->
@@ -1794,12 +1973,12 @@ const htmlContent = `<!DOCTYPE html>
           <span class="text-[10px] font-semibold text-slate-500">All phone numbers &amp; emails below are selectable &amp; 1-click linked</span>
         </div>
 
-        <div id="ai-navigator-response" class="hidden mt-3 p-3.5 bg-blue-50 border rounded-xl text-xs text-slate-800">
+        <div id="ai-navigator-response" role="status" aria-live="polite" class="hidden mt-3 p-3.5 bg-blue-50 border rounded-xl text-xs text-slate-800">
           <div class="flex items-start justify-between gap-3">
-            <div class="flex items-start gap-2.5">
-              <span class="text-lg">🧭</span>
+            <div class="flex items-center gap-3">
+              <span id="ai-navigator-icon" class="text-lg shrink-0">🧭</span>
               <div>
-                <div class="font-extrabold text-blue-950 mb-0.5">NHVet411 Resource Navigator Match:</div>
+                <div id="ai-navigator-title" class="font-extrabold text-blue-950 mb-0.5">NHVet411 Resource Navigator Match:</div>
                 <p id="ai-navigator-text" class="leading-relaxed text-slate-700" style="margin:0;"></p>
               </div>
             </div>
@@ -1892,7 +2071,6 @@ const htmlContent = `<!DOCTYPE html>
         <div>
           <h2 class="condensed-font text-lg font-extrabold uppercase text-slate-900" style="margin:0;">🏔️ Explore Resources Across New Hampshire's 7 Regions</h2>
         </div>
-        <button type="button" onclick="toggleMobileFilters()" class="text-xs font-bold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-lg border cursor-pointer">⚙️ Toggle Detailed Filter Bar</button>
       </div>
       <div id="region-photo-cards" class="region-photo-grid"></div>
     </div>
@@ -1905,8 +2083,10 @@ const htmlContent = `<!DOCTYPE html>
         <h2 class="condensed-font text-3xl font-extrabold uppercase text-slate-900" style="margin:0;">SUPPORT YOU CAN COUNT ON</h2>
         <p class="text-xs font-semibold text-slate-700" style="margin:2px 0 0 0;">Direct contact details, selectable phone numbers, and 1-click sharing for every verified VSO across New Hampshire.</p>
       </div>
-      <button type="button" onclick="resetAllFilters()" class="bg-olive condensed-font uppercase font-extrabold text-sm px-5 py-3 rounded-lg shadow-sm cursor-pointer">
-        VIEW ALL <span id="btn-view-all-count">${finalOrganizations.length}</span> RESOURCES
+      <button type="button" id="toggle-detailed-filters-btn" onclick="toggleMobileFilters()" aria-expanded="true" aria-controls="detailed-filter-panel" class="text-xs font-bold text-slate-800 bg-white px-3.5 py-2.5 rounded-xl border shadow-sm cursor-pointer inline-flex items-center gap-1.5 shrink-0">
+        <span>⚙️</span>
+        <span id="toggle-detailed-filters-label">Hide Detailed Filters</span>
+        <span id="toggle-detailed-filters-chevron" aria-hidden="true">▴</span>
       </button>
     </div>
 
@@ -1983,14 +2163,21 @@ const htmlContent = `<!DOCTYPE html>
           <button type="button" id="footer-privacy-link" onclick="openLegalModal('privacy')" class="text-slate-300 hover:underline font-semibold cursor-pointer" style="background:none; border:none; padding:0;">Privacy Policy</button>
           <span aria-hidden="true">•</span>
           <button type="button" id="footer-dmca-link" onclick="openLegalModal('dmca')" class="text-slate-300 hover:underline font-semibold cursor-pointer" style="background:none; border:none; padding:0;">DMCA / Removal Request</button>
+          <span aria-hidden="true">•</span>
+          <button type="button" id="footer-whats-new-link" onclick="openWhatsNewModal()" class="text-slate-300 hover:underline font-semibold cursor-pointer" style="background:none; border:none; padding:0;">✨ What's New (v${siteVersion})</button>
         </div>
       </div>
-      <div class="flex flex-wrap items-center gap-3 text-slate-300">
-        <span>🚨 <strong>Crisis Line:</strong> <a href="tel:988" class="text-white font-bold hover:underline selectable-text">988 (Press 1)</a></span>
-        <span>•</span>
-        <span>💬 <strong>Text:</strong> <a href="sms:838255" class="text-white font-bold hover:underline selectable-text">838255</a></span>
-        <span>•</span>
-        <span>🏠 <strong>NH 211:</strong> <a href="tel:211" class="text-white font-bold hover:underline selectable-text">Dial 211</a></span>
+      <div class="flex flex-col items-start md:items-end gap-2">
+        <div class="flex flex-wrap items-center gap-3 text-slate-300">
+          <span>🚨 <strong>Crisis Line:</strong> <a href="tel:988" class="text-white font-bold hover:underline selectable-text">988 (Press 1)</a></span>
+          <span>•</span>
+          <span>💬 <strong>Text:</strong> <a href="sms:838255" class="text-white font-bold hover:underline selectable-text">838255</a></span>
+          <span>•</span>
+          <span>🏠 <strong>211NH Help:</strong> <a href="tel:211" class="text-white font-bold hover:underline selectable-text">Dial 211</a></span>
+        </div>
+        <button type="button" id="footer-ai-key-btn" onclick="toggleApiKeyModal(true)" class="bg-amber-glass font-bold text-[11px] px-2.5 py-1 rounded-lg cursor-pointer inline-flex items-center gap-1.5" title="AI Search Status &amp; Optional Personal Gemini API Key">
+          <span>🔑</span> <span id="api-status-btn-text">Configure AI Key</span>
+        </button>
       </div>
     </div>
   </footer>
@@ -2293,6 +2480,22 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
+  <!-- ACCESSIBLE WHAT'S NEW RELEASE SUMMARY MODAL -->
+  <div id="whats-new-modal" role="dialog" aria-modal="true" aria-labelledby="whats-new-modal-title" class="hidden fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 overflow-y-auto" onclick="if(event.target===this) closeWhatsNewModal()">
+    <div class="modal-frosted rounded-2xl w-full max-w-xl p-6 shadow-2xl relative my-8">
+      <button type="button" id="whats-new-close-btn" aria-label="Close What's New modal" onclick="closeWhatsNewModal()" class="absolute top-4 right-4 text-slate-500 font-bold cursor-pointer bg-slate-100 px-2.5 py-1 rounded">✕</button>
+      <div class="mb-3" style="padding-right:2.5rem;">
+        <span class="nh-gold-pill" style="font-size:0.7rem; padding:0.15rem 0.55rem;">WHAT'S NEW • <span id="whats-new-current-version">v${siteVersion}</span></span>
+        <h3 id="whats-new-modal-title" class="text-lg font-extrabold text-slate-900 mt-1" style="margin-bottom:0;">NHVet411 Recent Updates</h3>
+        <p class="text-[11px] text-slate-600 mt-0.5" style="margin-bottom:0;">A high-level summary of improvements made to help New Hampshire veterans and families find support faster.</p>
+      </div>
+      <div id="whats-new-body" class="space-y-3 text-xs text-slate-800 leading-relaxed" style="max-height:62vh; overflow-y:auto;"></div>
+      <div class="pt-3 mt-3 border-t flex justify-end">
+        <button type="button" onclick="closeWhatsNewModal()" class="px-4 py-2 rounded-xl bg-navy text-white text-xs font-bold cursor-pointer">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION FOR SHARING -->
   <div id="toast-msg" class="hidden opacity-0 fixed bottom-4 right-4 bg-slate-800 text-white px-4 py-3 rounded-xl text-xs font-bold shadow-lg z-50 transition-opacity flex items-center gap-2">
     <span>✅</span> <span id="toast-text">Copied to clipboard!</span>
@@ -2307,6 +2510,8 @@ const htmlContent = `<!DOCTYPE html>
       portalUrl: 'https://www.nhveterans.nh.gov/',
       portalLabel: 'NH DMAVS State Portal'
     };
+    const SITE_VERSION = ${JSON.stringify(siteVersion)};
+    const WHATS_NEW_DATA = ${JSON.stringify(whatsNewData)};
     const LOOKUP_DATA = ${JSON.stringify(nhLookup)};
     let ORGANIZATIONS = ${JSON.stringify(finalOrganizations)};
     const SUPABASE_URL = ${JSON.stringify(supabaseUrl)};
@@ -2352,6 +2557,11 @@ const htmlContent = `<!DOCTYPE html>
       matchedOrgIds: null,
       highlightTerms: [],
       matchedTown: '',
+      aiSearchRequestId: 0,
+      aiSearchStageTimer: null,
+      updateAvailableVersion: null,
+      lastVersionCheckAt: 0,
+      siteUpdatePollTimer: null,
       uploadMode: 'new',
       submissionWorkflow: 'queue',
       uploadedFileObj: null,
@@ -2543,12 +2753,22 @@ const htmlContent = `<!DOCTYPE html>
       }
     }
 
+    function closeAdminToolsDropdown() {
+      const toolsEl = document.getElementById('hero-admin-tools');
+      const toolsBtn = document.getElementById('mobile-admin-tools-btn');
+      const toolsChev = document.getElementById('mobile-admin-chevron');
+      if (toolsEl) toolsEl.classList.remove('mobile-open');
+      if (toolsBtn) toolsBtn.setAttribute('aria-expanded', 'false');
+      if (toolsChev) toolsChev.textContent = '▾';
+    }
+
     function toggleMobileAdminTools() {
       const toolsEl = document.getElementById('hero-admin-tools');
       const toolsBtn = document.getElementById('mobile-admin-tools-btn');
       const toolsChev = document.getElementById('mobile-admin-chevron');
       if (!toolsEl) return;
-      const isOpen = toolsEl.classList.toggle('mobile-open');
+      toolsEl.classList.toggle('mobile-open');
+      const isOpen = toolsEl.classList.contains('mobile-open');
       if (toolsBtn) toolsBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       if (toolsChev) toolsChev.textContent = isOpen ? '▴' : '▾';
     }
@@ -2561,6 +2781,7 @@ const htmlContent = `<!DOCTYPE html>
         document.body.classList.toggle('force-web-view', !isMobile && isSmallScreen);
       }
       closeMobileHeaderDrawers();
+      closeAdminToolsDropdown();
       syncViewportModeButtons();
       showToast(isMobile ? '📱 Switched to Compact Mobile View' : '🖥️ Switched to Full Web View');
     }
@@ -2614,11 +2835,18 @@ const htmlContent = `<!DOCTYPE html>
         if (header && e.target && typeof header.contains === 'function' && !header.contains(e.target)) {
           closeMobileHeaderDrawers();
         }
+        const adminWrap = document.getElementById('hero-admin-dropdown-wrap');
+        if (adminWrap && e.target && typeof adminWrap.contains === 'function' && !adminWrap.contains(e.target)) {
+          closeAdminToolsDropdown();
+        }
       });
 
       document.addEventListener('keydown', function(e) {
         if (e && e.key === 'Escape') {
           closeMobileHeaderDrawers();
+          closeAdminToolsDropdown();
+          const whatsNewEl = document.getElementById('whats-new-modal');
+          if (whatsNewEl && !whatsNewEl.classList.contains('hidden')) closeWhatsNewModal();
           const legalEl = document.getElementById('legal-modal');
           if (legalEl && !legalEl.classList.contains('hidden')) closeLegalModal();
           const ampEl = document.getElementById('amplifier-modal');
@@ -2720,9 +2948,117 @@ const htmlContent = `<!DOCTYPE html>
       lastLegalModalTrigger = null;
     }
 
+    let lastWhatsNewTrigger = null;
+    function renderWhatsNewModal() {
+      const body = document.getElementById('whats-new-body');
+      const verBadge = document.getElementById('whats-new-current-version');
+      if (verBadge) verBadge.textContent = 'v' + SITE_VERSION;
+      if (!body) return;
+      const releases = (WHATS_NEW_DATA && Array.isArray(WHATS_NEW_DATA.releases)) ? WHATS_NEW_DATA.releases : [];
+      let updateNoticeHtml = '';
+      if (state.updateAvailableVersion && state.updateAvailableVersion !== SITE_VERSION) {
+        updateNoticeHtml = '<div class="rounded-xl p-3 border flex flex-wrap items-center justify-between gap-2" style="background-color:#F7F0D6; border-color:#D5AD36;">' +
+          '<div class="text-xs font-extrabold text-slate-900">↻ Version <strong>v' + escapeHtml(state.updateAvailableVersion) + '</strong> is ready! Refresh to load the newest updates.</div>' +
+          '<button type="button" onclick="window.location.reload()" class="bg-olive text-white text-xs font-extrabold px-3 py-1.5 rounded-lg cursor-pointer shrink-0">Refresh Now</button>' +
+        '</div>';
+      }
+      if (releases.length === 0) {
+        body.innerHTML = updateNoticeHtml + '<div class="bg-white rounded-xl p-4 border text-xs text-slate-700">No updates posted yet.</div>';
+        return;
+      }
+      body.innerHTML = updateNoticeHtml + releases.map(function(rel) {
+        const items = Array.isArray(rel.highlights) ? rel.highlights : [];
+        const listHtml = items.map(function(line) {
+          return '<li style="margin:0;">' + escapeHtml(line) + '</li>';
+        }).join('');
+        return '<section class="bg-white rounded-xl p-4 border space-y-2">' +
+          '<div class="flex flex-wrap items-center justify-between gap-2">' +
+            '<h4 class="text-sm font-extrabold text-slate-900" style="margin:0;">' + escapeHtml(rel.title || 'Directory Update') + '</h4>' +
+            '<span class="text-[11px] font-bold px-2 py-0.5 rounded-full border" style="background-color:#FAF8F3; border-color:#D5CCB8; color:#3E4734;">v' + escapeHtml(rel.version || SITE_VERSION) + (rel.date ? ' • ' + escapeHtml(rel.date) : '') + '</span>' +
+          '</div>' +
+          '<ul class="space-y-1.5 text-xs text-slate-700 leading-relaxed" style="margin:0; padding-left:1.15rem; list-style-type:disc;">' + listHtml + '</ul>' +
+        '</section>';
+      }).join('');
+    }
+
+    function openWhatsNewModal() {
+      lastWhatsNewTrigger = (typeof document !== 'undefined' && document.activeElement) ? document.activeElement : null;
+      const modal = document.getElementById('whats-new-modal');
+      if (!modal) return;
+      renderWhatsNewModal();
+      modal.classList.remove('hidden');
+      const closeBtn = document.getElementById('whats-new-close-btn');
+      if (closeBtn && typeof closeBtn.focus === 'function') closeBtn.focus();
+    }
+
+    function closeWhatsNewModal() {
+      const modal = document.getElementById('whats-new-modal');
+      if (modal) modal.classList.add('hidden');
+      if (lastWhatsNewTrigger && typeof lastWhatsNewTrigger.focus === 'function') {
+        lastWhatsNewTrigger.focus();
+      }
+      lastWhatsNewTrigger = null;
+    }
+
+    function showUpdateAvailableBanner(newVersion) {
+      const cleanVer = String(newVersion || '').trim();
+      if (!cleanVer || cleanVer === SITE_VERSION) return;
+      state.updateAvailableVersion = cleanVer;
+      const pill = document.getElementById('update-available-btn');
+      if (pill) {
+        pill.classList.remove('hidden');
+        pill.setAttribute('title', 'NHVet411 v' + cleanVer + ' is available — click to refresh');
+      }
+      const modal = document.getElementById('whats-new-modal');
+      if (modal && !modal.classList.contains('hidden')) {
+        renderWhatsNewModal();
+      }
+    }
+
+    async function checkForSiteUpdate(forceCheck) {
+      if (typeof fetch !== 'function') return false;
+      if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') return false;
+      const now = Date.now();
+      if (!forceCheck && state.lastVersionCheckAt && (now - state.lastVersionCheckAt) < 10 * 60 * 1000) {
+        return false;
+      }
+      state.lastVersionCheckAt = now;
+      try {
+        const res = await fetch('./version.json?t=' + now, { method: 'GET', cache: 'no-store' });
+        if (!res || !res.ok) return false;
+        const data = await res.json();
+        const remoteVer = data && data.version ? String(data.version).trim() : '';
+        if (remoteVer && remoteVer !== SITE_VERSION) {
+          showUpdateAvailableBanner(remoteVer);
+          return true;
+        }
+      } catch (err) {
+        // Silently ignore offline or local preview errors
+      }
+      return false;
+    }
+
+    function startSiteUpdateWatcher() {
+      if (typeof window === 'undefined' || (window.location && window.location.protocol === 'file:')) return;
+      if (state.siteUpdatePollTimer) return;
+      // Quietly check every 15 minutes for users who keep NHVet411 pinned in a browser tab
+      state.siteUpdatePollTimer = setInterval(function() {
+        if (typeof document !== 'undefined' && document.hidden) return;
+        checkForSiteUpdate(false);
+      }, 15 * 60 * 1000);
+    }
+
     function toggleMobileFilters() {
       const panel = document.getElementById('detailed-filter-panel');
-      if (panel) panel.classList.toggle('hidden');
+      if (!panel) return;
+      panel.classList.toggle('hidden');
+      const isHidden = panel.classList.contains('hidden');
+      const btn = document.getElementById('toggle-detailed-filters-btn');
+      const lbl = document.getElementById('toggle-detailed-filters-label');
+      const chev = document.getElementById('toggle-detailed-filters-chevron');
+      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+      if (lbl) lbl.textContent = isHidden ? 'Show Detailed Filters' : 'Hide Detailed Filters';
+      if (chev) chev.textContent = isHidden ? '▾' : '▴';
     }
 
     function buildBuddyShareData(org) {
@@ -3221,6 +3557,10 @@ const htmlContent = `<!DOCTYPE html>
       state.searchQuery = raw;
 
       if (!raw) {
+        state.aiSearchRequestId = (state.aiSearchRequestId || 0) + 1;
+        if (typeof setAiSearchLoadingState === 'function') {
+          setAiSearchLoadingState(false, '');
+        }
         state.matchedCategories = [];
         state.matchedOrgIds = null;
         state.highlightTerms = [];
@@ -3257,6 +3597,106 @@ const htmlContent = `<!DOCTYPE html>
       runAiAssistantFromInput();
     }
 
+    function buildNhVerticalFlagLoaderHtml() {
+      const nhPath = 'M75.9,6.0 L77.8,53.4 L79.5,93.7 L80.7,119.3 L82.2,136.7 L86.0,144.1 L88.7,150.2 L94.0,156.2 L92.3,162.3 L88.9,169.7 L82.4,169.7 L76.1,171.7 L71.3,175.1 L67.9,179.8 L64.0,181.1 L56.8,180.4 L48.5,179.2 L29.2,179.2 L9.4,179.2 L6.5,172.4 L6.0,163.6 L10.4,152.2 L11.3,139.4 L13.3,128.7 L16.2,117.2 L22.0,105.8 L27.8,93.7 L29.7,83.6 L30.7,72.2 L42.3,64.1 L51.9,53.4 L53.4,38.6 L55.8,25.8 L55.8,17.1 L60.6,10.4 L66.4,11.0 L70.8,7.0 Z';
+      const red = '#B31942';
+      const white = '#FFFFFF';
+      const blue = '#0A3161';
+      let stripes = '';
+      // U.S. Flag Code 4 U.S.C. § 7(i) vertical hang: union top-left, 13 vertical alternating red/white stripes (outer edges red, stripe right of union white)
+      const leftW = 56 / 7;
+      const rightW = 32 / 6;
+      for (let i = 0; i < 7; i++) {
+        stripes += '<rect x="' + (6 + i * leftW).toFixed(2) + '" y="0" width="' + (leftW + 0.35).toFixed(2) + '" height="187" fill="' + (i % 2 === 0 ? red : white) + '"/>';
+      }
+      for (let j = 0; j < 6; j++) {
+        stripes += '<rect x="' + (62 + j * rightW).toFixed(2) + '" y="0" width="' + (rightW + 0.35).toFixed(2) + '" height="187" fill="' + (j % 2 === 0 ? white : red) + '"/>';
+      }
+      // Staggered 5-pointed white stars inside the upper-left Old Glory Blue union
+      let stars = '';
+      const rows = 7, cols = 6, xMin = 22, xMax = 58.5, yMin = 13, yMax = 85, rOuter = 2.75, rInner = 1.15;
+      const dx = (xMax - xMin) / (cols - 1);
+      const dy = (yMax - yMin) / (rows - 1);
+      for (let r = 0; r < rows; r++) {
+        const isOffset = r % 2 === 1;
+        const rowCols = isOffset ? cols - 1 : cols;
+        const startX = isOffset ? xMin + dx / 2 : xMin;
+        const cy = yMin + r * dy;
+        for (let c = 0; c < rowCols; c++) {
+          const cx = startX + c * dx;
+          let pts = [];
+          for (let k = 0; k < 10; k++) {
+            const ang = -Math.PI / 2 + (k * Math.PI) / 5;
+            const rad = k % 2 === 0 ? rOuter : rInner;
+            pts.push((cx + rad * Math.cos(ang)).toFixed(1) + ',' + (cy + rad * Math.sin(ang)).toFixed(1));
+          }
+          stars += '<polygon points="' + pts.join(' ') + '" fill="#FFFFFF"/>';
+        }
+      }
+
+      return '<div class="nh-flag-loader-wrap" role="img" aria-label="New Hampshire filling vertically with the United States flag">' +
+        '<svg class="nh-flag-loader-svg" viewBox="0 0 100 187" xmlns="http://www.w3.org/2000/svg">' +
+          '<path d="' + nhPath + '" fill="#E6DDC8" stroke="#535E46" stroke-width="3.2" stroke-linejoin="round"/>' +
+        '</svg>' +
+        '<svg class="nh-flag-loader-svg nh-flag-loader-fill" viewBox="0 0 100 187" xmlns="http://www.w3.org/2000/svg">' +
+          '<defs><clipPath id="nh-flag-loader-clip"><path d="' + nhPath + '"/></clipPath></defs>' +
+          '<g clip-path="url(#nh-flag-loader-clip)">' +
+            stripes +
+            '<rect x="0" y="6" width="62" height="86" fill="' + blue + '"/>' +
+            stars +
+          '</g>' +
+        '</svg>' +
+        '<svg class="nh-flag-loader-svg nh-flag-loader-outline" viewBox="0 0 100 187" xmlns="http://www.w3.org/2000/svg">' +
+          '<path d="' + nhPath + '" fill="none" stroke="#282A25" stroke-width="3.2" stroke-linejoin="round"/>' +
+        '</svg>' +
+      '</div>';
+    }
+
+    function setAiSearchLoadingState(isLoading, rawQuery) {
+      if (state.aiSearchStageTimer) {
+        clearTimeout(state.aiSearchStageTimer);
+        state.aiSearchStageTimer = null;
+      }
+      const btn = document.getElementById('search-submit-btn');
+      const btnIcon = document.getElementById('search-submit-icon');
+      const btnLabel = document.getElementById('search-submit-label');
+      const aiBox = document.getElementById('ai-navigator-response');
+      const aiIcon = document.getElementById('ai-navigator-icon');
+      const aiTitle = document.getElementById('ai-navigator-title');
+      const aiText = document.getElementById('ai-navigator-text');
+
+      if (btn) {
+        btn.disabled = !!isLoading;
+        if (typeof btn.setAttribute === 'function') btn.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+      }
+      if (isLoading) {
+        if (btnIcon) {
+          btnIcon.innerHTML = '<svg class="nh-search-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><circle cx="12" cy="12" r="9" opacity="0.3"/><path d="M12 3a9 9 0 0 1 9 9" stroke-linecap="round"/></svg>';
+        }
+        if (btnLabel) btnLabel.textContent = 'Searching...';
+        if (aiBox) aiBox.classList.remove('hidden');
+        if (aiIcon) aiIcon.innerHTML = buildNhVerticalFlagLoaderHtml();
+        if (aiTitle) aiTitle.textContent = 'Searching New Hampshire Veteran Resources...';
+        if (aiText) {
+          const safeQ = escapeHtml(rawQuery || '');
+          aiText.innerHTML = 'Matching <em>"' + safeQ + '"</em> across <strong>' + ORGANIZATIONS.length + ' verified NH organizations</strong> &amp; all 10 counties...';
+        }
+        state.aiSearchStageTimer = setTimeout(function() {
+          const liveTitle = document.getElementById('ai-navigator-title');
+          const liveText = document.getElementById('ai-navigator-text');
+          if (liveTitle) liveTitle.textContent = 'Matching Local & Statewide Programs...';
+          if (liveText) {
+            liveText.innerHTML = 'Checking regional hubs, statewide VSOs, and direct contacts for <em>"' + escapeHtml(rawQuery || '') + '"</em>...';
+          }
+        }, 2800);
+      } else {
+        if (btnIcon) btnIcon.textContent = '✨';
+        if (btnLabel) btnLabel.textContent = 'Search / Ask AI';
+        if (aiIcon) aiIcon.textContent = '🧭';
+        if (aiTitle) aiTitle.textContent = 'NHVet411 Resource Navigator Match:';
+      }
+    }
+
     async function askAiNavigator(promptText) {
       document.getElementById('search-input').value = promptText;
       await runAiAssistantFromInput();
@@ -3269,6 +3709,9 @@ const htmlContent = `<!DOCTYPE html>
       }
       const rawQuery = (searchInputEl ? searchInputEl.value : '').trim();
       if (!rawQuery) return resetAllFilters();
+
+      const reqId = (state.aiSearchRequestId || 0) + 1;
+      state.aiSearchRequestId = reqId;
 
       const normalized = normalizeSearchQuery(rawQuery);
       const q = normalized.toLowerCase();
@@ -3309,7 +3752,9 @@ const htmlContent = `<!DOCTYPE html>
 
       const proxyUrl = getGeminiProxyUrl();
       const key = localStorage.getItem('nhvet411_gemini_key');
-      if ((proxyUrl || key) && !nameHit && !isEmailQuery && !pureGeoOnly) {
+      const willCallAi = !!((proxyUrl || key) && !nameHit && !isEmailQuery && !pureGeoOnly);
+      if (willCallAi) {
+        setAiSearchLoadingState(true, rawQuery);
         try {
           const catalog = ORGANIZATIONS.map(function(o) {
             return { id: o.id, name: o.name, categories: o.categories, city: o.city, county: o.county, is_statewide: o.is_statewide, description: o.description };
@@ -3387,8 +3832,17 @@ const htmlContent = `<!DOCTYPE html>
               }
             }
           }
-        } catch (err) { console.warn('Gemini AI fallback to local multi-intent engine:', err); }
+        } catch (err) {
+          console.warn('Gemini AI fallback to local multi-intent engine:', err);
+        } finally {
+          if (state.aiSearchRequestId === reqId) {
+            setAiSearchLoadingState(false, '');
+          }
+        }
       }
+
+      // If user clicked Reset Filters or started a newer search while awaiting AI, abort stale render
+      if (state.aiSearchRequestId !== reqId) return;
 
       if (nameHit) {
         detectedRegion = 'all'; detectedCounty = 'all'; detectedBranch = 'all'; matchedTownOrZip = '';
@@ -3514,8 +3968,6 @@ const htmlContent = `<!DOCTYPE html>
       if (navCount) navCount.textContent = totalOrgs;
       const navAllCount = document.getElementById('nav-all-vsos-count');
       if (navAllCount) navAllCount.textContent = totalOrgs;
-      const btnViewAllCount = document.getElementById('btn-view-all-count');
-      if (btnViewAllCount) btnViewAllCount.textContent = totalOrgs;
       const statVsos = document.getElementById('stat-total-vsos');
       if (statVsos) statVsos.textContent = totalOrgs;
       const statCounties = document.getElementById('stat-total-counties');
@@ -3559,12 +4011,20 @@ const htmlContent = `<!DOCTYPE html>
 
       if (typeof document !== 'undefined' && document.addEventListener) {
         document.addEventListener('visibilitychange', function() {
-          if (!document.hidden && isModeratorLoggedIn() && isSupabaseConfigured()) {
-            pollModeratorPendingCount(true);
+          if (!document.hidden) {
+            if (isModeratorLoggedIn() && isSupabaseConfigured()) {
+              pollModeratorPendingCount(true);
+            }
+            if (typeof checkForSiteUpdate === 'function') {
+              checkForSiteUpdate(false);
+            }
           }
         });
       }
       initMobileExperience();
+      if (typeof startSiteUpdateWatcher === 'function') {
+        startSiteUpdateWatcher();
+      }
       bootstrapSupabaseAndModeration();
     }
 
@@ -3575,6 +4035,10 @@ const htmlContent = `<!DOCTYPE html>
     }
 
     function resetAllFilters() {
+      state.aiSearchRequestId = (state.aiSearchRequestId || 0) + 1;
+      if (typeof setAiSearchLoadingState === 'function') {
+        setAiSearchLoadingState(false, '');
+      }
       state.searchQuery = '';
       state.selectedRegion = 'all';
       state.selectedCounty = 'all';
@@ -6370,7 +6834,14 @@ const htmlContent = `<!DOCTYPE html>
       const accountLabel = document.getElementById('mod-account-label');
       const wfBar = document.getElementById('workflow-switch-bar');
       const submitterRow = document.getElementById('submitter-info-row');
+      const actionsWrap = document.getElementById('hero-actions-wrap');
 
+      if (actionsWrap && actionsWrap.classList) {
+        actionsWrap.classList.toggle('hero-admin-is-mod', isMod);
+      }
+      if (typeof closeAdminToolsDropdown === 'function') {
+        closeAdminToolsDropdown();
+      }
       if (loginBtn) loginBtn.classList.toggle('hidden', isMod);
       if (reviewBtn) reviewBtn.classList.toggle('hidden', !isMod);
       if (accountBtn) accountBtn.classList.toggle('hidden', !isMod);
@@ -7716,4 +8187,12 @@ const htmlContent = `<!DOCTYPE html>
 </html>`;
 
 fs.writeFileSync(HTML_OUTPUT_PATH, htmlContent, 'utf-8');
-console.log('🎉 SUCCESS! Built NHVet411 index.html (147 Orgs + 4 72-Hour Upgrades Installed).');
+const versionPayload = {
+  version: siteVersion,
+  date: String(whatsNewData.lastUpdated || todayISO),
+  title: (Array.isArray(whatsNewData.releases) && whatsNewData.releases[0] && whatsNewData.releases[0].title)
+    ? String(whatsNewData.releases[0].title)
+    : 'NHVet411 Directory Update'
+};
+fs.writeFileSync(VERSION_OUTPUT_PATH, JSON.stringify(versionPayload, null, 2) + '\n', 'utf-8');
+console.log(`🎉 SUCCESS! Built NHVet411 index.html (v${siteVersion}, ${finalOrganizations.length} Orgs, ${totalNamedContacts} Named Contacts) + favicon.svg + version.json.`);

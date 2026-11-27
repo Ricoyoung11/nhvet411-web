@@ -27,3 +27,9 @@ After every change, report concisely:
 1. **Exact files & functions modified** (explicitly confirming fonts, background, and layout were untouched).
 2. **Pass 2 Review findings** (edge cases & ripple effects checked and fixed).
 3. **Optional Recommendations** (unimplemented ideas for approval).
+
+## 5. What's New & Version-Bump Approval Gate
+- User-facing release notes live in `whats_new.json` (which drives both the footer **What's New** modal and `version.json` update checks).
+- **Mandatory Owner Approval:** Never bump `currentVersion` or publish new/edited `whats_new.json` text until the site owner has explicitly reviewed and approved the exact wording.
+- Keep **What's New** entries at a **30,000ft plain-English level** for everyday veterans and families—no internal technical details, moderation mechanics, or overly descriptive jargon.
+

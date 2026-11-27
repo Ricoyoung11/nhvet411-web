@@ -90,13 +90,29 @@ function createAppHarness({ fetchMock = null } = {}) {
   makeEl('total-count-badge');
   makeEl('nav-total-count');
   makeEl('nav-all-vsos-count');
-  makeEl('btn-view-all-count');
   makeEl('stat-total-vsos');
   makeEl('stat-total-counties');
   makeEl('stat-total-regions');
   makeEl('stat-total-categories');
   makeEl('stat-total-contacts');
+  makeEl('footer-total-vsos');
+  makeEl('footer-total-contacts');
+  makeEl('footer-total-counties');
   makeEl('api-status-btn-text');
+  makeEl('search-submit-btn');
+  makeEl('search-submit-icon');
+  makeEl('search-submit-label');
+  makeEl('ai-navigator-icon');
+  makeEl('ai-navigator-title');
+  makeEl('detailed-filter-panel');
+  makeEl('toggle-detailed-filters-btn');
+  makeEl('toggle-detailed-filters-label');
+  makeEl('toggle-detailed-filters-chevron');
+  makeEl('hero-actions-wrap');
+  makeEl('update-available-btn', { classes: ['hidden'] });
+  makeEl('whats-new-modal', { classes: ['hidden'] });
+  makeEl('whats-new-body');
+  makeEl('whats-new-current-version');
   makeEl('review-queue-count');
   makeEl('mod-login-btn');
   makeEl('mod-review-btn', { classes: ['hidden'] });
@@ -1119,8 +1135,9 @@ test('20. Moderator direct live edit RPC & 260-org single-query scale stress tes
   assert.equal(vm.runInContext('ORGANIZATIONS.length', ctx), 260);
   assert.equal(document.getElementById('total-count-badge').textContent, 260);
   assert.equal(document.getElementById('nav-all-vsos-count').textContent, 260);
-  assert.equal(document.getElementById('btn-view-all-count').textContent, 260);
+  assert.equal(document.getElementById('footer-total-vsos').textContent, 260);
   assert.equal(document.getElementById('stat-total-vsos').textContent, 260);
+  assert.equal(document.getElementById('footer-total-contacts').textContent, document.getElementById('stat-total-contacts').textContent);
   assert.ok(syncMs < 400, `260-org sync + render should stay fast (<400ms), took ${syncMs.toFixed(1)}ms`);
 
   const tSearch = performance.now();
@@ -1294,7 +1311,7 @@ test('25. Pre-Launch Hygiene #4 & #5: Footer legal links, accessible legal modal
   assert.ok(html.includes('17 U.S.C. § 512'));
 
   // Escape key closes every interactive modal
-  for (const modalId of ['legal-modal', 'amplifier-modal', 'apikey-modal', 'submit-modal', 'mod-auth-modal', 'review-queue-modal']) {
+  for (const modalId of ['whats-new-modal', 'legal-modal', 'amplifier-modal', 'apikey-modal', 'submit-modal', 'mod-auth-modal', 'review-queue-modal']) {
     document.getElementById(modalId).classList.remove('hidden');
     for (const fn of (domListeners.keydown || [])) {
       fn({ key: 'Escape' });
@@ -1302,8 +1319,8 @@ test('25. Pre-Launch Hygiene #4 & #5: Footer legal links, accessible legal modal
     assert.equal(document.getElementById(modalId).classList.contains('hidden'), true, `Escape key must close #${modalId}`);
   }
 
-  // All 6 modals must declare role="dialog" and aria-modal="true"
-  for (const modalId of ['apikey-modal', 'submit-modal', 'review-queue-modal', 'mod-auth-modal', 'amplifier-modal', 'legal-modal']) {
+  // All 7 modals must declare role="dialog" and aria-modal="true"
+  for (const modalId of ['apikey-modal', 'submit-modal', 'review-queue-modal', 'mod-auth-modal', 'amplifier-modal', 'legal-modal', 'whats-new-modal']) {
     const tagMatch = html.match(new RegExp(`<div id="${modalId}"[^>]*>`));
     assert.ok(tagMatch, `Missing modal #${modalId}`);
     assert.ok(tagMatch[0].includes('role="dialog"') && tagMatch[0].includes('aria-modal="true"'), `#${modalId} must have role="dialog" and aria-modal="true"`);
@@ -1320,5 +1337,124 @@ test('25. Pre-Launch Hygiene #4 & #5: Footer legal links, accessible legal modal
     assert.ok(hasAriaLabel || hasLabelFor || isWrappedInLabel, `Form control <${tag}> (${idMatch ? idMatch[1] : attrs}) is missing <label for> or aria-label`);
   }
 });
+
+test('26. Site UX Polish Batch (#1-#9): 1A favicon, 211NH Help pill, desktop Admin dropdown + footer AI key, Detailed Filter toggle, 4 U.S.C. §7i vertical-stripe NH flag loader, live named contact count, version-bump update notice & What\'s New modal, and concise search placeholder', async () => {
+  const html = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+  const faviconSvg = fs.readFileSync(path.join(ROOT, 'favicon.svg'), 'utf8');
+  const versionJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'version.json'), 'utf8'));
+  const whatsNewJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'whats_new.json'), 'utf8'));
+
+  // #1: Option 1A stacked VET / 411 charcoal favicon exists and is linked in <head>
+  assert.ok(faviconSvg.includes('>VET</text>') && faviconSvg.includes('>411</text>'), 'favicon.svg must render Option 1A VET / 411');
+  assert.ok(html.includes('rel="icon" type="image/svg+xml" href="data:image/svg+xml'), 'index.html must include inline SVG favicon');
+
+  // #2: 211NH Help label in top banner and footer
+  assert.ok(html.includes('Dial 211</strong>: 211NH Help'), 'Top crisis banner must show Dial 211: 211NH Help');
+  assert.ok(html.includes('<strong>211NH Help:</strong>'), 'Footer must show 211NH Help');
+
+  // #3: AI Key pill moved to footer; Moderator Login tucked inside hero-admin-dropdown-wrap
+  const heroStart = html.indexOf('<header id="resource-search"');
+  const heroEnd = html.indexOf('</header>', heroStart);
+  const heroHtml = html.slice(heroStart, heroEnd);
+  const footerStart = html.indexOf('<footer');
+  const footerHtml = html.slice(footerStart);
+  assert.equal(heroHtml.includes('api-status-btn-text'), false, 'AI Key pill must no longer sit in the hero');
+  assert.ok(footerHtml.includes('id="footer-ai-key-btn"') && footerHtml.includes('id="api-status-btn-text"'), 'AI Key pill must live in the footer');
+  assert.ok(heroHtml.includes('id="hero-admin-dropdown-wrap"') && heroHtml.includes('id="mod-login-btn"'), 'Moderator Login must live inside Admin dropdown');
+
+  // #4 & #6: Redundant VIEW ALL pill removed; Detailed Filter toggle removed from 7 Regions and placed directly above #detailed-filter-panel
+  assert.equal(html.includes('btn-view-all-count'), false, 'Redundant green VIEW ALL pill must be removed');
+  const regionsStart = html.indexOf('id="nh-regions-showcase"');
+  const regionsEnd = html.indexOf('</section>', regionsStart);
+  assert.equal(html.slice(regionsStart, regionsEnd).includes('toggleMobileFilters'), false, 'Toggle button must be removed from 7 Regions showcase');
+  assert.ok(html.includes('id="toggle-detailed-filters-btn"') && html.includes('Hide Detailed Filters'), 'State-aware Detailed Filters toggle must sit above #detailed-filter-panel');
+
+  // #9: Concise question-first search placeholder
+  assert.ok(html.includes('placeholder="Ask any question, or enter a ZIP code or NH town..."'), 'Search placeholder must lead with Ask any question...');
+
+  // #8: version.json synced to whats_new.json
+  assert.equal(versionJson.version, whatsNewJson.currentVersion, 'version.json must match whats_new.json currentVersion');
+
+  // Runtime checks for #3, #5, #6, #7, #8
+  let pendingVersion = versionJson.version;
+  let resolveSlowAi;
+  const slowAiPromise = new Promise(r => { resolveSlowAi = r; });
+
+  const fetchMock = async (url) => {
+    if (url.includes('version.json')) {
+      return { ok: true, status: 200, json: async () => ({ version: pendingVersion }) };
+    }
+    if (url.includes('gemini-search-proxy')) {
+      await slowAiPromise;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ ok: true, model: 'gemini-3.5-flash-lite', data: { categories: ['benefits-advocacy'], org_ids: ['vso-030'], highlight_terms: ['VA'] } })
+      };
+    }
+    return { ok: false, status: 404, json: async () => ({}) };
+  };
+
+  const { ctx, document } = createAppHarness({ fetchMock });
+  ctx.window.NHVET411_GEMINI_PROXY_URL = 'https://demo.supabase.co/functions/v1/gemini-search-proxy';
+
+  // #6 runtime: toggleMobileFilters toggles panel visibility and updates button label/chevron/aria-expanded
+  assert.equal(document.getElementById('detailed-filter-panel').classList.contains('hidden'), false);
+  ctx.toggleMobileFilters();
+  assert.equal(document.getElementById('detailed-filter-panel').classList.contains('hidden'), true);
+  assert.equal(document.getElementById('toggle-detailed-filters-label').textContent, 'Show Detailed Filters');
+  assert.equal(document.getElementById('toggle-detailed-filters-btn').getAttribute('aria-expanded'), 'false');
+  ctx.toggleMobileFilters();
+  assert.equal(document.getElementById('detailed-filter-panel').classList.contains('hidden'), false);
+  assert.equal(document.getElementById('toggle-detailed-filters-label').textContent, 'Hide Detailed Filters');
+  assert.equal(document.getElementById('toggle-detailed-filters-btn').getAttribute('aria-expanded'), 'true');
+
+  // #5 runtime: plain-text AI search shows regulation vertical-stripe NH flag loader while awaiting proxy and clears cleanly on finish
+  document.getElementById('search-input').value = 'How do I file a VA disability claim in Concord?';
+  const searchRun = ctx.runAiAssistantFromInput();
+  assert.equal(document.getElementById('search-submit-btn').disabled, true, 'Search button must disable while AI search is in flight');
+  assert.equal(document.getElementById('search-submit-label').textContent, 'Searching...');
+  const loaderHtml = document.getElementById('ai-navigator-icon').innerHTML;
+  assert.ok(loaderHtml.includes('nh-flag-loader-fill'), 'Animated NH flag loader must appear during AI search');
+  assert.ok(loaderHtml.includes('fill="#0A3161"') && loaderHtml.includes('width="62" height="86"'), 'Blue union with stars must sit in upper-left per 4 U.S.C. § 7(i)');
+  assert.equal((loaderHtml.match(/height="187"/g) || []).length, 13, 'Flag must render 13 regulation vertical stripes');
+  resolveSlowAi();
+  await searchRun;
+  assert.equal(document.getElementById('search-submit-btn').disabled, false, 'Search button must re-enable after AI search finishes');
+  assert.equal(document.getElementById('search-submit-label').textContent, 'Search / Ask AI');
+
+  // #7 runtime: adding a named VSO contact dynamically increments BOTH banner and footer contact counts
+  ctx.updateStateDirectoryStats();
+  const beforeBannerContacts = Number(document.getElementById('stat-total-contacts').textContent);
+  const beforeFooterContacts = Number(document.getElementById('footer-total-contacts').textContent);
+  assert.equal(beforeBannerContacts, 215);
+  assert.equal(beforeFooterContacts, 215);
+  ctx.applySubmissionPayloadLive({
+    uploadMode: 'add-contact',
+    targetOrgId: 'vso-030',
+    incomingContacts: [{ name: 'Alex Rivera (Outreach Specialist)', email: 'arivera@dmavs.nh.gov', phone: '(603) 555-0199', public_opt_in: true }],
+    license_accepted: true
+  });
+  assert.equal(Number(document.getElementById('stat-total-contacts').textContent), 216, 'Banner VSO contacts count must increment dynamically');
+  assert.equal(Number(document.getElementById('footer-total-contacts').textContent), 216, 'Footer VSO contacts count must increment dynamically');
+
+  // #8 runtime: Update Available stays hidden on same version, appears ONLY on version bump, and What's New modal renders cleanly
+  const sameRes = await ctx.checkForSiteUpdate(true);
+  assert.equal(sameRes, false);
+  assert.equal(document.getElementById('update-available-btn').classList.contains('hidden'), true, 'Update badge must remain hidden when versions match');
+
+  pendingVersion = '1.2.0';
+  const bumpRes = await ctx.checkForSiteUpdate(true);
+  assert.equal(bumpRes, true);
+  assert.equal(document.getElementById('update-available-btn').classList.contains('hidden'), false, 'Update badge must appear when version bumps');
+
+  ctx.openWhatsNewModal();
+  assert.equal(document.getElementById('whats-new-modal').classList.contains('hidden'), false);
+  assert.ok(document.getElementById('whats-new-body').innerHTML.includes('v1.2.0'), 'What\'s New modal should display refresh banner for detected new version');
+  assert.ok(document.getElementById('whats-new-body').innerHTML.includes(whatsNewJson.releases[0].title.replace(/&/g, '&amp;')), 'What\'s New modal should render current release title safely escaped');
+  ctx.closeWhatsNewModal();
+  assert.equal(document.getElementById('whats-new-modal').classList.contains('hidden'), true);
+});
+
 
 

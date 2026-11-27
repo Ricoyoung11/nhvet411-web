@@ -1,0 +1,17 @@
+{
+  "currentVersion": "1.1.0",
+  "lastUpdated": "2026-11-26",
+  "approvedByOwner": true,
+  "releases": [
+    {
+      "version": "1.1.0",
+      "date": "2026-11-26",
+      "title": "Navigation & Search Refresh",
+      "highlights": [
+        "Search Feedback: Added a live progress indicator and clearer search prompt.",
+        "Cleaner Layout: Simplified top controls, filter toggle, and the 211NH Help banner link.",
+        "Tab Icon & Update Alerts: Added a browser tab icon and a refresh notice when updates go live."
+      ]
+    }
+  ]
+}
